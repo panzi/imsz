@@ -44,7 +44,7 @@ all: $(BIN)
 
 $(BIN): $(OBJ) $(DEPS)
 	@mkdir -p $(BUILDDIR)/examples
-	$(CC) $(CFLAGS) $(LIBS) $< $(OBJEX) -o $@
+	$(CC) $(CFLAGS) $< $(OBJEX) $(LIBS) -o $@
 
 $(BUILDDIR)/examples/%.o: examples/%.c imsz.h
 	@mkdir -p $(BUILDDIR)/examples
