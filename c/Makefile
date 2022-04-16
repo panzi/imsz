@@ -24,6 +24,11 @@ OBJ=$(BUILDDIR)/examples/imsz.o
 BIN=$(BUILDDIR)/examples/imsz
 
 ifeq ($(LINK),STATIC)
+    # It's fake static linking by direktly linking libimsz.a,
+    # i.e. the binary is not actually statically linked, since
+    # certain functions in glibc (getpwuid_r and getaddrinfo)
+    # require at runtime the shared libraries from the glibc
+    # version used for static linking.
     LIBS=-lgcc_s -lutil -lrt -lpthread -lm -ldl -lc
     DEPS=$(LIB)
     OBJEX=$(LIB)
