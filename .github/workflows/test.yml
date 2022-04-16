@@ -21,10 +21,11 @@ jobs:
         cargo build --verbose
         cargo build --examples --verbose
         cd c
-        cargo build
+        cargo build --verbose
+        make LINK=DYNAMIC
 
 # TODO: find out why compiling the C example program doesn't work on GitHub
-#        make
+#        make LINK=STATIC
 
     - name: Run tests
       run: cargo test --verbose
