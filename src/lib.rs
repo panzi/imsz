@@ -4,21 +4,46 @@ use std::io::{Read, Seek, SeekFrom, BufReader};
 #[non_exhaustive]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum ImFormat {
+    /// GIF87a and GIF89a files.
     GIF     =  1,
+
+    // Requires the first chunk to be `IHDR`.
     PNG     =  2,
+
+    /// Windows Bitmap, both for Windows 2.0 (BITMAPCOREHEADER) and for newer
+    /// versions (BITMAPINFOHEADER).
     BMP     =  3,
     JPEG    =  4,
+
+    /// Supported sub-formats: `VP8 `, `VP8L`, `VP8X`.
     WEBP    =  5,
     QOI     =  6,
+
+    /// Adobe Photoshop files.
     PSD     =  7,
+
+    /// GIMP files.
     XCF     =  8,
+
+    /// ICO files can contain multiple images. This returns the dimensions of
+    /// the biggest image in the file.
     ICO     =  9,
     AVIF    = 10,
+
+    /// Supports big endian and little endian TIFF files.
     TIFF    = 11,
     OpenEXR = 12,
     PCX     = 13,
+
+    /// Only if the file ends in `b"TRUEVISION-XFILE.\0"` since otherwise there
+    /// is no good way to detect TGA files. Note that this string is optional
+    /// to file format and thus there can be TGA files that aren't supported by
+    /// this library.
     TGA     = 14,
     DDS     = 15,
+
+    /// HEIC/HEIF files. These are extremely similar to AVIF and use the same
+    /// parsing code.
     HEIC    = 16,
 }
 
@@ -61,9 +86,15 @@ pub struct ImInfo {
 
 #[derive(Debug)]
 pub enum ImError {
+    /// If there was an IO error reading the image file this error is returend.
     IO(std::io::Error),
+
+    /// If the image format couldn't be detected this error is returend.
     UnknownFormat,
-    ParserError(ImFormat)
+
+    /// If the image format was detected, but then something went wrong parsing
+    /// the file this error is returned.
+    ParserError(ImFormat),
 }
 
 impl std::fmt::Display for ImError {
@@ -431,12 +462,14 @@ where R: Read, R: Seek {
     return Ok(&buf == b"TRUEVISION-XFILE.\0");
 }
 
+/// Read width and height of an image.
 #[inline]
 pub fn imsz(fname: impl AsRef<std::path::Path>) -> ImResult<ImInfo> {
     let mut file = File::open(fname)?;
     return imsz_from_reader(&mut file);
 }
 
+/// Read width and height of an image.
 pub fn imsz_from_reader<R>(file: &mut R) -> ImResult<ImInfo>
 where R: Read, R: Seek {
     let mut preamble = [0u8; 30];

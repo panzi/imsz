@@ -216,8 +216,24 @@ fn image_tga() {
 
 
 #[test]
-fn image_tiff() {
-    let info = imsz::imsz(get_testdata("image.tiff"));
+fn image_xcf() {
+    let info = imsz::imsz(get_testdata("image.xcf"));
+    match info {
+        Ok(info) => {
+            assert_eq!(info.format, imsz::ImFormat::XCF);
+            assert_eq!(info.width,  32);
+            assert_eq!(info.height, 16);
+        }
+        Err(error) => {
+            assert!(false, "{}", error);
+        }
+    }
+}
+
+
+#[test]
+fn image_be_tiff() {
+    let info = imsz::imsz(get_testdata("image_be.tiff"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::TIFF);
@@ -232,11 +248,11 @@ fn image_tiff() {
 
 
 #[test]
-fn image_xcf() {
-    let info = imsz::imsz(get_testdata("image.xcf"));
+fn image_le_tiff() {
+    let info = imsz::imsz(get_testdata("image_le.tiff"));
     match info {
         Ok(info) => {
-            assert_eq!(info.format, imsz::ImFormat::XCF);
+            assert_eq!(info.format, imsz::ImFormat::TIFF);
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
