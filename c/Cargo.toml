@@ -12,5 +12,8 @@ name = "imsz"
 path = "src/lib.rs"
 crate-type = ["staticlib", "cdylib"]
 
+[profile.release]
+strip = "debuginfo"
+
 [dependencies]
 imsz = { path = ".." }

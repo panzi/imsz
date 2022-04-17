@@ -11,5 +11,8 @@ edition = "2021"
 name = "imsz"
 path = "src/lib.rs"
 
+[profile.release]
+strip = "debuginfo"
+
 [dev-dependencies]
 clap = { version = "3.1.8", features = ["derive"] }

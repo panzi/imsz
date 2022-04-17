@@ -343,7 +343,7 @@ where R: Read, R: Seek {
         if sub_chunk_size < 8 {
             return Err(ImError::ParserError(ImFormat::AVIF));
         }
-        if buf.ends_with(name) {
+        if &buf[4..8] == name {
             break;
         }
         offset += sub_chunk_size;
@@ -456,43 +456,47 @@ where R: Read, R: Seek {
             width:  w as u64,
             height: h as u64,
         });
-    } else if size >= 16 && &preamble[..8] == b"\x89PNG\r\n\x1a\n" {
+    } else if size >= 8 && preamble.starts_with(b"\x89PNG\r\n\x1a\n") {
         // PNG
-        let w;
-        let h;
-        if &preamble[12..16] == b"IHDR" {
-            if size < 24 {
-                return Err(ImError::ParserError(ImFormat::PNG));
-            }
-            w = u32::from_be_bytes(array4!(preamble, 16));
-            h = u32::from_be_bytes(array4!(preamble, 20));
-        } else {
-            w = u32::from_be_bytes(array4!(preamble,  8));
-            h = u32::from_be_bytes(array4!(preamble, 12));
+        if size < 24 {
+            return Err(ImError::ParserError(ImFormat::PNG));
         }
+
+        let chunk_size = u32::from_be_bytes(array4!(preamble, 8));
+        if chunk_size < 8 || &preamble[12..16] != b"IHDR" {
+            return Err(ImError::ParserError(ImFormat::PNG));
+        }
+
+        let w = u32::from_be_bytes(array4!(preamble, 16));
+        let h = u32::from_be_bytes(array4!(preamble, 20));
 
         return Ok(ImInfo {
             format: ImFormat::PNG,
             width:  w as u64,
             height: h as u64,
         });
-    } else if size >= 10 && (&preamble[..2] == b"BM" && &preamble[6..10] == b"\0\0\0\0") {
+    } else if size >= 10 && preamble.starts_with(b"BM") && &preamble[6..10] == b"\0\0\0\0" {
         // BMP
-        if size < 22 {
+        let file_size = u32::from_le_bytes(array4!(preamble, 2));
+        let min_size = (file_size as usize).min(size);
+        if min_size < 22 {
             return Err(ImError::ParserError(ImFormat::BMP));
         }
+
         let header_size = u32::from_le_bytes(array4!(preamble, 14));
         if header_size == 12 {
-            let w = u16::from_le_bytes(array2!(preamble, 18));
-            let h = u16::from_le_bytes(array2!(preamble, 20));
+            // Windows 2.0 BITMAPCOREHEADER
+            let w = i16::from_le_bytes(array2!(preamble, 18));
+            let h = i16::from_le_bytes(array2!(preamble, 20));
 
             return Ok(ImInfo {
                 format: ImFormat::BMP,
                 width:  w as u64,
-                height: h as u64,
+                // h is negative when stored upside down
+                height: h.abs() as u64,
             });
         } else {
-            if size < 24 {
+            if min_size < 26 || header_size <= 12 {
                 return Err(ImError::ParserError(ImFormat::BMP));
             }
             let w = i32::from_le_bytes(array4!(preamble, 18));
