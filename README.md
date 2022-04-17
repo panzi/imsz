@@ -7,29 +7,23 @@
 
 Get width and height from an image file reading as few bytes as possible.
 
-## Why?
+This is a fork of [scardine/imsz](https://github.com/scardine/imsz) that adds
+support for more file formats, but also breaks API compatibility in order to be
+more idiomatic Rust. It also provides a C library wrapper. For more information
+on how this started see the mentioned link.
 
-A few years ago I answered a Stackoverflow question ["Get Image size WITHOUT loading image into memory"](https://stackoverflow.com/questions/15800704/get-image-size-without-loading-image-into-memory) (using Python). The canonical answer for dealing with images in Python is the PIL library but it is a huge library if you just want to get width and height. I rolled up my sleeves and wrote a small function to do just this. Over the years people sent patches implementing new image formats and refactoring the code until I could not recognize it anymore. I always wanted to tidy it up a bit, may be reimplement it as a C module...
-
-## Am I rusty?
-
-In the last 10 years I've used Python for everything. This saturday afternoon I wanted to answer the question: "at my age, can I still learn a new computer language?". So I decided to try Rust and this is the result. It was a pleasant surprise, if you are familiar with C/C++ Rust is really easy to pick up - and I see some Python influence here and there.
-
-I don't expect it to be very idiomatic Rust, it is my first Rust project so be kind!
-
-## First impressions
-
-There are many things I like in Rust. I'm still looking for a good debugger, the one I was using with VSCode is unable to show the values in a HashMap, for example.
+The library itself has zero dependencies, but the example binary uses
+[clap](https://crates.io/crates/clap).
 
 ## Usage
 
 There is a simple example binary:
 
-```plain
-> cargo run --example imsz tenor.gif
+```bash
+$ cargo run --example imsz tenor.gif
 tenor.gif: gif, 220 x 159
 
-> cargo run --example imsz -- -h
+$ cargo run --example imsz -- --help
 imsz 0.2.0
 Paulo Scardine <paulo@scardine.com.br>, Mathias Panzenböck <grosser.meister.morti@gmx.net>
 
@@ -53,7 +47,7 @@ let info = imsz(fname)?;
 println!("{}: {}, {} x {}", fname, info.format, info.width, info.height);
 // tenor.gif: gif, 220 x 159
 
-// alternatively if you have someting implementing Read and Seek:
+// alternatively if you have something implementing Read and Seek:
 use imsz::imsz_from_reader;
 
 let mut file = File::open(fname)?;
