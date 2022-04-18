@@ -1,27 +1,84 @@
 CC=gcc
 RELEASE=OFF
-CFLAGS=-Wall -std=c11 -I.
+CFLAGS=-Wall -Werror -pedantic -std=c11 -I. -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64
 CARGO=cargo
 LINK=STATIC
+CARGO_FLAGS=
+BIN_EXT=
+SO_PREFIX=lib
+SO_EXT=.so
+
+# example targets:
+# x86_64-unknown-linux-gnu
+# x86_64-pc-windows-gnu
+# i686-pc-windows-gnu
+# x86_64-apple-darwin
+
+ifeq ($(TARGET),)
+    TARGET_DIR   = target
+else
+    CARGO_FLAGS += --target $(TARGET)
+    TARGET_DIR   = target/$(TARGET)
+
+ifeq ($(patsubst i686-%,i686,$(TARGET)),i686)
+    CFLAGS += -m32 -march=i686
+else
+ifeq ($(patsubst x86_64-%,x86_64,$(TARGET)),x86_64)
+    CFLAGS += -m64 -march=x86-64
+else
+ifeq ($(patsubst armv7-%,armv7,$(TARGET)),armv7)
+    CFLAGS += -march=armv7
+else
+ifeq ($(patsubst armv7a-%,armv7a,$(TARGET)),armv7a)
+    CFLAGS += -march=armv7-a
+else
+ifeq ($(patsubst aarch64-%,aarch64,$(TARGET)),aarch64)
+    CFLAGS += -m64 -march=armv8-a
+endif
+endif
+endif
+endif
+endif
+
+ifeq ($(TARGET),i686-pc-windows-gnu)
+    CC=i686-w64-mingw32-gcc
+else
+ifeq ($(TARGET),x86_64-pc-windows-gnu)
+    CC=x86_64-w64-mingw32-gcc
+endif
+endif
+
+ifeq ($(patsubst %-windows-gnu,windows-gnu,$(TARGET)),windows-gnu)
+    CFLAGS   += -Wno-pedantic-ms-format -static-libgcc
+    BIN_EXT   = .exe
+    SO_PREFIX =
+    SO_EXT    = .dll
+else
+ifeq ($(patsubst %-apple-darwin,apple-darwin,$(TARGET)),apple-darwin)
+    CC        = clang
+    CFLAGS   += -Qunused-arguments
+    SO_EXT    = .dylib
+endif
+endif
+endif
 
 ifeq ($(RELEASE),ON)
-    BUILDDIR=target/release
-    CFLAGS += -O2
-    CARGO_FLAGS=--release
+    BUILD_DIR    = $(TARGET_DIR)/release
+    CFLAGS      += -O2 -DNDEBUG
+    CARGO_FLAGS += --release
 else
 ifeq ($(RELEASE),OFF)
-    BUILDDIR=target/debug
-    CFLAGS += -g
-    CARGO_FLAGS=
+    BUILD_DIR = $(TARGET_DIR)/debug
+    CFLAGS   += -g
 else
     $(error illegal value for RELEASE=$(RELEASE))
 endif
 endif
 
-LIB=$(BUILDDIR)/libimsz.a
-SO =$(BUILDDIR)/libimsz.so
-OBJ=$(BUILDDIR)/examples/imsz.o
-BIN=$(BUILDDIR)/examples/imsz
+LIB=$(BUILD_DIR)/libimsz.a
+SO =$(BUILD_DIR)/$(SO_PREFIX)imsz$(SO_EXT)
+OBJ=$(BUILD_DIR)/examples/imsz.o
+BIN=$(BUILD_DIR)/examples/imsz$(BIN_EXT)
 
 ifeq ($(LINK),STATIC)
     # It's fake static linking by direktly linking libimsz.a,
@@ -29,15 +86,19 @@ ifeq ($(LINK),STATIC)
     # certain functions in glibc (getpwuid_r and getaddrinfo)
     # require at runtime the shared libraries from the glibc
     # version used for static linking.
-    LIBS=-lgcc_s -lutil -lrt -lpthread -lm -ldl -lc
-    DEPS=$(LIB)
-    OBJEX=$(LIB)
-    CFLAGS+=-DIMSZ_STATIC
+ifeq ($(patsubst %-windows-gnu,windows-gnu,$(TARGET)),windows-gnu)
+    LIBS    = -lkernel32 -lws2_32 -lbcrypt -ladvapi32 -luserenv
+else
+    LIBS    = -lgcc_s -lutil -lrt -lpthread -lm -ldl -lc
+endif
+    DEPS    = $(LIB)
+    OBJEX   = $(LIB)
+    CFLAGS += -DIMSZ_STATIC
 else
 ifeq ($(LINK),DYNAMIC)
-    LIBS=-L$(BUILDDIR) -limsz
-    DEPS=$(SO)
-    OBJEX=
+    LIBS  = -L$(BUILD_DIR) -limsz
+    DEPS  = $(SO)
+    OBJEX =
 else
     $(error illegal value for LINK=$(LINK))
 endif
@@ -48,11 +109,11 @@ endif
 all: $(BIN)
 
 $(BIN): $(OBJ) $(DEPS)
-	@mkdir -p $(BUILDDIR)/examples
+	@mkdir -p $(BUILD_DIR)/examples
 	$(CC) $(CFLAGS) $< $(OBJEX) $(LIBS) -o $@
 
-$(BUILDDIR)/examples/%.o: examples/%.c imsz.h
-	@mkdir -p $(BUILDDIR)/examples
+$(BUILD_DIR)/examples/%.o: examples/%.c imsz.h
+	@mkdir -p $(BUILD_DIR)/examples
 	$(CC) $(CFLAGS) $< -o $@ -c
 
 $(SO): $(LIB)

@@ -1,6 +1,5 @@
-
 fn get_testdata(fname: &str) -> std::path::PathBuf {
-    let mut path = std::env::current_exe().unwrap().parent().unwrap().parent().unwrap().parent().unwrap().parent().unwrap().to_owned();
+    let mut path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     path.push("testdata");
     path.push(fname);
     return path;
@@ -8,7 +7,7 @@ fn get_testdata(fname: &str) -> std::path::PathBuf {
 
 
 #[test]
-fn image_avif() {
+fn avif() {
     let info = imsz::imsz(get_testdata("image.avif"));
     match info {
         Ok(info) => {
@@ -24,7 +23,7 @@ fn image_avif() {
 
 
 #[test]
-fn image_bmp() {
+fn bmp() {
     let info = imsz::imsz(get_testdata("image.bmp"));
     match info {
         Ok(info) => {
@@ -40,7 +39,7 @@ fn image_bmp() {
 
 
 #[test]
-fn image_dds() {
+fn dds() {
     let info = imsz::imsz(get_testdata("image.dds"));
     match info {
         Ok(info) => {
@@ -56,7 +55,7 @@ fn image_dds() {
 
 
 #[test]
-fn image_exr() {
+fn exr() {
     let info = imsz::imsz(get_testdata("image.exr"));
     match info {
         Ok(info) => {
@@ -72,7 +71,7 @@ fn image_exr() {
 
 
 #[test]
-fn image_gif() {
+fn gif() {
     let info = imsz::imsz(get_testdata("image.gif"));
     match info {
         Ok(info) => {
@@ -88,7 +87,7 @@ fn image_gif() {
 
 
 #[test]
-fn image_heic() {
+fn heic() {
     let info = imsz::imsz(get_testdata("image.heic"));
     match info {
         Ok(info) => {
@@ -104,7 +103,7 @@ fn image_heic() {
 
 
 #[test]
-fn image_ico() {
+fn ico() {
     let info = imsz::imsz(get_testdata("image.ico"));
     match info {
         Ok(info) => {
@@ -120,7 +119,7 @@ fn image_ico() {
 
 
 #[test]
-fn image_jpeg() {
+fn jpeg() {
     let info = imsz::imsz(get_testdata("image.jpeg"));
     match info {
         Ok(info) => {
@@ -136,7 +135,7 @@ fn image_jpeg() {
 
 
 #[test]
-fn image_pcx() {
+fn pcx() {
     let info = imsz::imsz(get_testdata("image.pcx"));
     match info {
         Ok(info) => {
@@ -152,7 +151,7 @@ fn image_pcx() {
 
 
 #[test]
-fn image_png() {
+fn png() {
     let info = imsz::imsz(get_testdata("image.png"));
     match info {
         Ok(info) => {
@@ -168,7 +167,7 @@ fn image_png() {
 
 
 #[test]
-fn image_psd() {
+fn psd() {
     let info = imsz::imsz(get_testdata("image.psd"));
     match info {
         Ok(info) => {
@@ -184,7 +183,7 @@ fn image_psd() {
 
 
 #[test]
-fn image_qoi() {
+fn qoi() {
     let info = imsz::imsz(get_testdata("image.qoi"));
     match info {
         Ok(info) => {
@@ -200,7 +199,7 @@ fn image_qoi() {
 
 
 #[test]
-fn image_tga() {
+fn tga() {
     let info = imsz::imsz(get_testdata("image.tga"));
     match info {
         Ok(info) => {
@@ -216,23 +215,7 @@ fn image_tga() {
 
 
 #[test]
-fn image_xcf() {
-    let info = imsz::imsz(get_testdata("image.xcf"));
-    match info {
-        Ok(info) => {
-            assert_eq!(info.format, imsz::ImFormat::XCF);
-            assert_eq!(info.width,  32);
-            assert_eq!(info.height, 16);
-        }
-        Err(error) => {
-            assert!(false, "{}", error);
-        }
-    }
-}
-
-
-#[test]
-fn image_be_tiff() {
+fn tiff_be() {
     let info = imsz::imsz(get_testdata("image_be.tiff"));
     match info {
         Ok(info) => {
@@ -248,7 +231,7 @@ fn image_be_tiff() {
 
 
 #[test]
-fn image_le_tiff() {
+fn tiff_le() {
     let info = imsz::imsz(get_testdata("image_le.tiff"));
     match info {
         Ok(info) => {
@@ -264,7 +247,7 @@ fn image_le_tiff() {
 
 
 #[test]
-fn image_lossless_webp() {
+fn webp_lossless() {
     let info = imsz::imsz(get_testdata("image_lossless.webp"));
     match info {
         Ok(info) => {
@@ -280,7 +263,7 @@ fn image_lossless_webp() {
 
 
 #[test]
-fn image_lossless_vp8x_webp() {
+fn webp_lossless_vp8x() {
     let info = imsz::imsz(get_testdata("image_lossless_vp8x.webp"));
     match info {
         Ok(info) => {
@@ -296,7 +279,7 @@ fn image_lossless_vp8x_webp() {
 
 
 #[test]
-fn image_lossy_webp() {
+fn webp_lossy() {
     let info = imsz::imsz(get_testdata("image_lossy.webp"));
     match info {
         Ok(info) => {
@@ -312,11 +295,27 @@ fn image_lossy_webp() {
 
 
 #[test]
-fn image_lossy_vp8x_webp() {
+fn webp_lossy_vp8x() {
     let info = imsz::imsz(get_testdata("image_lossy_vp8x.webp"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
+            assert_eq!(info.width,  32);
+            assert_eq!(info.height, 16);
+        }
+        Err(error) => {
+            assert!(false, "{}", error);
+        }
+    }
+}
+
+
+#[test]
+fn xcf() {
+    let info = imsz::imsz(get_testdata("image.xcf"));
+    match info {
+        Ok(info) => {
+            assert_eq!(info.format, imsz::ImFormat::XCF);
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }

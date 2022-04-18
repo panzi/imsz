@@ -386,14 +386,12 @@ where R: Read, R: Seek {
     return Ok(sub_chunk_size);
 }
 
-fn parse_tiff<BR, R>(file: &mut R, preamble: &[u8]) -> ImResult<ImInfo>
+fn parse_tiff<BR, R>(reader: &mut R, preamble: &[u8]) -> ImResult<ImInfo>
 where BR: BinaryReader, R: Read, R: Seek {
-    let mut reader = BufReader::new(file);
-
     let ifd_offset = BR::get_u32(array4!(preamble, 4));
     map_err!(TIFF reader.seek(SeekFrom::Start(ifd_offset as u64)));
 
-    let ifd_entry_count = map_expr!(TIFF BR::read_u16(&mut reader)) as u32;
+    let ifd_entry_count = map_expr!(TIFF BR::read_u16(reader)) as u32;
     // 2 bytes: TagId + 2 bytes: type + 4 bytes: count of values + 4
     // bytes: value offset
     let mut width:  Option<u64> = None;
@@ -403,28 +401,28 @@ where BR: BinaryReader, R: Read, R: Seek {
         // sizeof ifd_entry_count = 2
         let entry_offset = ifd_offset + 2 + index * 12;
         map_err!(TIFF reader.seek(SeekFrom::Start(entry_offset as u64)));
-        let tag = map_expr!(TIFF BR::read_u16(&mut reader));
+        let tag = map_expr!(TIFF BR::read_u16(reader));
 
         // 256 ... width
         // 257 ... height
         if tag == 256 || tag == 257 {
             // if type indicates that value fits into 4 bytes, value
             // offset is not an offset but value itself
-            let ftype = map_expr!(TIFF BR::read_u16(&mut reader));
+            let ftype = map_expr!(TIFF BR::read_u16(reader));
             map_err!(TIFF reader.seek(SeekFrom::Start(entry_offset as u64 + 8)));
             let value: u64 = match ftype {
-                 1 => map_expr!(TIFF BR::read_u8(&mut reader)).into(),
-                 2 => map_expr!(TIFF BR::read_uchar(&mut reader)).into(),
-                 3 => map_expr!(TIFF BR::read_u16(&mut reader)).into(),
-                 4 => map_expr!(TIFF BR::read_u32(&mut reader)).into(),
-                 5 => map_expr!(TIFF BR::read_uratio(&mut reader)).value::<u64>(),
-                 6 => map_expr!(TIFF BR::read_i8(&mut reader)).max(0) as u64,
-                 7 => map_expr!(TIFF BR::read_ichar(&mut reader)).max(0) as u64,
-                 8 => map_expr!(TIFF BR::read_i16(&mut reader)).max(0) as u64,
-                 9 => map_expr!(TIFF BR::read_i32(&mut reader)).max(0) as u64,
-                10 => map_expr!(TIFF BR::read_iratio(&mut reader)).value::<i64>().max(0) as u64,
-                11 => map_expr!(TIFF BR::read_f32(&mut reader)) as u64,
-                12 => map_expr!(TIFF BR::read_f64(&mut reader)) as u64,
+                 1 => map_expr!(TIFF BR::read_u8(reader)).into(),
+                 2 => map_expr!(TIFF BR::read_uchar(reader)).into(),
+                 3 => map_expr!(TIFF BR::read_u16(reader)).into(),
+                 4 => map_expr!(TIFF BR::read_u32(reader)).into(),
+                 5 => map_expr!(TIFF BR::read_uratio(reader)).value::<u64>(),
+                 6 => map_expr!(TIFF BR::read_i8(reader)).max(0) as u64,
+                 7 => map_expr!(TIFF BR::read_ichar(reader)).max(0) as u64,
+                 8 => map_expr!(TIFF BR::read_i16(reader)).max(0) as u64,
+                 9 => map_expr!(TIFF BR::read_i32(reader)).max(0) as u64,
+                10 => map_expr!(TIFF BR::read_iratio(reader)).value::<i64>().max(0) as u64,
+                11 => map_expr!(TIFF BR::read_f32(reader)) as u64,
+                12 => map_expr!(TIFF BR::read_f64(reader)) as u64,
                 _ => return Err(ImError::ParserError(ImFormat::TIFF))
             };
 
@@ -465,11 +463,14 @@ where R: Read, R: Seek {
 /// Read width and height of an image.
 #[inline]
 pub fn imsz(fname: impl AsRef<std::path::Path>) -> ImResult<ImInfo> {
-    let mut file = File::open(fname)?;
-    return imsz_from_reader(&mut file);
+    let mut reader = BufReader::new(File::open(fname)?);
+    return imsz_from_reader(&mut reader);
 }
 
 /// Read width and height of an image.
+/// 
+/// Some file formats (like JPEG) need repeated small reads, so passing a
+/// `std::io::BufReader` is recommended.
 pub fn imsz_from_reader<R>(file: &mut R) -> ImResult<ImInfo>
 where R: Read, R: Seek {
     let mut preamble = [0u8; 30];
@@ -544,21 +545,20 @@ where R: Read, R: Seek {
         }
     } else if size >= 3 && &preamble[..2] == b"\xff\xd8" {
         // JPEG
-        let mut reader = BufReader::new(file);
-        map_err!(JPEG reader.seek(SeekFrom::Start(3)));
+        map_err!(JPEG file.seek(SeekFrom::Start(3)));
         let mut buf1: [u8; 1] = [ preamble[2] ];
         let mut buf2: [u8; 2] = [0; 2];
         let mut buf4: [u8; 4] = [0; 4];
         while buf1[0] != b'\xda' && buf1[0] != 0 {
             while buf1[0] != b'\xff' {
-                map_err!(JPEG reader.read_exact(&mut buf1));
+                map_err!(JPEG file.read_exact(&mut buf1));
             }
             while buf1[0] == b'\xff' {
-                map_err!(JPEG reader.read_exact(&mut buf1));
+                map_err!(JPEG file.read_exact(&mut buf1));
             }
             if buf1[0] >= 0xc0 && buf1[0] <= 0xc3 {
-                map_err!(JPEG reader.seek(SeekFrom::Current(3)));
-                map_err!(JPEG reader.read_exact(&mut buf4));
+                map_err!(JPEG file.seek(SeekFrom::Current(3)));
+                map_err!(JPEG file.read_exact(&mut buf4));
                 let h = u16::from_be_bytes(array2!(buf4, 0));
                 let w = u16::from_be_bytes(array2!(buf4, 2));
 
@@ -568,11 +568,11 @@ where R: Read, R: Seek {
                     height: h as u64,
                 });
             }
-            map_err!(JPEG reader.read_exact(&mut buf2));
+            map_err!(JPEG file.read_exact(&mut buf2));
             let b = u16::from_be_bytes(buf2);
             let offset = (b - 2) as i64;
-            map_err!(JPEG reader.seek(SeekFrom::Current(offset)));
-            map_err!(JPEG reader.read_exact(&mut buf1));
+            map_err!(JPEG file.seek(SeekFrom::Current(offset)));
+            map_err!(JPEG file.read_exact(&mut buf1));
         }
         return Err(ImError::ParserError(ImFormat::JPEG));
     } else if size >= 30 && preamble.starts_with(b"RIFF") && &preamble[8..12] == b"WEBP" {
@@ -636,25 +636,24 @@ where R: Read, R: Seek {
         if ftype_size < 12 {
             return Err(ImError::ParserError(format));
         }
-        let mut reader = BufReader::new(file);
-        map_err!(format, reader.seek(SeekFrom::Start(ftype_size as u64)));
+        map_err!(format, file.seek(SeekFrom::Start(ftype_size as u64)));
 
         // chunk nesting: meta > iprp > ipco > ispe
-        let chunk_size = find_avif_chunk(&mut reader, b"meta", u64::MAX)?;
+        let chunk_size = find_avif_chunk(file, b"meta", u64::MAX)?;
         if chunk_size < 12 {
             return Err(ImError::ParserError(format));
         }
-        map_err!(format, reader.seek(SeekFrom::Current(4)));
-        let chunk_size = find_avif_chunk(&mut reader, b"iprp", chunk_size - 12)?;
-        let chunk_size = find_avif_chunk(&mut reader, b"ipco", chunk_size - 8)?;
-        let chunk_size = find_avif_chunk(&mut reader, b"ispe", chunk_size - 8)?;
+        map_err!(format, file.seek(SeekFrom::Current(4)));
+        let chunk_size = find_avif_chunk(file, b"iprp", chunk_size - 12)?;
+        let chunk_size = find_avif_chunk(file, b"ipco", chunk_size - 8)?;
+        let chunk_size = find_avif_chunk(file, b"ispe", chunk_size - 8)?;
 
         if chunk_size < 12 {
             return Err(ImError::ParserError(format));
         }
 
         let mut buf = [0u8; 12];
-        map_err!(format, reader.read_exact(&mut buf));
+        map_err!(format, file.read_exact(&mut buf));
 
         let w = u32::from_be_bytes(array4!(buf, 4));
         let h = u32::from_be_bytes(array4!(buf, 8));
@@ -729,8 +728,7 @@ where R: Read, R: Seek {
     } else if size > 8 && preamble.starts_with(b"\x76\x2f\x31\x01") && (preamble[4] == 0x01 || preamble[4] == 0x02) {
         // OpenEXR
         // https://www.openexr.com/documentation/openexrfilelayout.pdf
-        let mut reader = BufReader::new(file);
-        map_err!(OpenEXR reader.seek(SeekFrom::Start(8)));
+        map_err!(OpenEXR file.seek(SeekFrom::Start(8)));
 
         let mut name_buf = Vec::new();
         let mut type_buf = Vec::new();
@@ -740,7 +738,7 @@ where R: Read, R: Seek {
         loop {
             name_buf.clear();
             loop {
-                map_err!(OpenEXR reader.read_exact(&mut buf1));
+                map_err!(OpenEXR file.read_exact(&mut buf1));
                 let byte = buf1[0];
                 if byte == 0 {
                     break;
@@ -754,7 +752,7 @@ where R: Read, R: Seek {
 
             type_buf.clear();
             loop {
-                map_err!(OpenEXR reader.read_exact(&mut buf1));
+                map_err!(OpenEXR file.read_exact(&mut buf1));
                 let byte = buf1[0];
                 if byte == 0 {
                     break;
@@ -762,7 +760,7 @@ where R: Read, R: Seek {
                 type_buf.push(byte);
             }
 
-            map_err!(OpenEXR reader.read_exact(&mut buf4));
+            map_err!(OpenEXR file.read_exact(&mut buf4));
             let size = u32::from_le_bytes(buf4);
 
             if &name_buf == b"displayWindow" {
@@ -771,7 +769,7 @@ where R: Read, R: Seek {
                 }
 
                 let mut box_buf = [0u8; 16];
-                map_err!(OpenEXR reader.read_exact(&mut box_buf));
+                map_err!(OpenEXR file.read_exact(&mut box_buf));
 
                 let x1 = i32::from_le_bytes(array4!(box_buf,  0)) as i64;
                 let y1 = i32::from_le_bytes(array4!(box_buf,  4)) as i64;
@@ -791,7 +789,7 @@ where R: Read, R: Seek {
                     height: height as u64,
                 });
             } else {
-                map_err!(OpenEXR reader.seek(SeekFrom::Current(size as i64)));
+                map_err!(OpenEXR file.seek(SeekFrom::Current(size as i64)));
             }
         }
 

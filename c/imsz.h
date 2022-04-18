@@ -4,6 +4,12 @@
 
 #include <stdint.h>
 
+#if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+    #include <windows.h>
+#else
+    #include <stdio.h>
+#endif
+
 #ifdef __cpluspluc
 extern "C" {
 #endif
@@ -53,9 +59,17 @@ typedef struct ImInfo {
 } ImInfo;
 
 IMSZ_EXPORT int imsz(const char *fname, ImInfo *info_ptr);
+IMSZ_EXPORT int imszmem(const void *mem, size_t len, ImInfo *info_ptr);
+IMSZ_EXPORT int imszfd(int fd, ImInfo *info_ptr);
+IMSZ_EXPORT const char *imsz_format_name(int format);
 
-#define IMSZ_FORMAT_NAMES (char*[]){ "(unknown)", "gif", "png", "bmp", "jpeg", "webp", "qoi", "psd", "xcf", "ico", "avif", "tiff", "OpenEXR", "pcx", "tga", "dds", "heic" }
-#define imsz_format_name(format) ((format) <= 0 || (format) >= sizeof(IMSZ_FORMAT_NAMES) / sizeof(char*) ? (IMSZ_FORMAT_NAMES)[0] : (IMSZ_FORMAT_NAMES)[(format)])
+#if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+    IMSZ_EXPORT int imszw(const wchar_t *fname, ImInfo *info_ptr);
+    IMSZ_EXPORT int imszhnd(HANDLE hnd, ImInfo *info_ptr);
+    IMSZ_EXPORT const wchar_t *imsz_format_namew(int format);
+#else
+    #define imszf(fp, info_ptr) imszfd(fileno((fp)), (info_ptr))
+#endif
 
 #ifdef __cpluspluc
 }
