@@ -20,9 +20,9 @@ typedef struct ImInfo {
     uint64_t width;
     uint64_t height;
 } ImInfo;
-int imsz(const char *fname, ImInfo *info_ptr);
-int imszmem(const void *mem, size_t len, ImInfo *info_ptr);
-int imszfd(int fd, ImInfo *info_ptr);
+int imsz_from_path(const char *fname, ImInfo *info_ptr);
+int imsz_from_buffer(const void *mem, size_t len, ImInfo *info_ptr);
+int imsz_from_fd(int fd, ImInfo *info_ptr);
 const char *imsz_format_name(int format);
 """)
 
@@ -33,7 +33,7 @@ if IS_WINDOWS:
     format_error = FormatError # type: ignore
 
     ffi.cdef("""
-int imszw(const wchar_t *fname, ImInfo *info_ptr);
+int imsz_from_pathw(const wchar_t *fname, ImInfo *info_ptr);
 const wchar_t *imsz_format_namew(int format);
 """)
 
@@ -123,38 +123,50 @@ def _convert_result(result: int, cinfo: Any) -> ImInfo:
         raise ImError()
 
 if IS_WINDOWS:
-    def imsz(path: Union[str, PathLike]) -> ImInfo:
+    def imsz_from_path(path: Union[str, PathLike]) -> ImInfo:
         info_ptr = ffi.new("ImInfo*")
-        result = _imsz.imszw(ffi.new("wchar_t[]", path), info_ptr)
+        result = _imsz.imsz_from_pathw(ffi.new("wchar_t[]", path), info_ptr)
         return _convert_result(result, info_ptr)
 
 else:
-    def imsz(path: Union[str, PathLike]) -> ImInfo:
+    def imsz_from_path(path: Union[str, PathLike]) -> ImInfo:
         info_ptr = ffi.new("ImInfo*")
-        result = _imsz.imsz(ffi.new("char[]", fsencode(path)), info_ptr)
+        result = _imsz.imsz_from_path(ffi.new("char[]", fsencode(path)), info_ptr)
         return _convert_result(result, info_ptr)
 
-def imszmem(data: Union[bytes, bytearray, memoryview]) -> ImInfo:
+def imsz_from_buffer(data: Union[bytes, bytearray, memoryview]) -> ImInfo:
     info_ptr = ffi.new("ImInfo*")
-    result = _imsz.imszmem(data, len(data), info_ptr)
+    result = _imsz.imsz_from_buffer(data, len(data), info_ptr)
     return _convert_result(result, info_ptr)
 
-def imszfd(fd: int) -> ImInfo:
+def imsz_from_fd(fd: int) -> ImInfo:
     info_ptr = ffi.new("ImInfo*")
-    result = _imsz.imszfd(fd, info_ptr)
+    result = _imsz.imsz_from_fd(fd, info_ptr)
     return _convert_result(result, info_ptr)
 
-def imszf(fp: Union[io.BytesIO, io.FileIO]) -> ImInfo:
+def imsz_from_file(fp: Union[io.BytesIO, io.FileIO]) -> ImInfo:
     if isinstance(fp, io.BytesIO):
-        return imszmem(fp.getbuffer())
+        return imsz_from_buffer(fp.getbuffer())
 
-    return imszfd(fp.fileno())
+    return imsz_from_fd(fp.fileno())
+
+def imsz(input: Union[str, PathLike, bytes, bytearray, memoryview, int, io.BytesIO, io.FileIO]) -> ImInfo:
+    if isinstance(input, (bytes, bytearray, memoryview)):
+        return imsz_from_buffer(input)
+
+    if isinstance(input, int):
+        return imsz_from_fd(input)
+
+    if isinstance(input, (io.BytesIO, io.FileIO)):
+        return imsz_from_file(input)
+
+    return imsz_from_path(input)
 
 if __name__ == '__main__':
     import sys
     if len(sys.argv) <= 1:
         try:
-            info = imszfd(sys.stdin.fileno())
+            info = imsz(sys.stdin.fileno())
         except Exception as error:
             print(f"<stdin>: {error}", file=sys.stderr)
         else:

@@ -97,6 +97,25 @@ IMSZ_EXPORT const char *imsz_format_name(unsigned int format);
 
 #define imsz_4th_(arg1, arg2, arg3, arg4, ...) arg4
 
+/**
+ * @brief All `imsz_from_*()` calls in one using `_Generic`.
+ * 
+ * Only for compilers that support C11.
+ * 
+ * Equivalent to:
+ * ```
+ * int imsz(const char *path, ImInfo *info_ptr);
+ * int imsz(const void *buf, size_t len, ImInfo *info_ptr);
+ * int imsz(int fd, ImInfo *info_ptr);
+ * int imsz(FILE *file, ImInfo *info_ptr);
+ * ```
+ * 
+ * In addition to that only on Windows:
+ * ```
+ * int imsz(const wchar_t *path, ImInfo *info_ptr);
+ * int imsz(HANDLE hnd, ImInfo *info_ptr);
+ * ```
+ */
 #define imsz(...) imsz_4th_(__VA_ARGS__, imsz_3_, imsz_2_, imsz_error_)(__VA_ARGS__)
 
 #ifdef __cplusplus

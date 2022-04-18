@@ -1,0 +1,113 @@
+# Untested, don't have Windows.
+
+MSVC_PATH=
+RELEASE=OFF
+CFLAGS=/std:c11 /utf-8 /nologo /Wall
+CARGO=cargo
+LINK=STATIC
+CARGO_FLAGS=
+
+# example targets:
+# aarch64-pc-windows-msvc
+# aarch64-uwp-windows-msvc
+# i586-pc-windows-msvc
+# i686-pc-windows-msvc
+# i686-uwp-windows-msvc
+# thumbv7a-pc-windows-msvc
+# thumbv7a-uwp-windows-msvc
+# x86_64-pc-windows-msvc
+# x86_64-uwp-windows-msvc
+
+ifeq ($(TARGET),)
+    $(error cannot auto-detect TARGET)
+else
+    CARGO_FLAGS += --target $(TARGET)
+    TARGET_DIR   = target/$(TARGET)
+
+ifneq ($(patsubst %-windows-msvc,windows-msvc,$(TARGET)),windows-msvc)
+    $(error unsupported TARGET=$(TARGET))
+endif
+
+ifeq ($(patsubst i586-%,i586,$(TARGET)),i586)
+    ARCH = x86
+else
+ifeq ($(patsubst i686-%,i686,$(TARGET)),i686)
+    ARCH = x86
+else
+ifeq ($(patsubst x86_64-%,x86_64,$(TARGET)),x86_64)
+    ARCH = x64
+else
+ifeq ($(patsubst armv7-%,armv7,$(TARGET)),armv7)
+    ARCH = arm
+else
+ifeq ($(patsubst thumbv7a-%,thumbv7a,$(TARGET)),thumbv7a)
+    ARCH = arm
+else
+ifeq ($(patsubst aarch64-%,aarch64,$(TARGET)),aarch64)
+    ARCH = arm64
+else
+    $(error unsupported TARGET=$(TARGET))
+endif
+endif
+endif
+endif
+endif
+endif
+
+ifeq ($(MSVC_PATH),)
+    CC=cl
+else
+    CC=$(MSVC_PATH)/$(ARCH)/cl
+endif
+
+ifeq ($(RELEASE),ON)
+    BUILD_DIR    = $(TARGET_DIR)/release
+    CFLAGS      += /DNDEBUG /O2
+    CARGO_FLAGS += --release
+else
+ifeq ($(RELEASE),OFF)
+    BUILD_DIR = $(TARGET_DIR)/debug
+    CFLAGS   += /Od /Z7
+else
+    $(error illegal value for RELEASE=$(RELEASE))
+endif
+endif
+
+LIB=$(BUILD_DIR)/imsz_s.lib
+SO =$(BUILD_DIR)/imsz.dll
+OBJ=$(BUILD_DIR)/examples/imsz.obj
+BIN=$(BUILD_DIR)/examples/imsz.exe
+
+ifeq ($(LINK),STATIC)
+    LIBS    = kernel32.lib ws2_32.lib bcrypt.lib advapi32.lib userenv.lib $(LIB)
+    DEPS    = $(LIB)
+    CFLAGS += /DIMSZ_STATIC
+else
+ifeq ($(LINK),DYNAMIC)
+    LIBS  = $(BUILD_DIR)/imsz.lib
+    DEPS  = $(SO)
+else
+    $(error illegal value for LINK=$(LINK))
+endif
+endif
+
+.PHONY: all clean
+
+all: $(BIN)
+
+$(BIN): $(OBJ) $(DEPS)
+	@mkdir -p $(BUILD_DIR)/examples
+	$(CC) $(CFLAGS) $< $(LIBS) /Fe$@
+
+$(BUILD_DIR)/examples/%.obj: examples/%.c imsz.h
+	@mkdir -p $(BUILD_DIR)/examples
+	$(CC) $(CFLAGS) $< /c /Fo:$@
+
+$(SO): $(LIB)
+
+$(LIB): src/lib.rs Cargo.toml
+	$(CARGO) build $(CARGO_FLAGS)
+
+clean:
+	rm $(OBJ) $(BIN) || true
+	$(CARGO) clean

@@ -34,7 +34,7 @@ for fname in files:
     funcs.append((ident, f"""
 #[test]
 fn {ident}() {{
-    let info = imsz::imsz(get_testdata("{fname}"));
+    let info = imsz::imsz_from_path(get_testdata("{fname}"));
     match info {{
         Ok(info) => {{
             assert_eq!(info.format, imsz::ImFormat::{format});

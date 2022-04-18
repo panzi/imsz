@@ -8,7 +8,7 @@ fn get_testdata(fname: &str) -> std::path::PathBuf {
 
 #[test]
 fn avif() {
-    let info = imsz::imsz(get_testdata("image.avif"));
+    let info = imsz::imsz_from_path(get_testdata("image.avif"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::AVIF);
@@ -24,7 +24,7 @@ fn avif() {
 
 #[test]
 fn bmp() {
-    let info = imsz::imsz(get_testdata("image.bmp"));
+    let info = imsz::imsz_from_path(get_testdata("image.bmp"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::BMP);
@@ -40,7 +40,7 @@ fn bmp() {
 
 #[test]
 fn dds() {
-    let info = imsz::imsz(get_testdata("image.dds"));
+    let info = imsz::imsz_from_path(get_testdata("image.dds"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::DDS);
@@ -56,7 +56,7 @@ fn dds() {
 
 #[test]
 fn exr() {
-    let info = imsz::imsz(get_testdata("image.exr"));
+    let info = imsz::imsz_from_path(get_testdata("image.exr"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::OpenEXR);
@@ -72,7 +72,7 @@ fn exr() {
 
 #[test]
 fn gif() {
-    let info = imsz::imsz(get_testdata("image.gif"));
+    let info = imsz::imsz_from_path(get_testdata("image.gif"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::GIF);
@@ -88,7 +88,7 @@ fn gif() {
 
 #[test]
 fn heic() {
-    let info = imsz::imsz(get_testdata("image.heic"));
+    let info = imsz::imsz_from_path(get_testdata("image.heic"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::HEIC);
@@ -104,7 +104,7 @@ fn heic() {
 
 #[test]
 fn ico() {
-    let info = imsz::imsz(get_testdata("image.ico"));
+    let info = imsz::imsz_from_path(get_testdata("image.ico"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::ICO);
@@ -120,7 +120,7 @@ fn ico() {
 
 #[test]
 fn jpeg() {
-    let info = imsz::imsz(get_testdata("image.jpeg"));
+    let info = imsz::imsz_from_path(get_testdata("image.jpeg"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::JPEG);
@@ -136,7 +136,7 @@ fn jpeg() {
 
 #[test]
 fn pcx() {
-    let info = imsz::imsz(get_testdata("image.pcx"));
+    let info = imsz::imsz_from_path(get_testdata("image.pcx"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::PCX);
@@ -152,7 +152,7 @@ fn pcx() {
 
 #[test]
 fn png() {
-    let info = imsz::imsz(get_testdata("image.png"));
+    let info = imsz::imsz_from_path(get_testdata("image.png"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::PNG);
@@ -168,7 +168,7 @@ fn png() {
 
 #[test]
 fn psd() {
-    let info = imsz::imsz(get_testdata("image.psd"));
+    let info = imsz::imsz_from_path(get_testdata("image.psd"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::PSD);
@@ -184,7 +184,7 @@ fn psd() {
 
 #[test]
 fn qoi() {
-    let info = imsz::imsz(get_testdata("image.qoi"));
+    let info = imsz::imsz_from_path(get_testdata("image.qoi"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::QOI);
@@ -200,7 +200,7 @@ fn qoi() {
 
 #[test]
 fn tga() {
-    let info = imsz::imsz(get_testdata("image.tga"));
+    let info = imsz::imsz_from_path(get_testdata("image.tga"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::TGA);
@@ -216,7 +216,7 @@ fn tga() {
 
 #[test]
 fn tiff_be() {
-    let info = imsz::imsz(get_testdata("image_be.tiff"));
+    let info = imsz::imsz_from_path(get_testdata("image_be.tiff"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::TIFF);
@@ -232,7 +232,7 @@ fn tiff_be() {
 
 #[test]
 fn tiff_le() {
-    let info = imsz::imsz(get_testdata("image_le.tiff"));
+    let info = imsz::imsz_from_path(get_testdata("image_le.tiff"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::TIFF);
@@ -248,7 +248,7 @@ fn tiff_le() {
 
 #[test]
 fn webp_lossless() {
-    let info = imsz::imsz(get_testdata("image_lossless.webp"));
+    let info = imsz::imsz_from_path(get_testdata("image_lossless.webp"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
@@ -264,7 +264,7 @@ fn webp_lossless() {
 
 #[test]
 fn webp_lossless_vp8x() {
-    let info = imsz::imsz(get_testdata("image_lossless_vp8x.webp"));
+    let info = imsz::imsz_from_path(get_testdata("image_lossless_vp8x.webp"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
@@ -280,7 +280,7 @@ fn webp_lossless_vp8x() {
 
 #[test]
 fn webp_lossy() {
-    let info = imsz::imsz(get_testdata("image_lossy.webp"));
+    let info = imsz::imsz_from_path(get_testdata("image_lossy.webp"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
@@ -296,7 +296,7 @@ fn webp_lossy() {
 
 #[test]
 fn webp_lossy_vp8x() {
-    let info = imsz::imsz(get_testdata("image_lossy_vp8x.webp"));
+    let info = imsz::imsz_from_path(get_testdata("image_lossy_vp8x.webp"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
@@ -312,7 +312,7 @@ fn webp_lossy_vp8x() {
 
 #[test]
 fn xcf() {
-    let info = imsz::imsz(get_testdata("image.xcf"));
+    let info = imsz::imsz_from_path(get_testdata("image.xcf"));
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::XCF);

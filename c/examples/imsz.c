@@ -69,8 +69,9 @@ int main() {
     if (nArgs <= 1) {
         ImInfo info = IMSZ_INIT;
 
-        // int error = imsz_from_handle(GetStdHandle(STD_INPUT_HANDLE), &info);
-        int error = imsz(GetStdHandle(STD_INPUT_HANDLE), &info);
+        int error = imsz_from_handle(GetStdHandle(STD_INPUT_HANDLE), &info);
+        // Only very recent MSVC support _Generic, apparently.
+        // int error = imsz(GetStdHandle(STD_INPUT_HANDLE), &info);
         if (!print_result(L"<stdin>", error, &info)) {
             status = 1;
         }
@@ -79,8 +80,8 @@ int main() {
             const LPWSTR fname = szArglist[index];
             ImInfo info = IMSZ_INIT;
 
-            // int error = imsz_from_pathw(fname, &info);
-            int error = imsz(fname, &info);
+            int error = imsz_from_pathw(fname, &info);
+            // int error = imsz(fname, &info);
             if (!print_result(fname, error, &info)) {
                 status = 1;
             }
@@ -91,6 +92,7 @@ int main() {
 
     return status;
 }
+
 #else
 
 #include <unistd.h>

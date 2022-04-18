@@ -460,10 +460,131 @@ where R: Read, R: Seek {
     return Ok(&buf == b"TRUEVISION-XFILE.\0");
 }
 
+pub trait Imsz {
+    fn imsz(self) -> ImResult<ImInfo>;
+}
+
+impl Imsz for &str {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self);
+    }
+}
+
+impl Imsz for &String {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self.as_str());
+    }
+}
+
+impl Imsz for String {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self.as_str());
+    }
+}
+
+impl Imsz for &std::ffi::OsStr {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self);
+    }
+}
+
+impl Imsz for &std::ffi::OsString {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self.as_os_str());
+    }
+}
+
+impl Imsz for std::ffi::OsString {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self.as_os_str());
+    }
+}
+
+impl Imsz for &std::path::Path {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self);
+    }
+}
+
+impl Imsz for &std::path::PathBuf {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self.as_path());
+    }
+}
+
+impl Imsz for std::path::PathBuf {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_path(self.as_path());
+    }
+}
+
+impl Imsz for &[u8] {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut std::io::Cursor::new(self));
+    }
+}
+
+impl Imsz for &mut std::fs::File {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut BufReader::new(self));
+    }
+}
+
+impl Imsz for std::fs::File {
+    #[inline]
+    fn imsz(mut self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut BufReader::new(&mut self));
+    }
+}
+
+impl Imsz for &mut std::io::Cursor<&[u8]> {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_reader(self);
+    }
+}
+
+impl Imsz for std::io::Cursor<&[u8]> {
+    #[inline]
+    fn imsz(mut self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut self);
+    }
+}
+
+impl<R> Imsz for &mut std::io::BufReader<R> where R: Read, R: Seek {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_reader(self);
+    }
+}
+
+impl<R> Imsz for std::io::BufReader<R> where R: Read, R: Seek {
+    #[inline]
+    fn imsz(mut self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut self);
+    }
+}
+
+#[inline]
+pub fn imsz(input: impl Imsz) -> ImResult<ImInfo> {
+    return input.imsz();
+}
+
 /// Read width and height of an image.
 #[inline]
-pub fn imsz(fname: impl AsRef<std::path::Path>) -> ImResult<ImInfo> {
-    let mut reader = BufReader::new(File::open(fname)?);
+pub fn imsz_from_path(path: impl AsRef<std::path::Path>) -> ImResult<ImInfo> {
+    let mut reader = BufReader::new(File::open(path)?);
     return imsz_from_reader(&mut reader);
 }
 
