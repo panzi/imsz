@@ -45,24 +45,24 @@ fn convert_result(result: ImResult<ImInfo>, info_ptr: *mut ImInfoC) -> c_int {
 }
 
 #[no_mangle]
-pub extern "C" fn imsz(fname: *const c_char, info_ptr: *mut ImInfoC) -> c_int {
+pub extern "C" fn imsz_from_path(path: *const c_char, info_ptr: *mut ImInfoC) -> c_int {
     #[cfg(target_family="unix")]
     use std::{os::unix::ffi::OsStrExt, ffi::OsStr};
 
-    let fname = unsafe { std::ffi::CStr::from_ptr(fname) };
+    let path = unsafe { std::ffi::CStr::from_ptr(path) };
 
     #[cfg(target_family="unix")]
-    let fname = OsStr::from_bytes(fname.to_bytes());
+    let path = OsStr::from_bytes(path.to_bytes());
 
     #[cfg(not(target_family="unix"))]
-    let fname = unsafe { String::from_utf8_unchecked(Vec::from(fname.to_bytes())) };
+    let path = unsafe { String::from_utf8_unchecked(Vec::from(path.to_bytes())) };
 
-    return convert_result(imsz::imsz(fname), info_ptr);
+    return convert_result(imsz::imsz(path), info_ptr);
 }
 
 #[no_mangle]
-pub extern "C" fn imszmem(mem: *const c_void, len: libc::size_t, info_ptr: *mut ImInfoC) -> c_int {
-    if mem == std::ptr::null() {
+pub extern "C" fn imsz_from_buffer(buf: *const c_void, len: libc::size_t, info_ptr: *mut ImInfoC) -> c_int {
+    if buf == std::ptr::null() {
         #[cfg(target_family="unix")]
         return libc::EINVAL;
 
@@ -70,7 +70,7 @@ pub extern "C" fn imszmem(mem: *const c_void, len: libc::size_t, info_ptr: *mut 
         return 0x000000A0; // ERROR_BAD_ARGUMENTS
     }
 
-    let slice = unsafe { std::slice::from_raw_parts(mem as *const u8, len) };
+    let slice = unsafe { std::slice::from_raw_parts(buf as *const u8, len) };
     let mut reader = std::io::Cursor::new(slice);
 
     return convert_result(imsz::imsz_from_reader(&mut reader), info_ptr);
@@ -78,7 +78,7 @@ pub extern "C" fn imszmem(mem: *const c_void, len: libc::size_t, info_ptr: *mut 
 
 #[no_mangle]
 #[cfg(target_family="unix")]
-pub extern "C" fn imszfd(fd: c_int, info_ptr: *mut ImInfoC) -> c_int {
+pub extern "C" fn imsz_from_fd(fd: c_int, info_ptr: *mut ImInfoC) -> c_int {
     use std::os::unix::io::FromRawFd;
 
     if fd < 0 {
@@ -92,7 +92,7 @@ pub extern "C" fn imszfd(fd: c_int, info_ptr: *mut ImInfoC) -> c_int {
 
 #[no_mangle]
 #[cfg(target_family="windows")]
-pub extern "C" fn imszfd(fd: c_int, info_ptr: *mut ImInfoC) -> c_int {
+pub extern "C" fn imsz_from_fd(fd: c_int, info_ptr: *mut ImInfoC) -> c_int {
     use std::os::windows::io::FromRawHandle;
 
     let hnd = unsafe { libc::get_osfhandle(fd) };
@@ -108,7 +108,7 @@ pub extern "C" fn imszfd(fd: c_int, info_ptr: *mut ImInfoC) -> c_int {
 
 #[no_mangle]
 #[cfg(target_family="windows")]
-pub extern "C" fn imszhnd(hnd: std::os::windows::io::RawHandle, info_ptr: *mut ImInfoC) -> c_int {
+pub extern "C" fn imsz_from_handle(hnd: std::os::windows::io::RawHandle, info_ptr: *mut ImInfoC) -> c_int {
     use std::os::windows::io::FromRawHandle;
 
     if hnd == std::ptr::null_mut() {
@@ -122,14 +122,14 @@ pub extern "C" fn imszhnd(hnd: std::os::windows::io::RawHandle, info_ptr: *mut I
 
 #[no_mangle]
 #[cfg(target_family="windows")]
-pub extern "C" fn imszw(fname: *const u16, info_ptr: *mut ImInfoC) -> c_int {
+pub extern "C" fn imsz_from_pathw(path: *const u16, info_ptr: *mut ImInfoC) -> c_int {
     use std::ffi::OsString;
     use std::os::windows::ffi::OsStringExt;
 
-    let slice = unsafe { std::slice::from_raw_parts(fname, libc::wcslen(fname)) };
-    let fname = OsString::from_wide(slice);
+    let slice = unsafe { std::slice::from_raw_parts(path, libc::wcslen(path)) };
+    let path = OsString::from_wide(slice);
 
-    return convert_result(imsz::imsz(fname), info_ptr);
+    return convert_result(imsz::imsz(path), info_ptr);
 }
 
 const FORMAT_NAMES: &'static [&'static [u8]] = &[

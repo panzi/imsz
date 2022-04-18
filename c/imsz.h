@@ -2,7 +2,10 @@
 #define IMSZ_H
 #pragma once
 
+#define _POSIX_C_SOURCE 1
+#define _POSIX_SOURCE
 #include <stdint.h>
+#include <stdio.h>
 
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     #include <windows.h>
@@ -56,18 +59,45 @@ typedef struct ImInfo {
     uint64_t height;
 } ImInfo;
 
-IMSZ_EXPORT int imsz(const char *fname, ImInfo *info_ptr);
-IMSZ_EXPORT int imszmem(const void *mem, size_t len, ImInfo *info_ptr);
-IMSZ_EXPORT int imszfd(int fd, ImInfo *info_ptr);
+IMSZ_EXPORT int imsz_from_path(const char *path, ImInfo *info_ptr);
+IMSZ_EXPORT int imsz_from_buffer(const void *buf, size_t len, ImInfo *info_ptr);
+IMSZ_EXPORT int imsz_from_fd(int fd, ImInfo *info_ptr);
 IMSZ_EXPORT const char *imsz_format_name(unsigned int format);
 
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
-    IMSZ_EXPORT int imszw(const wchar_t *fname, ImInfo *info_ptr);
-    IMSZ_EXPORT int imszhnd(HANDLE hnd, ImInfo *info_ptr);
+    IMSZ_EXPORT int imsz_from_pathw(const wchar_t *path, ImInfo *info_ptr);
+    IMSZ_EXPORT int imsz_from_handle(HANDLE hnd, ImInfo *info_ptr);
     IMSZ_EXPORT const wchar_t *imsz_format_namew(unsigned int format);
+    #define imsz_from_file(fp, info_ptr) imsz_from_fd(_fileno((fp)), (info_ptr))
+
+    #define imsz_2_(arg1, arg2) \
+        _Generic((arg1), \
+            wchar_t*:       imsz_from_pathw((const wchar_t*)(arg1), (arg2)), \
+            const wchar_t*: imsz_from_pathw((const wchar_t*)(arg1), (arg2)), \
+            char*:          imsz_from_path((const char*)(arg1), (arg2)), \
+            const char*:    imsz_from_path((const char*)(arg1), (arg2)), \
+            FILE*:          imsz_from_file((FILE*)(arg1), (arg2)), \
+            HANDLE:         imsz_from_handle((HANDLE)(arg1), (arg2)), \
+            int:            imsz_from_fd((intptr_t)(arg1), (arg2)) \
+        )
 #else
-    #define imszf(fp, info_ptr) imszfd(fileno((fp)), (info_ptr))
+    #define imsz_from_file(fp, info_ptr) imsz_from_fd(fileno((fp)), (info_ptr))
+
+    #define imsz_2_(arg1, arg2) \
+        _Generic((arg1), \
+            char*:          imsz_from_path((const char*)(arg1), (arg2)), \
+            const char*:    imsz_from_path((const char*)(arg1), (arg2)), \
+            FILE*:          imsz_from_file((FILE*)(arg1), (arg2)), \
+            int:            imsz_from_fd((intptr_t)(arg1), (arg2)) \
+        )
 #endif
+
+#define imsz_3_(arg1, arg2, arg3) \
+    imsz_from_buffer((arg1), (arg2), (arg3))
+
+#define imsz_4th_(arg1, arg2, arg3, arg4, ...) arg4
+
+#define imsz(...) imsz_4th_(__VA_ARGS__, imsz_3_, imsz_2_, imsz_error_)(__VA_ARGS__)
 
 #ifdef __cplusplus
 }

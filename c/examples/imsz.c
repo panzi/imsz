@@ -1,3 +1,6 @@
+#define _POSIX_C_SOURCE 1
+#define _POSIX_SOURCE
+
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
@@ -12,19 +15,19 @@
 bool print_result(const LPWSTR fname, int error, const ImInfo *info) {
     switch (error) {
         case IMSZ_OK:
-            wprintf(L"%s: %s, %I64u x %I64u\n", fname, imsz_format_namew(info->format), info->width, info->height);
+            wprintf(L"%ls: %ls, %I64u x %I64u\n", fname, imsz_format_namew(info->format), info->width, info->height);
             return true;
 
         case IMSZ_ERR_IO:
-            fwprintf(stderr, L"%s: IO Error\n", fname);
+            fwprintf(stderr, L"%ls: IO Error\n", fname);
             return false;
 
         case IMSZ_ERR_PARSER:
-            fwprintf(stderr, L"%s: Parser Error %s\n", fname, imsz_format_namew(info->format));
+            fwprintf(stderr, L"%ls: Parser Error %ls\n", fname, imsz_format_namew(info->format));
             return false;
 
         case IMSZ_ERR_UNSUPPORTED:
-            fwprintf(stderr, L"%s: Unsupported Format\n", fname);
+            fwprintf(stderr, L"%ls: Unsupported Format\n", fname);
             return false;
 
         default:
@@ -43,9 +46,9 @@ bool print_result(const LPWSTR fname, int error, const ImInfo *info) {
                 NULL );
 
             if (dwChars == 0) {
-                fwprintf(stderr, L"%s: error retreiving error message for error code %d\n", fname, error);
+                fwprintf(stderr, L"%ls: error retreiving error message for error code %d\n", fname, error);
             } else {
-                fwprintf(stderr, L"%s: %s\n", fname, wszMsgBuff);
+                fwprintf(stderr, L"%ls: %ls\n", fname, wszMsgBuff);
             }
             return false;
         }
@@ -66,7 +69,8 @@ int main() {
     if (nArgs <= 1) {
         ImInfo info = IMSZ_INIT;
 
-        int error = imszhnd(GetStdHandle(STD_INPUT_HANDLE), &info);
+        // int error = imsz_from_handle(GetStdHandle(STD_INPUT_HANDLE), &info);
+        int error = imsz(GetStdHandle(STD_INPUT_HANDLE), &info);
         if (!print_result(L"<stdin>", error, &info)) {
             status = 1;
         }
@@ -75,7 +79,8 @@ int main() {
             const LPWSTR fname = szArglist[index];
             ImInfo info = IMSZ_INIT;
 
-            int error = imszw(fname, &info);
+            // int error = imsz_from_pathw(fname, &info);
+            int error = imsz(fname, &info);
             if (!print_result(fname, error, &info)) {
                 status = 1;
             }
@@ -120,7 +125,8 @@ int main(int argc, char *argv[]) {
     if (argc <= 1) {
         ImInfo info = IMSZ_INIT;
 
-        int error = imszfd(STDIN_FILENO, &info);
+        // int error = imsz_from_fd(STDIN_FILENO, &info);
+        int error = imsz(STDIN_FILENO, &info);
         if (!print_result("<stdin>", error, &info)) {
             status = 1;
         }
@@ -129,6 +135,7 @@ int main(int argc, char *argv[]) {
             const char *fname = argv[index];
             ImInfo info = IMSZ_INIT;
 
+            // int error = imsz_from_path(fname, &info);
             int error = imsz(fname, &info);
             if (!print_result(fname, error, &info)) {
                 status = 1;
