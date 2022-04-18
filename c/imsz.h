@@ -8,7 +8,7 @@
     #include <windows.h>
 #endif
 
-#ifdef __cpluspluc
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -69,7 +69,7 @@ IMSZ_EXPORT const char *imsz_format_name(int format);
     #define imszf(fp, info_ptr) imszfd(fileno((fp)), (info_ptr))
 #endif
 
-#ifdef __cpluspluc
+#ifdef __cplusplus
 }
 #endif
 
