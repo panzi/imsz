@@ -175,18 +175,12 @@ const FORMAT_NAMESW: &'static [&'static [u16]] = &[
 ];
 
 #[no_mangle]
-pub extern "C" fn imsz_format_name(format: c_int) -> *const c_char {
-    if format < 0 {
-        return FORMAT_NAMES[0].as_ptr() as *const c_char;
-    }
+pub extern "C" fn imsz_format_name(format: c_uint) -> *const c_char {
     return FORMAT_NAMES.get(format as usize).unwrap_or(&FORMAT_NAMES[0]).as_ptr() as *const c_char;
 }
 
 #[no_mangle]
 #[cfg(target_family="windows")]
-pub extern "C" fn imsz_format_namew(format: c_int) -> *const u16 {
-    if format < 0 {
-        return FORMAT_NAMESW[0].as_ptr();
-    }
+pub extern "C" fn imsz_format_namew(format: c_uint) -> *const u16 {
     return FORMAT_NAMESW.get(format as usize).unwrap_or(&FORMAT_NAMESW[0]).as_ptr();
 }

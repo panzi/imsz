@@ -59,12 +59,12 @@ typedef struct ImInfo {
 IMSZ_EXPORT int imsz(const char *fname, ImInfo *info_ptr);
 IMSZ_EXPORT int imszmem(const void *mem, size_t len, ImInfo *info_ptr);
 IMSZ_EXPORT int imszfd(int fd, ImInfo *info_ptr);
-IMSZ_EXPORT const char *imsz_format_name(int format);
+IMSZ_EXPORT const char *imsz_format_name(unsigned int format);
 
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     IMSZ_EXPORT int imszw(const wchar_t *fname, ImInfo *info_ptr);
     IMSZ_EXPORT int imszhnd(HANDLE hnd, ImInfo *info_ptr);
-    IMSZ_EXPORT const wchar_t *imsz_format_namew(int format);
+    IMSZ_EXPORT const wchar_t *imsz_format_namew(unsigned int format);
 #else
     #define imszf(fp, info_ptr) imszfd(fileno((fp)), (info_ptr))
 #endif
