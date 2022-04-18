@@ -6,8 +6,6 @@
 
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
     #include <windows.h>
-#else
-    #include <stdio.h>
 #endif
 
 #ifdef __cpluspluc
