@@ -28,6 +28,22 @@ fn broken_avif() {
 }
 
 #[test]
+fn broken_heic() {
+    let _ = imsz(b"\0\0\0\0ftypheic");
+    let broken_images = [
+        b"\0\0\0\0ftypheic" as &[u8],
+        b"\x00\x00\x00\x0cftypheic",
+        b"\x00\x00\x00\x0cftypheic\x00\x00\x00\x14meta....\x00\x00\x00\x08iprp",
+        b"\x00\x00\x00\x0cftypheic\x00\x00\x00\x1cmeta....\x00\x00\x00\x10iprp\x00\x00\x00\x08ipco",
+        b"\x00\x00\x00\x0cftypheic\x00\x00\x00$meta....\x00\x00\x00\x18iprp\x00\x00\x00\x10ipco\x00\x00\x00\x08ispe",
+        b"\x00\x00\x00\x0cftypheic\x00\x00\x00/meta....\x00\x00\x00#iprp\x00\x00\x00\x1bipco\x00\x00\x00\x13ispe..........."
+    ];
+    for data in broken_images {
+        expect_broken(data, ImFormat::HEIC);
+    }
+}
+
+#[test]
 fn broken_gif() {
     let broken_images = [
         b"GIF87a" as &[u8],

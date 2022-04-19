@@ -357,7 +357,7 @@ macro_rules! map_expr {
     };
 }
 
-fn find_avif_chunk<R>(reader: &mut R, name: &[u8], chunk_size: u64) -> ImResult<u64>
+fn find_avif_chunk<R>(reader: &mut R, name: &[u8], chunk_size: u64, format: ImFormat) -> ImResult<u64>
 where R: Read, R: Seek {
     let mut sub_chunk_size;
     let mut buf = [0u8; 8];
@@ -365,21 +365,21 @@ where R: Read, R: Seek {
 
     loop {
         if offset > chunk_size {
-            return Err(ImError::ParserError(ImFormat::AVIF));
+            return Err(ImError::ParserError(format));
         }
         if let Err(_) = reader.read_exact(&mut buf) {
-            return Err(ImError::ParserError(ImFormat::AVIF));
+            return Err(ImError::ParserError(format));
         }
         sub_chunk_size = u32::from_be_bytes(array4!(&buf, 0)) as u64;
         if sub_chunk_size < 8 {
-            return Err(ImError::ParserError(ImFormat::AVIF));
+            return Err(ImError::ParserError(format));
         }
         if &buf[4..8] == name {
             break;
         }
         offset += sub_chunk_size;
         if let Err(_) = reader.seek(SeekFrom::Current(sub_chunk_size as i64 - 8)) {
-            return Err(ImError::ParserError(ImFormat::AVIF));
+            return Err(ImError::ParserError(format));
         }
     }
 
@@ -826,14 +826,14 @@ where R: Read, R: Seek {
         map_err!(format, file.seek(SeekFrom::Start(ftype_size as u64)));
 
         // chunk nesting: meta > iprp > ipco > ispe
-        let chunk_size = find_avif_chunk(file, b"meta", u64::MAX)?;
+        let chunk_size = find_avif_chunk(file, b"meta", u64::MAX, format)?;
         if chunk_size < 12 {
             return Err(ImError::ParserError(format));
         }
         map_err!(format, file.seek(SeekFrom::Current(4)));
-        let chunk_size = find_avif_chunk(file, b"iprp", chunk_size - 12)?;
-        let chunk_size = find_avif_chunk(file, b"ipco", chunk_size - 8)?;
-        let chunk_size = find_avif_chunk(file, b"ispe", chunk_size - 8)?;
+        let chunk_size = find_avif_chunk(file, b"iprp", chunk_size - 12, format)?;
+        let chunk_size = find_avif_chunk(file, b"ipco", chunk_size -  8, format)?;
+        let chunk_size = find_avif_chunk(file, b"ispe", chunk_size -  8, format)?;
 
         if chunk_size < 12 {
             return Err(ImError::ParserError(format));
