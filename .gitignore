@@ -19,3 +19,6 @@ Cargo.lock
 __pycache__
 *.pyc
 *.pyo
+
+perf.data
+perf.data.old
