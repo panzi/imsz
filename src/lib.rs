@@ -534,6 +534,20 @@ impl Imsz for &[u8] {
     }
 }
 
+impl<const LEN: usize> Imsz for [u8; LEN] {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut std::io::Cursor::new(&self[..]));
+    }
+}
+
+impl<const LEN: usize> Imsz for &[u8; LEN] {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut std::io::Cursor::new(&self[..]));
+    }
+}
+
 impl Imsz for &mut std::fs::File {
     #[inline]
     fn imsz(self) -> ImResult<ImInfo> {
@@ -548,6 +562,41 @@ impl Imsz for std::fs::File {
     }
 }
 
+impl Imsz for std::io::Stdin {
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        return (&self).imsz();
+    }
+}
+
+#[cfg(any(target_family="unix", target_family="windows", target_family="wasi"))]
+impl Imsz for &std::io::Stdin {
+    /// WARNING: This looses already buffered input!
+    #[inline]
+    fn imsz(self) -> ImResult<ImInfo> {
+        let lock = self.lock();
+
+        #[cfg(any(target_family="unix", target_family="wasi"))]
+        let mut seekable_stdin = unsafe {
+            use std::os::unix::io::{AsRawFd, FromRawFd};
+            std::fs::File::from_raw_fd(lock.as_raw_fd())
+        };
+
+        #[cfg(target_family="windows")]
+        let mut seekable_stdin = unsafe {
+            use std::os::windows::io::{AsRawHandle, FromRawHandle};
+            std::fs::File::from_raw_handle(lock.as_raw_handle())
+        };
+
+        let result = imsz_from_reader(&mut BufReader::new(&mut seekable_stdin));
+
+        // Be sure the lock is released *after* all my IO happened.
+        drop(lock);
+
+        return result;
+    }
+}
+
 impl Imsz for &mut std::io::Cursor<&[u8]> {
     #[inline]
     fn imsz(self) -> ImResult<ImInfo> {
@@ -556,6 +605,20 @@ impl Imsz for &mut std::io::Cursor<&[u8]> {
 }
 
 impl Imsz for std::io::Cursor<&[u8]> {
+    #[inline]
+    fn imsz(mut self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut self);
+    }
+}
+
+impl<const LEN: usize> Imsz for std::io::Cursor<&[u8; LEN]> {
+    #[inline]
+    fn imsz(mut self) -> ImResult<ImInfo> {
+        return imsz_from_reader(&mut self);
+    }
+}
+
+impl<const LEN: usize> Imsz for std::io::Cursor<[u8; LEN]> {
     #[inline]
     fn imsz(mut self) -> ImResult<ImInfo> {
         return imsz_from_reader(&mut self);
@@ -576,6 +639,9 @@ impl<R> Imsz for std::io::BufReader<R> where R: Read, R: Seek {
     }
 }
 
+/// Read width and height of an image.
+/// 
+/// `input` can be a file path, a byte buffer, a file reader, or a buffered reader.
 #[inline]
 pub fn imsz(input: impl Imsz) -> ImResult<ImInfo> {
     return input.imsz();

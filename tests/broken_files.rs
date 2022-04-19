@@ -1,8 +1,7 @@
-use std::io::Cursor;
-use imsz::{imsz_from_reader, ImError, ImFormat};
+use imsz::{imsz, ImError, ImFormat};
 
 fn expect_broken(data: &[u8], expect_format: ImFormat) {
-    match imsz_from_reader(&mut Cursor::new(data)) {
+    match imsz(data) {
         Err(ImError::ParserError(format)) => {
             assert_eq!(format, expect_format);
         }
@@ -14,6 +13,7 @@ fn expect_broken(data: &[u8], expect_format: ImFormat) {
 
 #[test]
 fn broken_avif() {
+    let _ = imsz(b"\0\0\0\0ftypavif");
     let broken_images = [
         b"\0\0\0\0ftypavif" as &[u8],
         b"\x00\x00\x00\x0cftypavif",
