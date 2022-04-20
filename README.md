@@ -53,7 +53,7 @@ let mut file = File::open(fname)?;
 let info = imsz_from_reader(&mut file)?;
 ```
 
-## Supported File Types
+## Supported File Formats
 
 * AVIF
 * BMP
