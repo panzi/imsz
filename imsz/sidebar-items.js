@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ImError",""],["ImFormat",""]],"fn":[["imsz","Read width and height of an image."],["imsz_from_path","Read width and height of an image."],["imsz_from_reader","Read width and height of an image."]],"struct":[["ImInfo",""]],"trait":[["Imsz",""]],"type":[["ImResult",""]]});
