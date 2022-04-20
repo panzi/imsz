@@ -5,6 +5,7 @@ authors = [
     "Paulo Scardine <paulo@scardine.com.br>",
     "Mathias Panzenböck <grosser.meister.morti@gmx.net>"
 ]
+repository = "https://github.com/panzi/imsz"
 edition = "2021"
 
 [lib]

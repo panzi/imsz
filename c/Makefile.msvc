@@ -2,7 +2,7 @@
 
 MSVC_PATH=
 RELEASE=OFF
-CFLAGS=/std:c11 /utf-8 /nologo /Wall
+XFLAGS=/std:c11 /utf-8 /nologo /Wall /I .
 CARGO=cargo
 LINK=STATIC
 CARGO_FLAGS=
@@ -62,12 +62,12 @@ endif
 
 ifeq ($(RELEASE),ON)
     BUILD_DIR    = $(TARGET_DIR)/release
-    CFLAGS      += /DNDEBUG /O2
+    XFLAGS      += /DNDEBUG /O2
     CARGO_FLAGS += --release
 else
 ifeq ($(RELEASE),OFF)
     BUILD_DIR = $(TARGET_DIR)/debug
-    CFLAGS   += /Od /Z7
+    XFLAGS   += /Od /Z7
 else
     $(error illegal value for RELEASE=$(RELEASE))
 endif
@@ -77,11 +77,13 @@ LIB=$(BUILD_DIR)/imsz_s.lib
 SO =$(BUILD_DIR)/imsz.dll
 OBJ=$(BUILD_DIR)/examples/imsz.obj
 BIN=$(BUILD_DIR)/examples/imsz.exe
+OBJXX=$(BUILD_DIR)/examples/imsz.obj
+BINXX=$(BUILD_DIR)/examples/imsz.exe
 
 ifeq ($(LINK),STATIC)
     LIBS    = kernel32.lib ws2_32.lib bcrypt.lib advapi32.lib userenv.lib $(LIB)
     DEPS    = $(LIB)
-    CFLAGS += /DIMSZ_STATIC
+    XFLAGS += /DIMSZ_STATIC
 else
 ifeq ($(LINK),DYNAMIC)
     LIBS  = $(BUILD_DIR)/imsz.lib
@@ -91,13 +93,24 @@ else
 endif
 endif
 
+CFLAGS   = $(XFLAGS) /std:c11
+CXXFLAGS = $(XFLAGS) /std:c++2a
+
 .PHONY: all clean
 
-all: $(BIN)
+all: $(BIN) $(BINXX)
 
 $(BIN): $(OBJ) $(DEPS)
 	@mkdir -p $(BUILD_DIR)/examples
 	$(CC) $(CFLAGS) $< $(LIBS) /Fe$@
+
+$(BINXX): $(OBJXX) $(DEPS)
+	@mkdir -p $(BUILD_DIR)/examples
+	$(CC) $(CXXFLAGS) $< $(LIBS) /Fe$@
+
+$(BUILD_DIR)/examples/%xx.obj: examples/%.cpp imsz.h
+	@mkdir -p $(BUILD_DIR)/examples
+	$(CC) $(CXXFLAGS) $< /c /Fo:$@
 
 $(BUILD_DIR)/examples/%.obj: examples/%.c imsz.h
 	@mkdir -p $(BUILD_DIR)/examples
@@ -109,5 +122,5 @@ $(LIB): src/lib.rs Cargo.toml
 	$(CARGO) build $(CARGO_FLAGS)
 
 clean:
-	rm $(OBJ) $(BIN) || true
+	rm $(OBJ) $(BIN) $(OBJXX) $(BINXX) || true
 	$(CARGO) clean

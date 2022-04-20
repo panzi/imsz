@@ -5,9 +5,9 @@ use std::fs::File;
 
 #[repr(C)]
 pub struct ImInfoC {
-    format: c_uint,
     width:  u64,
     height: u64,
+    format: c_uint,
 }
 
 #[inline]

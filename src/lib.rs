@@ -1,3 +1,28 @@
+//! Get image width and height reading as few bytes as possible.
+//! 
+//! [GitHub](https://github.com/panzi/imsz) – [C API Reference](https://panzi.github.io/imsz/c)
+//! 
+//! Example:
+//! ```
+//! # use std::io::BufReader;
+//! # use std::fs::File;
+//! # fn main() -> imsz::ImResult<()> {
+//! use imsz::imsz;
+//! 
+//! let fname = "testdata/image.gif";
+//! let info = imsz(fname)?;
+//! println!("{}: {}, {} x {}", fname, info.format, info.width, info.height);
+//! // testdata/image.gif: GIF, 32 x 16
+//! 
+//! // alternatively if you have something implementing std::io::Read and std::io::Seek:
+//! use imsz::imsz_from_reader;
+//! 
+//! let mut file = BufReader::new(File::open(fname)?);
+//! let info = imsz_from_reader(&mut file)?;
+//! # Ok(())
+//! # }
+//! ```
+
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom, BufReader};
 
@@ -32,6 +57,8 @@ pub enum ImFormat {
     /// ICO files can contain multiple images. This returns the dimensions of
     /// the biggest image in the file.
     ICO     =  9,
+
+    /// AV1 Image File Format.
     AVIF    = 10,
 
     /// Tag Image File Format. Supports big endian and little endian TIFF files.
@@ -43,6 +70,8 @@ pub enum ImFormat {
     /// PiCture eXchange files.
     PCX     = 13,
 
+    /// TARGA (Truevision Advanced Raster Graphics Adapter) files.
+    /// 
     /// Only if the file ends in `b"TRUEVISION-XFILE.\0"` since otherwise there
     /// is no good way to detect TGA files. Note that this string is optional
     /// to file format and thus there can be TGA files that aren't supported by
@@ -56,7 +85,7 @@ pub enum ImFormat {
     /// parsing code.
     HEIC    = 16,
 
-    /// JPEG 2000
+    /// JPEG 2000 files.
     JP2K    = 17,
 }
 
@@ -91,6 +120,7 @@ impl std::fmt::Display for ImFormat {
     }
 }
 
+/// The width, height and format of an image.
 #[derive(Debug, Clone)]
 pub struct ImInfo {
     pub width:  u64,
@@ -474,6 +504,7 @@ where R: Read, R: Seek {
     return Ok(&buf == b"TRUEVISION-XFILE.\0");
 }
 
+/// Trait to provide generic [imsz()] function for paths, buffers, and readers.
 pub trait Imsz {
     fn imsz(self) -> ImResult<ImInfo>;
 }

@@ -2,7 +2,7 @@
 
 [![Test Status](https://img.shields.io/github/workflow/status/panzi/imsz/Tests)](https://github.com/panzi/imsz/actions/workflows/tests.yml)
 [![License](https://img.shields.io/github/license/panzi/imsz)](https://github.com/panzi/imsz/blob/main/LICENSE)
-[Documentation](https://panzi.github.io/imsz/imsz)
+[Reference](https://panzi.github.io/imsz/imsz) – [C API](https://panzi.github.io/imsz/c)
 
 Get width and height from an image file reading as few bytes as possible.
 
@@ -44,12 +44,12 @@ use imsz::imsz;
 
 let info = imsz(fname)?;
 println!("{}: {}, {} x {}", fname, info.format, info.width, info.height);
-// tenor.gif: gif, 220 x 159
+// testdata/image.gif: GIF, 32 x 16
 
 // alternatively if you have something implementing Read and Seek:
 use imsz::imsz_from_reader;
 
-let mut file = File::open(fname)?;
+let mut file = BufReader::new(File::open(fname)?);
 let info = imsz_from_reader(&mut file)?;
 ```
 

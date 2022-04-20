@@ -16,6 +16,10 @@ jobs:
     - name: Build Documentation
       run: |
         cargo doc
+        cd c
+        make doc
+        cd ..
+        mv c/target/doxygen/html target/doc/c
 
     - name: Deploy Docs to GH-Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4

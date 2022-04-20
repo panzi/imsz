@@ -1,0 +1,38 @@
+/// @mainpage imsz
+/// 
+/// Get image width and height reading as few bytes as possible.
+///
+/// This library provides C bindings for the [imsz Rust library](https://github.com/panzi/imsz).
+/// ([Rust reference](https://panzi.github.io/imsz/imsz))
+///
+/// See @ref imsz.h for all provided functionality.
+///
+/// Example:
+/// ```
+/// const char *filename = "image.png";
+/// ImInfo info = IMSZ_INIT;
+/// int error = imsz(filename, &info);
+/// switch (error) {
+///     case IMSZ_OK:
+///         printf("%s: %s, %" PRIu64 " x %" PRIu64 "\n", fname, imsz_format_name(info->format), info->width, info->height);
+///         break;
+/// 
+///     case IMSZ_ERR_IO:
+///         fprintf(stderr, "%s: IO Error\n", fname);
+///         break;
+/// 
+///     case IMSZ_ERR_PARSER:
+///         fprintf(stderr, "%s: Parser Error %s\n", fname, imsz_format_name(info->format));
+///         break;
+/// 
+///     case IMSZ_ERR_UNSUPPORTED:
+///         fprintf(stderr, "%s: Unsupported Format\n", fname);
+///         break;
+/// 
+///     default:
+///         // NOTE: Under Windows `error` is here a Windows error code and
+///         // FormatMessageW() has to be used instead of strerror().
+///         fprintf(stderr, "%s: %s\n", fname, strerror(error));
+///         break;
+///     }
+/// ```
