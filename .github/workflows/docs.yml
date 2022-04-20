@@ -18,18 +18,18 @@ jobs:
         path: |
           /home/runner/debs
           /var/cache/apt/archives/*.deb
-        key: ${{ runner.os }}-debs
+        key: ${{ runner.os }}-debs-2022-04-21_01:40:43
 
     - name: Install Dependencies
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo apt-get install -q -y doxygen
+        sudo apt-get install -q -y doxygen graphviz
 
     - name: Checkout Repository
       uses: actions/checkout@v2
       with:
-        submodules: 'true'
+        submodules: 'recursive'
 
     - uses: Swatinem/rust-cache@v1
 
