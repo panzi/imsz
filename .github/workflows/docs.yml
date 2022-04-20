@@ -26,10 +26,8 @@ jobs:
       run: |
         sudo apt-get install -q -y doxygen graphviz
 
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-      with:
-        submodules: 'recursive'
+    - uses: actions/checkout@v2
+    - run: git submodule update --init --recursive
 
     - uses: Swatinem/rust-cache@v1
 
