@@ -15,11 +15,10 @@ jobs:
 
     - name: Build Documentation
       run: |
-        cargo docs
+        cargo doc
 
     - name: Deploy Docs to GH-Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
         branch: gh-pages
-        folder: docs
-
+        folder: target/doc
