@@ -194,28 +194,28 @@ IMSZ_EXPORT const char *imsz_format_name(unsigned int format);
 
 /// @brief Alias of ::imsz_from_path()
 ///
-/// Under C this is a macro using `_Generic`, under C++ an overloaded function.
+/// Under C this is a macro using `_Generic`, under C++ an overloaded inline function.
 inline int imsz(const char *path, ImInfo *info_ptr) {
     return imsz_from_path(path, info_ptr);
 }
 
 /// @brief Alias of ::imsz_from_buffer()
 ///
-/// Under C this is a macro using `_Generic`, under C++ an overloaded function.
+/// Under C this is a macro using `_Generic`, under C++ an overloaded inline function.
 inline int imsz(const void *buf, size_t len, ImInfo *info_ptr) {
     return imsz_from_buffer(buf, len, info_ptr);
 }
 
 /// @brief Alias of ::imsz_from_fd()
 ///
-/// Under C this is a macro using `_Generic`, under C++ an overloaded function.
+/// Under C this is a macro using `_Generic`, under C++ an overloaded inline function.
 inline int imsz(int fd, ImInfo *info_ptr) {
     return imsz_from_fd(fd, info_ptr);
 }
 
 /// @brief Alias of ::imsz_from_file()
 ///
-/// Under C this is a macro using `_Generic`, under C++ an overloaded function.
+/// Under C this is a macro using `_Generic`, under C++ an overloaded inline function.
 inline int imsz(FILE *file, ImInfo *info_ptr) {
     return imsz_from_file(file, info_ptr);
 }
@@ -223,14 +223,14 @@ inline int imsz(FILE *file, ImInfo *info_ptr) {
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__) || defined(__DOXYGEN__)
 /// @brief Alias of ::imsz_from_pathw()
 ///
-/// Under C this is a macro using `_Generic`, under C++ an overloaded function.
+/// Under C this is a macro using `_Generic`, under C++ an overloaded inline function.
 inline int imsz(const wchar_t *path, ImInfo *info_ptr) {
     return imsz_from_pathw(path, info_ptr);
 }
 
 /// @brief Alias of ::imsz_from_handle()
 ///
-/// Under C this is a macro using `_Generic`, under C++ an overloaded function.
+/// Under C this is a macro using `_Generic`, under C++ an overloaded inline function.
 inline int imsz(HANDLE hnd, ImInfo *info_ptr) {
     return imsz_from_handle(hnd, info_ptr);
 }
