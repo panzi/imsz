@@ -119,6 +119,7 @@ CXXFLAGS = $(XFLAGS) -std=c++2a
 all: $(BIN) $(BINXX)
 
 doc: imsz.h Doxyfile
+	@mkdir -p target/doxygen
 	$(DOXYGEN)
 
 $(BIN): $(OBJ) $(DEPS)

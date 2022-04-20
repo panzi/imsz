@@ -10,12 +10,24 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+    - name: Cache Debian Packages
+      id: cache-debs
+      uses: actions/cache@v2
+      if: startsWith(runner.os, 'Linux')
+      with:
+        path: |
+          /home/runner/debs
+          /var/cache/apt/archives/*.deb
+        key: ${{ runner.os }}-debs
 
     - name: Install Dependencies
+      env:
+        DEBIAN_FRONTEND: noninteractive
       run: |
-        apk add doxygen
+        sudo apt-get install -q -y doxygen
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
     - name: Build Documentation
       run: |
