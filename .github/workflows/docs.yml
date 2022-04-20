@@ -27,7 +27,10 @@ jobs:
         sudo apt-get install -q -y doxygen graphviz
 
     - uses: actions/checkout@v2
-    - run: git submodule update --init --recursive
+    - run: |
+        set -e
+        git submodule update --init --recursive
+        ls -lh c/doxygen-awesome-css/doxygen-awesome.css c/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js
 
     - uses: Swatinem/rust-cache@v1
 
