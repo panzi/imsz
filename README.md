@@ -1,5 +1,3 @@
-![bear](https://github.com/scardine/imsz/blob/master/tenor.gif?raw=true)
-
 # imsz
 
 [![Test Status](https://img.shields.io/github/workflow/status/panzi/imsz/Tests)](https://github.com/panzi/imsz/actions/workflows/tests.yml)
@@ -20,8 +18,8 @@ The library itself has zero dependencies, but the example binary uses
 There is a simple example binary:
 
 ```bash
-$ cargo run --example imsz tenor.gif
-tenor.gif: GIF, 220 x 159
+$ cargo run -q --example imsz testdata/image.gif
+testdata/image.gif: GIF, 32 x 16
 
 $ cargo run --example imsz -- --help
 imsz 0.2.0
