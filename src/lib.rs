@@ -45,27 +45,29 @@ pub enum ImFormat {
     /// HEIC/HEIF files. These are extremely similar to AVIF and use the same
     /// parsing code.
     HEIC    = 16,
+    JP2K    = 17,
 }
 
 impl ImFormat {
     pub fn name(&self) -> &'static str {
         match self {
-            Self::GIF     => "gif",
-            Self::PNG     => "png",
-            Self::BMP     => "bmp",
-            Self::JPEG    => "jpeg",
-            Self::WEBP    => "webp",
-            Self::QOI     => "qoi",
-            Self::PSD     => "psd",
-            Self::XCF     => "xcf",
-            Self::ICO     => "ico",
-            Self::AVIF    => "avif",
-            Self::TIFF    => "tiff",
+            Self::GIF     => "GIF",
+            Self::PNG     => "PNG",
+            Self::BMP     => "BMP",
+            Self::JPEG    => "JPEG",
+            Self::WEBP    => "WebP",
+            Self::QOI     => "QOI",
+            Self::PSD     => "PSD",
+            Self::XCF     => "XCF",
+            Self::ICO     => "ICO",
+            Self::AVIF    => "AVIF",
+            Self::TIFF    => "TIFF",
             Self::OpenEXR => "OpenEXR",
-            Self::PCX     => "pcx",
-            Self::TGA     => "tga",
-            Self::DDS     => "dds",
-            Self::HEIC    => "heic",
+            Self::PCX     => "PCX",
+            Self::TGA     => "TGA",
+            Self::DDS     => "DDS",
+            Self::HEIC    => "HEIC",
+            Self::JP2K    => "JPEG 2000",
         }
     }
 }
@@ -357,7 +359,7 @@ macro_rules! map_expr {
     };
 }
 
-fn find_avif_chunk<R>(reader: &mut R, name: &[u8], chunk_size: u64, format: ImFormat) -> ImResult<u64>
+fn find_riff_chunk<R>(reader: &mut R, name: &[u8; 4], chunk_size: u64, format: ImFormat) -> ImResult<u64>
 where R: Read, R: Seek {
     let mut sub_chunk_size;
     let mut buf = [0u8; 8];
@@ -826,14 +828,14 @@ where R: Read, R: Seek {
         map_err!(format, file.seek(SeekFrom::Start(ftype_size as u64)));
 
         // chunk nesting: meta > iprp > ipco > ispe
-        let chunk_size = find_avif_chunk(file, b"meta", u64::MAX, format)?;
+        let chunk_size = find_riff_chunk(file, b"meta", u64::MAX, format)?;
         if chunk_size < 12 {
             return Err(ImError::ParserError(format));
         }
         map_err!(format, file.seek(SeekFrom::Current(4)));
-        let chunk_size = find_avif_chunk(file, b"iprp", chunk_size - 12, format)?;
-        let chunk_size = find_avif_chunk(file, b"ipco", chunk_size -  8, format)?;
-        let chunk_size = find_avif_chunk(file, b"ispe", chunk_size -  8, format)?;
+        let chunk_size = find_riff_chunk(file, b"iprp", chunk_size - 12, format)?;
+        let chunk_size = find_riff_chunk(file, b"ipco", chunk_size -  8, format)?;
+        let chunk_size = find_riff_chunk(file, b"ispe", chunk_size -  8, format)?;
 
         if chunk_size < 12 {
             return Err(ImError::ParserError(format));
@@ -847,6 +849,28 @@ where R: Read, R: Seek {
 
         return Ok(ImInfo {
             format,
+            width:  w as u64,
+            height: h as u64,
+        });
+    } else if size >= 24 && preamble.starts_with(b"\0\0\0\x0CjP  ") && &preamble[16..24] == b"ftypjp2 " {
+        // JPEG 2000
+        let chunk_size = u32::from_be_bytes(array4!(preamble, 12));
+        map_err!(JP2K file.seek(SeekFrom::Start(12 + chunk_size as u64)));
+        let chunk_size = find_riff_chunk(file, b"jp2h", u64::MAX, ImFormat::JP2K)?;
+        let chunk_size = find_riff_chunk(file, b"ihdr", chunk_size, ImFormat::JP2K)?;
+
+        if chunk_size < 8 {
+            return Err(ImError::ParserError(ImFormat::JP2K));
+        }
+
+        let mut buf = [0u8; 8];
+        map_err!(JP2K file.read_exact(&mut buf));
+
+        let h = u32::from_be_bytes(array4!(buf, 0));
+        let w = u32::from_be_bytes(array4!(buf, 4));
+
+        return Ok(ImInfo {
+            format: ImFormat::JP2K,
             width:  w as u64,
             height: h as u64,
         });

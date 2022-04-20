@@ -119,6 +119,22 @@ fn ico() {
 
 
 #[test]
+fn jp2() {
+    let info = imsz::imsz_from_path(get_testdata("image.jp2"));
+    match info {
+        Ok(info) => {
+            assert_eq!(info.format, imsz::ImFormat::JP2K);
+            assert_eq!(info.width,  32);
+            assert_eq!(info.height, 16);
+        }
+        Err(error) => {
+            assert!(false, "{}", error);
+        }
+    }
+}
+
+
+#[test]
 fn jpeg() {
     let info = imsz::imsz_from_path(get_testdata("image.jpeg"));
     match info {

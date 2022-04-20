@@ -22,12 +22,17 @@ fn get_testdata(fname: &str) -> std::path::PathBuf {
 
 funcs: List[Tuple[str, str]] = []
 
+format_map = {
+    '.exr': 'OpenEXR',
+    '.jp2': 'JP2K',
+}
+
 for fname in files:
     ident = fname.replace('.', '_')
     path = f"testdata/{fname}"
 
     leaf, ext = splitext(fname)
-    format = ext[1:].upper() if ext != ".exr" else "OpenEXR"
+    format = format_map.get(ext) or ext[1:].upper()
 
     ident = '_'.join([ ext[1:], *leaf.split('_')[1:] ])
 

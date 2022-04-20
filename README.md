@@ -21,7 +21,7 @@ There is a simple example binary:
 
 ```bash
 $ cargo run --example imsz tenor.gif
-tenor.gif: gif, 220 x 159
+tenor.gif: GIF, 220 x 159
 
 $ cargo run --example imsz -- --help
 imsz 0.2.0
@@ -63,6 +63,7 @@ let info = imsz_from_reader(&mut file)?;
 * HEIC/HEIF
 * ICO
 * JPEG
+* JPEG 2000
 * PCX
 * PNG
 * PSD

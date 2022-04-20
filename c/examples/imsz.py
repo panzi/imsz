@@ -9,7 +9,7 @@ from enum import Enum
 from os.path import join as join_path, abspath, dirname
 from os import fsencode, PathLike
 
-__all__ = 'ImInfo', 'ImError', 'ImFormat', 'imsz', 'imszmem', 'imszfd', 'imszf'
+__all__ = 'ImInfo', 'ImError', 'ImFormat', 'imsz', 'imsz_from_path', 'imsz_from_buffer', 'imsz_from_fd', 'imsz_from_file'
 
 IS_WINDOWS = platform.system() == 'Windows'
 
@@ -62,6 +62,7 @@ class ImFormat(Enum):
     TGA     = 14
     DDS     = 15
     HEIC    = 16
+    JP2K    = 17
 
     def __str__(self) -> str:
         return ffi.string(_imsz.imsz_format_name(self.value)).decode('ASCII')
