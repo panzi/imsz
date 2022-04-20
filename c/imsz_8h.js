@@ -1,0 +1,47 @@
+var imsz_8h =
+[
+    [ "ImInfo", "structImInfo.html", "structImInfo" ],
+    [ "imsz_from_file", "imsz_8h.html#afc34a3081457d2885eb9b26bd2e630c1", null ],
+    [ "IMSZ_INIT", "imsz_8h.html#a00ef6174783a621fe64821f7fd4cc221", null ],
+    [ "ImError", "imsz_8h.html#a08e7b4c0d641a5b7fe137bf65905665a", null ],
+    [ "ImFormat", "imsz_8h.html#ae31a5519c3faa6263b2ede7753bf07c5", null ],
+    [ "ImInfo", "imsz_8h.html#a03781d4181f753a251be2603602f1ed7", null ],
+    [ "ImError", "imsz_8h.html#a18c92e8e5e4ab52cee73bcf2ddbbeee8", [
+      [ "IMSZ_OK", "imsz_8h.html#a18c92e8e5e4ab52cee73bcf2ddbbeee8ac3044091c0432e9feea7e149d0627341", null ],
+      [ "IMSZ_ERR_IO", "imsz_8h.html#a18c92e8e5e4ab52cee73bcf2ddbbeee8a986220023e25a6fd65c614fbe9098404", null ],
+      [ "IMSZ_ERR_PARSER", "imsz_8h.html#a18c92e8e5e4ab52cee73bcf2ddbbeee8a7588421f17146cb7ecebd875de82f4ec", null ],
+      [ "IMSZ_ERR_UNSUPPORTED", "imsz_8h.html#a18c92e8e5e4ab52cee73bcf2ddbbeee8ae9b48dd1f507a75e0a3f496aece062e9", null ]
+    ] ],
+    [ "ImFormat", "imsz_8h.html#a65569055a682779f95215e0613eacc35", [
+      [ "IMSZ_GIF", "imsz_8h.html#a65569055a682779f95215e0613eacc35a050cc8ca3cd637a4ba57c19bfc8514a3", null ],
+      [ "IMSZ_PNG", "imsz_8h.html#a65569055a682779f95215e0613eacc35a6df859991e9175d1ae248bcaf1c59883", null ],
+      [ "IMSZ_BMP", "imsz_8h.html#a65569055a682779f95215e0613eacc35aa6ac3f67ac32c989715f418b0646a746", null ],
+      [ "IMSZ_JPEG", "imsz_8h.html#a65569055a682779f95215e0613eacc35a8bc9d0b6874df93595b6614d87038c5d", null ],
+      [ "IMSZ_WEBP", "imsz_8h.html#a65569055a682779f95215e0613eacc35a621bc2a8e9cae78006f442b0999b4c3d", null ],
+      [ "IMSZ_QOI", "imsz_8h.html#a65569055a682779f95215e0613eacc35acc1d62a72a8d0026b7f23fc14cba4e83", null ],
+      [ "IMSZ_PSD", "imsz_8h.html#a65569055a682779f95215e0613eacc35ad1ee351ace5f495309a900e06caffbab", null ],
+      [ "IMSZ_XCF", "imsz_8h.html#a65569055a682779f95215e0613eacc35af500baa74fd53d7af6d3d77ea813af31", null ],
+      [ "IMSZ_ICO", "imsz_8h.html#a65569055a682779f95215e0613eacc35a491a0cfd051253714f5668f04226df5c", null ],
+      [ "IMSZ_AVIF", "imsz_8h.html#a65569055a682779f95215e0613eacc35aad7d0a565b6c58e0350cf29e584a5ad1", null ],
+      [ "IMSZ_TIFF", "imsz_8h.html#a65569055a682779f95215e0613eacc35abaa29356ed73ebfae8fcb2e8a53aad23", null ],
+      [ "IMSZ_OpenEXR", "imsz_8h.html#a65569055a682779f95215e0613eacc35a504b688756e69d984ed0cda0735ff5c4", null ],
+      [ "IMSZ_PCX", "imsz_8h.html#a65569055a682779f95215e0613eacc35a0119d49ecaa51e88683a5c19ac0142ad", null ],
+      [ "IMSZ_TGA", "imsz_8h.html#a65569055a682779f95215e0613eacc35a8032f0969d3226f7a51b9256d86dc410", null ],
+      [ "IMSZ_DDS", "imsz_8h.html#a65569055a682779f95215e0613eacc35a7fbebbfd3e5de0aec59d37762dcbde49", null ],
+      [ "IMSZ_HEIC", "imsz_8h.html#a65569055a682779f95215e0613eacc35a482e0503d15d587d7e7c07e98e317e5d", null ],
+      [ "IMSZ_JP2K", "imsz_8h.html#a65569055a682779f95215e0613eacc35a3c004408e2b9a8154ec6414dad24e0fa", null ]
+    ] ],
+    [ "imsz", "imsz_8h.html#abf3da7b32d3026baeb4b9f0da3b5a4f6", null ],
+    [ "imsz", "imsz_8h.html#ae5db3c4269648328df33f55f8aaf58a6", null ],
+    [ "imsz", "imsz_8h.html#a4b90d0026dc6b0934e7e339d0d430343", null ],
+    [ "imsz", "imsz_8h.html#a3440e4cd670c7a6b4de4512d378a7f24", null ],
+    [ "imsz", "imsz_8h.html#abcd8b4cffb79269afde93efcb161e20f", null ],
+    [ "imsz", "imsz_8h.html#a620c492ffaea971b806ca4a61f656e46", null ],
+    [ "imsz_format_name", "imsz_8h.html#abdb5c222ce01bfb28e61db448b99bb62", null ],
+    [ "imsz_format_namew", "imsz_8h.html#a906c9e466f601765166fcdfc88b03466", null ],
+    [ "imsz_from_buffer", "imsz_8h.html#ab82b6b7b4d5ea5b26f21a82b7f7ed89f", null ],
+    [ "imsz_from_fd", "imsz_8h.html#a145e962d3ae91ccee260887963609aaf", null ],
+    [ "imsz_from_handle", "imsz_8h.html#ae19020f7de81b052e59b206acf0e2129", null ],
+    [ "imsz_from_path", "imsz_8h.html#a18b800cb8c934351b298a9ccaaeca04e", null ],
+    [ "imsz_from_pathw", "imsz_8h.html#a56bb9ec2039480c3423faee43e944f10", null ]
+];
