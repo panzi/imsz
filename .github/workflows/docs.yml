@@ -27,10 +27,7 @@ jobs:
         sudo apt-get install -q -y doxygen graphviz
 
     - uses: actions/checkout@v2
-    - run: |
-        set -e
-        git submodule update --init --recursive
-        ls -lh c/doxygen-awesome-css/doxygen-awesome.css c/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js
+    - run: git submodule update --init --recursive
 
     - uses: Swatinem/rust-cache@v1
 
@@ -40,7 +37,15 @@ jobs:
         cd c
         make doc
         cd ..
+        echo
+        echo
+        ls -lh c/target/doxygen/html
+        echo
+        echo
         mv c/target/doxygen/html target/doc/c
+        echo
+        echo
+        ls -lh target/doc/c
 
     - name: Deploy Docs to GH-Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
