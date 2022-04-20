@@ -12,6 +12,7 @@ fn avif() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::AVIF);
+            assert_eq!(info.format.name(), "AVIF");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -28,6 +29,7 @@ fn bmp() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::BMP);
+            assert_eq!(info.format.name(), "BMP");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -44,6 +46,7 @@ fn dds() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::DDS);
+            assert_eq!(info.format.name(), "DDS");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -60,6 +63,7 @@ fn exr() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::OpenEXR);
+            assert_eq!(info.format.name(), "OpenEXR");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -76,6 +80,7 @@ fn gif() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::GIF);
+            assert_eq!(info.format.name(), "GIF");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -92,6 +97,7 @@ fn heic() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::HEIC);
+            assert_eq!(info.format.name(), "HEIC");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -108,6 +114,7 @@ fn ico() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::ICO);
+            assert_eq!(info.format.name(), "ICO");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -124,6 +131,7 @@ fn jp2() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::JP2K);
+            assert_eq!(info.format.name(), "JPEG 2000");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -140,6 +148,7 @@ fn jpeg() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::JPEG);
+            assert_eq!(info.format.name(), "JPEG");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -156,6 +165,7 @@ fn pcx() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::PCX);
+            assert_eq!(info.format.name(), "PCX");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -172,6 +182,7 @@ fn png() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::PNG);
+            assert_eq!(info.format.name(), "PNG");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -188,6 +199,7 @@ fn psd() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::PSD);
+            assert_eq!(info.format.name(), "PSD");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -204,6 +216,7 @@ fn qoi() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::QOI);
+            assert_eq!(info.format.name(), "QOI");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -220,6 +233,7 @@ fn tga() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::TGA);
+            assert_eq!(info.format.name(), "TGA");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -236,6 +250,7 @@ fn tiff_be() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::TIFF);
+            assert_eq!(info.format.name(), "TIFF");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -252,6 +267,7 @@ fn tiff_le() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::TIFF);
+            assert_eq!(info.format.name(), "TIFF");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -268,6 +284,7 @@ fn webp_lossless() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
+            assert_eq!(info.format.name(), "WebP");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -284,6 +301,7 @@ fn webp_lossless_vp8x() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
+            assert_eq!(info.format.name(), "WebP");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -300,6 +318,7 @@ fn webp_lossy() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
+            assert_eq!(info.format.name(), "WebP");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -316,6 +335,7 @@ fn webp_lossy_vp8x() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::WEBP);
+            assert_eq!(info.format.name(), "WebP");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }
@@ -332,6 +352,7 @@ fn xcf() {
     match info {
         Ok(info) => {
             assert_eq!(info.format, imsz::ImFormat::XCF);
+            assert_eq!(info.format.name(), "XCF");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }

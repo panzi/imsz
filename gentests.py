@@ -27,12 +27,18 @@ format_map = {
     '.jp2': 'JP2K',
 }
 
+format_names = {
+    'JP2K': 'JPEG 2000',
+    'WEBP': 'WebP',
+}
+
 for fname in files:
     ident = fname.replace('.', '_')
     path = f"testdata/{fname}"
 
     leaf, ext = splitext(fname)
     format = format_map.get(ext) or ext[1:].upper()
+    format_name = format_names.get(format, format)
 
     ident = '_'.join([ ext[1:], *leaf.split('_')[1:] ])
 
@@ -43,6 +49,7 @@ fn {ident}() {{
     match info {{
         Ok(info) => {{
             assert_eq!(info.format, imsz::ImFormat::{format});
+            assert_eq!(info.format.name(), "{format_name}");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }}
