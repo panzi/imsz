@@ -4,19 +4,23 @@ use std::io::{Read, Seek, SeekFrom, BufReader};
 #[non_exhaustive]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum ImFormat {
-    /// GIF87a and GIF89a files.
+    /// Graphics Interchange Format files in version GIF87a or GIF89a.
     GIF     =  1,
 
-    // Requires the first chunk to be `IHDR`.
+    /// Portable Network Graphics files. Requires the first chunk to be `IHDR`.
     PNG     =  2,
 
     /// Windows Bitmap, both for Windows 2.0 (BITMAPCOREHEADER) and for newer
     /// versions (BITMAPINFOHEADER).
     BMP     =  3,
+
+    /// Joint Photographic Experts Group files.
     JPEG    =  4,
 
-    /// Supported sub-formats: `VP8 `, `VP8L`, `VP8X`.
+    /// WebP files. Supported sub-formats: `VP8 `, `VP8L`, `VP8X`.
     WEBP    =  5,
+
+    /// Quite OK Image format files.
     QOI     =  6,
 
     /// Adobe Photoshop files.
@@ -30,9 +34,13 @@ pub enum ImFormat {
     ICO     =  9,
     AVIF    = 10,
 
-    /// Supports big endian and little endian TIFF files.
+    /// Tag Image File Format. Supports big endian and little endian TIFF files.
     TIFF    = 11,
+
+    /// OpenEXR files.
     OpenEXR = 12,
+
+    /// PiCture eXchange files.
     PCX     = 13,
 
     /// Only if the file ends in `b"TRUEVISION-XFILE.\0"` since otherwise there
@@ -40,11 +48,15 @@ pub enum ImFormat {
     /// to file format and thus there can be TGA files that aren't supported by
     /// this library.
     TGA     = 14,
+
+    /// DirectDraw Surface files.
     DDS     = 15,
 
     /// HEIC/HEIF files. These are extremely similar to AVIF and use the same
     /// parsing code.
     HEIC    = 16,
+
+    /// JPEG 2000
     JP2K    = 17,
 }
 

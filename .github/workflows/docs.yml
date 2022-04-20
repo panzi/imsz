@@ -1,0 +1,25 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Build Documentation
+      run: |
+        cargo docs
+
+    - name: Deploy Docs to GH-Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        branch: gh-pages
+        folder: docs
+

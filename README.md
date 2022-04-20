@@ -2,6 +2,7 @@
 
 [![Test Status](https://img.shields.io/github/workflow/status/panzi/imsz/Tests)](https://github.com/panzi/imsz/actions/workflows/tests.yml)
 [![License](https://img.shields.io/github/license/panzi/imsz)](https://github.com/panzi/imsz/blob/main/LICENSE)
+[Documentation](https://panzi.github.io/imsz/imsz)
 
 Get width and height from an image file reading as few bytes as possible.
 
@@ -21,7 +22,7 @@ There is a simple example binary:
 $ cargo run -q --example imsz testdata/image.gif
 testdata/image.gif: GIF, 32 x 16
 
-$ cargo run --example imsz -- --help
+$ cargo run -q --example imsz -- --help
 imsz 0.2.0
 Paulo Scardine <paulo@scardine.com.br>, Mathias Panzenböck <grosser.meister.morti@gmx.net>
 
