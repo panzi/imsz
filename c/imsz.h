@@ -49,6 +49,11 @@ typedef enum ImFormat {
     IMSZ_AVIF    = 10u,
     IMSZ_TIFF    = 11u,
     IMSZ_OpenEXR = 12u,
+    IMSZ_PCX     = 13u,
+    IMSZ_TGA     = 14u,
+    IMSZ_DDS     = 15u,
+    IMSZ_HEIC    = 16u,
+    IMSZ_JP2K    = 17u,
 } ImFormat;
 
 #define IMSZ_INIT { .format = 0, .width = (uint64_t)0, .height = (uint64_t)0 }
