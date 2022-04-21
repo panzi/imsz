@@ -68,9 +68,9 @@ class ImFormat(Enum):
         return ffi.string(_imsz.imsz_format_name(self.value)).decode('ASCII')
 
 class ImInfo(NamedTuple):
-    format: ImFormat
     width:  int
     height: int
+    format: ImFormat
 
 class ImError(Exception):
     __slots__ = ()
@@ -111,7 +111,7 @@ class UnsupportedFormat(ImError):
 
 def _convert_result(result: int, cinfo: Any) -> ImInfo:
     if result == 0:
-        return ImInfo(ImFormat(cinfo.format), cinfo.width, cinfo.height)
+        return ImInfo(cinfo.width, cinfo.height, ImFormat(cinfo.format))
     elif result == -1:
         raise IOError()
     elif result == -2:
