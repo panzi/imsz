@@ -33,18 +33,24 @@ jobs:
 
     - name: Build Documentation
       run: |
+        if [ -e target/doc ]; then
+          rm -r target/doc
+        fi
         cargo doc
         cd c
         make doc
         cd ..
         echo
-        echo
+        echo "ls -lh c/target/doxygen/html"
         ls -lh c/target/doxygen/html
         echo
         echo
+        if [ -e target/doc/c ]; then
+          rm -r target/doc/c
+        fi
         mv c/target/doxygen/html target/doc/c
         echo
-        echo
+        echo "ls -lh target/doc/c"
         ls -lh target/doc/c
 
     - name: Deploy Docs to GH-Pages
