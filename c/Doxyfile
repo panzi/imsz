@@ -15,6 +15,6 @@ EXPAND_ONLY_PREDEF = YES
 PREDEFINED = __DOXYGEN__ IMSZ_EXPORT=
 
 GENERATE_TREEVIEW      = YES
-HTML_EXTRA_STYLESHEET  = doxygen-awesome-css/doxygen-awesome.css
+HTML_EXTRA_STYLESHEET  = doxygen-msearchbox-fix.css doxygen-awesome-css/doxygen-awesome.css
 HTML_EXTRA_FILES       = doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js
 HTML_HEADER            = header.html
