@@ -73,7 +73,7 @@ typedef enum ImFormat {
     IMSZ_PCX     = 13u, ///< PiCture eXchange files.
     IMSZ_TGA     = 14u, ///< TARGA (Truevision Advanced Raster Graphics Adapter) files.
     IMSZ_DDS     = 15u, ///< DirectDraw Surface files.
-    IMSZ_HEIC    = 16u, ///< HEIC/HEIF files.
+    IMSZ_HEIF    = 16u, ///< HEIC/HEIF files.
     IMSZ_JP2K    = 17u, ///< JPEG 2000 files.
 } ImFormat;
 

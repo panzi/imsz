@@ -83,7 +83,7 @@ pub enum ImFormat {
 
     /// HEIC/HEIF files. These are extremely similar to AVIF and use the same
     /// parsing code.
-    HEIC    = 16,
+    HEIF    = 16,
 
     /// JPEG 2000 files.
     JP2K    = 17,
@@ -107,7 +107,7 @@ impl ImFormat {
             Self::PCX     => "PCX",
             Self::TGA     => "TGA",
             Self::DDS     => "DDS",
-            Self::HEIC    => "HEIC",
+            Self::HEIF    => "HEIF",
             Self::JP2K    => "JPEG 2000",
         }
     }
@@ -857,11 +857,11 @@ where R: Read, R: Seek {
         }
         return Err(ImError::ParserError(ImFormat::WEBP));
     } else if size >= 12 && (&preamble[4..12] == b"ftypavif" || &preamble[4..12] == b"ftypheic") {
-        // AVIF and HEIC
+        // AVIF and HEIF
         let format = if &preamble[8..12] == b"avif" {
             ImFormat::AVIF
         } else {
-            ImFormat::HEIC
+            ImFormat::HEIF
         };
 
         let ftype_size = u32::from_be_bytes(array4!(preamble, 0));

@@ -28,7 +28,7 @@ fn broken_avif() {
 }
 
 #[test]
-fn broken_heic() {
+fn broken_heif() {
     let _ = imsz(b"\0\0\0\0ftypheic");
     let broken_images = [
         b"\0\0\0\0ftypheic" as &[u8],
@@ -39,7 +39,7 @@ fn broken_heic() {
         b"\x00\x00\x00\x0cftypheic\x00\x00\x00/meta....\x00\x00\x00#iprp\x00\x00\x00\x1bipco\x00\x00\x00\x13ispe..........."
     ];
     for data in broken_images {
-        expect_broken(data, ImFormat::HEIC);
+        expect_broken(data, ImFormat::HEIF);
     }
 }
 

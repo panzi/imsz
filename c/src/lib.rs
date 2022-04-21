@@ -149,7 +149,7 @@ const FORMAT_NAMES: &'static [&'static [u8]] = &[
     b"PCX\0",
     b"TGA\0",
     b"DDS\0",
-    b"HEIC\0",
+    b"HEIF\0",
     b"JPEG 2000\0",
 ];
 
@@ -184,7 +184,7 @@ const FORMAT_NAMESW: &'static [&'static [u16]] = &[
     &w(b"PCX\0"),
     &w(b"TGA\0"),
     &w(b"DDS\0"),
-    &w(b"HEIC\0"),
+    &w(b"HEIF\0"),
     &w(b"JPEG 2000\0"),
 ];
 

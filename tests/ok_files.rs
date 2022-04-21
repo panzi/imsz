@@ -92,12 +92,12 @@ fn gif() {
 
 
 #[test]
-fn heic() {
-    let info = imsz::imsz_from_path(get_testdata("image.heic"));
+fn heif() {
+    let info = imsz::imsz_from_path(get_testdata("image.heif"));
     match info {
         Ok(info) => {
-            assert_eq!(info.format, imsz::ImFormat::HEIC);
-            assert_eq!(info.format.name(), "HEIC");
+            assert_eq!(info.format, imsz::ImFormat::HEIF);
+            assert_eq!(info.format.name(), "HEIF");
             assert_eq!(info.width,  32);
             assert_eq!(info.height, 16);
         }

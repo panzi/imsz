@@ -61,7 +61,7 @@ class ImFormat(Enum):
     PCX     = 13
     TGA     = 14
     DDS     = 15
-    HEIC    = 16
+    HEIF    = 16
     JP2K    = 17
 
     def __str__(self) -> str:
