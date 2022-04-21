@@ -18,12 +18,13 @@ jobs:
         path: |
           /home/runner/debs
           /var/cache/apt/archives/*.deb
-        key: ${{ runner.os }}-debs-2022-04-21_01:40:43
+        key: ${{ runner.os }}-debs-2022-04-21_02:08:33
 
     - name: Install Dependencies
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        sudo apt-get update  -q -y
         sudo apt-get install -q -y doxygen graphviz
 
     - uses: actions/checkout@v2
