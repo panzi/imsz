@@ -46,7 +46,7 @@ extern "C" {
 /// be any certain integer type.
 ///
 /// Also a returned error value is not limited to these values, but can also be
-/// a `errno` value under POSIX or a Windows error code under Windows. Both,
+/// an `errno` value under POSIX or a Windows error code under Windows. Both,
 /// POSIX and Windows error codes are positive integers (or 0 for no error),
 /// these custom error codes are negative values.
 typedef enum ImError {
