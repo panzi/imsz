@@ -78,5 +78,5 @@ No guarantees of correct or complete implementation are made.
 ## Related Work
 
 * [scardine/imsz](https://github.com/scardine/imsz) – original Rust library from which this is a fork
-* [panzi/get_image_size](https://github.com/panzi/get_image_size) – a very similar library in pure Python
+* [panzi/get_image_size.py](https://github.com/panzi/get_image_size.py) – a very similar library in pure Python
 * [StackOverflow answer](https://stackoverflow.com/a/19035508/277767) – the start of it all
