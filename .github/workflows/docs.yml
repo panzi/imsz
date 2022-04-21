@@ -40,18 +40,12 @@ jobs:
         cd c
         make doc
         cd ..
-        echo
-        echo "ls -lh c/target/doxygen/html"
-        ls -lh c/target/doxygen/html
-        echo
-        echo
         if [ -e target/doc/c ]; then
           rm -r target/doc/c
         fi
         mv c/target/doxygen/html target/doc/c
         echo
-        echo "ls -lh target/doc/c"
-        ls -lh target/doc/c
+        echo "DOXYGEN VERSION: `doxygen --version`"
 
     - name: Deploy Docs to GH-Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
