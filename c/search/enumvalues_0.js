@@ -7,7 +7,7 @@ var searchData=
   ['imsz_5ferr_5fparser_61',['IMSZ_ERR_PARSER',['../imsz_8h.html#a18c92e8e5e4ab52cee73bcf2ddbbeee8a7588421f17146cb7ecebd875de82f4ec',1,'imsz.h']]],
   ['imsz_5ferr_5funsupported_62',['IMSZ_ERR_UNSUPPORTED',['../imsz_8h.html#a18c92e8e5e4ab52cee73bcf2ddbbeee8ae9b48dd1f507a75e0a3f496aece062e9',1,'imsz.h']]],
   ['imsz_5fgif_63',['IMSZ_GIF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a050cc8ca3cd637a4ba57c19bfc8514a3',1,'imsz.h']]],
-  ['imsz_5fheic_64',['IMSZ_HEIC',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a482e0503d15d587d7e7c07e98e317e5d',1,'imsz.h']]],
+  ['imsz_5fheif_64',['IMSZ_HEIF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a87dc1ba36a45cc7ac7d4db0ea77b1513',1,'imsz.h']]],
   ['imsz_5fico_65',['IMSZ_ICO',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a491a0cfd051253714f5668f04226df5c',1,'imsz.h']]],
   ['imsz_5fjp2k_66',['IMSZ_JP2K',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a3c004408e2b9a8154ec6414dad24e0fa',1,'imsz.h']]],
   ['imsz_5fjpeg_67',['IMSZ_JPEG',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a8bc9d0b6874df93595b6614d87038c5d',1,'imsz.h']]],

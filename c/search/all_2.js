@@ -20,7 +20,7 @@ var searchData=
   ['imsz_5ffrom_5fpath_19',['imsz_from_path',['../imsz_8h.html#a18b800cb8c934351b298a9ccaaeca04e',1,'imsz.h']]],
   ['imsz_5ffrom_5fpathw_20',['imsz_from_pathw',['../imsz_8h.html#a56bb9ec2039480c3423faee43e944f10',1,'imsz.h']]],
   ['imsz_5fgif_21',['IMSZ_GIF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a050cc8ca3cd637a4ba57c19bfc8514a3',1,'imsz.h']]],
-  ['imsz_5fheic_22',['IMSZ_HEIC',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a482e0503d15d587d7e7c07e98e317e5d',1,'imsz.h']]],
+  ['imsz_5fheif_22',['IMSZ_HEIF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a87dc1ba36a45cc7ac7d4db0ea77b1513',1,'imsz.h']]],
   ['imsz_5fico_23',['IMSZ_ICO',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a491a0cfd051253714f5668f04226df5c',1,'imsz.h']]],
   ['imsz_5finit_24',['IMSZ_INIT',['../imsz_8h.html#a00ef6174783a621fe64821f7fd4cc221',1,'imsz.h']]],
   ['imsz_5fjp2k_25',['IMSZ_JP2K',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a3c004408e2b9a8154ec6414dad24e0fa',1,'imsz.h']]],
