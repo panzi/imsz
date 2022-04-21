@@ -74,8 +74,8 @@ pub enum ImFormat {
     /// 
     /// Only if the file ends in `b"TRUEVISION-XFILE.\0"` since otherwise there
     /// is no good way to detect TGA files. Note that this string is optional
-    /// to file format and thus there can be TGA files that aren't supported by
-    /// this library.
+    /// to this file format and thus there can be TGA files that aren't supported
+    /// by this library.
     TGA     = 14,
 
     /// DirectDraw Surface files.
