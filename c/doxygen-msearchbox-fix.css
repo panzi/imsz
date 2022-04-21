@@ -1,3 +1,7 @@
 #MSearchBox {
 	display: inline-block !important;
 }
+
+doxygen-awesome-dark-mode-toggle {
+	float: right !important;
+}

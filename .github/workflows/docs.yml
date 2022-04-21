@@ -45,8 +45,6 @@ jobs:
           rm -r target/doc/c
         fi
         mv c/target/doxygen/html target/doc/c
-        echo
-        echo "DOXYGEN VERSION: `doxygen --version`"
 
     - name: Deploy Docs to GH-Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
