@@ -16,9 +16,9 @@ IS_WINDOWS = platform.system() == 'Windows'
 ffi = cffi.FFI()
 ffi.cdef("""
 typedef struct ImInfo {
-    unsigned int format;
     uint64_t width;
     uint64_t height;
+    unsigned int format;
 } ImInfo;
 int imsz_from_path(const char *fname, ImInfo *info_ptr);
 int imsz_from_buffer(const void *mem, size_t len, ImInfo *info_ptr);
@@ -63,6 +63,7 @@ class ImFormat(Enum):
     DDS     = 15
     HEIF    = 16
     JP2K    = 17
+    DIB     = 18
 
     def __str__(self) -> str:
         return ffi.string(_imsz.imsz_format_name(self.value)).decode('ASCII')

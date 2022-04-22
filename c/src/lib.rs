@@ -151,6 +151,7 @@ const FORMAT_NAMES: &'static [&'static [u8]] = &[
     b"DDS\0",
     b"HEIF\0",
     b"JPEG 2000\0",
+    b"DIB\0",
 ];
 
 #[cfg(target_family="windows")]
@@ -186,6 +187,7 @@ const FORMAT_NAMESW: &'static [&'static [u16]] = &[
     &w(b"DDS\0"),
     &w(b"HEIF\0"),
     &w(b"JPEG 2000\0"),
+    &w(b"DIB\0"),
 ];
 
 #[no_mangle]

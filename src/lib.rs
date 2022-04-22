@@ -87,6 +87,9 @@ pub enum ImFormat {
 
     /// JPEG 2000 files.
     JP2K    = 17,
+
+    /// Device-Independent Bitmap files.
+    DIB     = 18,
 }
 
 impl ImFormat {
@@ -109,6 +112,7 @@ impl ImFormat {
             Self::DDS     => "DDS",
             Self::HEIF    => "HEIF",
             Self::JP2K    => "JPEG 2000",
+            Self::DIB     => "DIB",
         }
     }
 }
@@ -1079,6 +1083,16 @@ where R: Read, R: Seek {
             format: ImFormat::DDS,
             width:  w as u64,
             height: h as u64,
+        });
+    } else if size >= 14 && preamble.starts_with(b"\x28\0\0\0") && &preamble[12..14] == b"\x01\0" && preamble[15] == 0 {
+        // DIB
+        let w = i32::from_le_bytes(array4!(preamble, 4));
+        let h = i32::from_le_bytes(array4!(preamble, 8));
+
+        return Ok(ImInfo {
+            format: ImFormat::DIB,
+            width:  w as u64,
+            height: h.abs() as u64,
         });
     } else if size >= 30 && preamble[1] < 2 && preamble[2] < 12 && is_tga(file)? {
         // TGA

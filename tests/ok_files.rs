@@ -58,6 +58,23 @@ fn dds() {
 
 
 #[test]
+fn dib() {
+    let info = imsz::imsz_from_path(get_testdata("image.dib"));
+    match info {
+        Ok(info) => {
+            assert_eq!(info.format, imsz::ImFormat::DIB);
+            assert_eq!(info.format.name(), "DIB");
+            assert_eq!(info.width,  32);
+            assert_eq!(info.height, 16);
+        }
+        Err(error) => {
+            assert!(false, "{}", error);
+        }
+    }
+}
+
+
+#[test]
 fn exr() {
     let info = imsz::imsz_from_path(get_testdata("image.exr"));
     match info {
