@@ -1098,6 +1098,20 @@
 <span id="1093">1093</span>
 <span id="1094">1094</span>
 <span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Get image width and height reading as few bytes as possible.</span>
 <span class="doccomment">//! </span>
 <span class="doccomment">//! [GitHub](https://github.com/panzi/imsz) – [C API Reference](https://panzi.github.io/imsz/c)</span>
@@ -1187,6 +1201,9 @@
 
     <span class="doccomment">/// JPEG 2000 files.</span>
     <span class="ident">JP2K</span>    <span class="op">=</span> <span class="number">17</span>,
+
+    <span class="doccomment">/// Device-Independent Bitmap files.</span>
+    <span class="ident">DIB</span>     <span class="op">=</span> <span class="number">18</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ImFormat</span> {
@@ -1209,6 +1226,7 @@
             <span class="ident"><span class="self">Self</span>::DDS</span>     =&gt; <span class="string">&quot;DDS&quot;</span>,
             <span class="ident"><span class="self">Self</span>::HEIF</span>    =&gt; <span class="string">&quot;HEIF&quot;</span>,
             <span class="ident"><span class="self">Self</span>::JP2K</span>    =&gt; <span class="string">&quot;JPEG 2000&quot;</span>,
+            <span class="ident"><span class="self">Self</span>::DIB</span>     =&gt; <span class="string">&quot;DIB&quot;</span>,
         }
     }
 }
@@ -2179,6 +2197,16 @@
             <span class="ident">format</span>: <span class="ident">ImFormat::DDS</span>,
             <span class="ident">width</span>:  <span class="ident">w</span> <span class="kw">as</span> <span class="ident">u64</span>,
             <span class="ident">height</span>: <span class="ident">h</span> <span class="kw">as</span> <span class="ident">u64</span>,
+        });
+    } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">size</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">14</span> <span class="op">&amp;&amp;</span> <span class="ident">preamble</span>.<span class="ident">starts_with</span>(<span class="string">b&quot;\x28\0\0\0&quot;</span>) <span class="op">&amp;&amp;</span> <span class="kw-2">&amp;</span><span class="ident">preamble</span>[<span class="number">12</span>..<span class="number">14</span>] <span class="op">==</span> <span class="string">b&quot;\x01\0&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">preamble</span>[<span class="number">15</span>] <span class="op">==</span> <span class="number">0</span> {
+        <span class="comment">// DIB</span>
+        <span class="kw">let</span> <span class="ident">w</span> <span class="op">=</span> <span class="ident">i32::from_le_bytes</span>(<span class="macro">array4!</span>(<span class="ident">preamble</span>, <span class="number">4</span>));
+        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">i32::from_le_bytes</span>(<span class="macro">array4!</span>(<span class="ident">preamble</span>, <span class="number">8</span>));
+
+        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">ImInfo</span> {
+            <span class="ident">format</span>: <span class="ident">ImFormat::DIB</span>,
+            <span class="ident">width</span>:  <span class="ident">w</span> <span class="kw">as</span> <span class="ident">u64</span>,
+            <span class="ident">height</span>: <span class="ident">h</span>.<span class="ident">abs</span>() <span class="kw">as</span> <span class="ident">u64</span>,
         });
     } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">size</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">30</span> <span class="op">&amp;&amp;</span> <span class="ident">preamble</span>[<span class="number">1</span>] <span class="op">&lt;</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">preamble</span>[<span class="number">2</span>] <span class="op">&lt;</span> <span class="number">12</span> <span class="op">&amp;&amp;</span> <span class="ident">is_tga</span>(<span class="ident">file</span>)<span class="question-mark">?</span> {
         <span class="comment">// TGA</span>

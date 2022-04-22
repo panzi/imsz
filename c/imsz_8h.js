@@ -29,7 +29,8 @@ var imsz_8h =
       [ "IMSZ_TGA", "imsz_8h.html#a65569055a682779f95215e0613eacc35a8032f0969d3226f7a51b9256d86dc410", null ],
       [ "IMSZ_DDS", "imsz_8h.html#a65569055a682779f95215e0613eacc35a7fbebbfd3e5de0aec59d37762dcbde49", null ],
       [ "IMSZ_HEIF", "imsz_8h.html#a65569055a682779f95215e0613eacc35a87dc1ba36a45cc7ac7d4db0ea77b1513", null ],
-      [ "IMSZ_JP2K", "imsz_8h.html#a65569055a682779f95215e0613eacc35a3c004408e2b9a8154ec6414dad24e0fa", null ]
+      [ "IMSZ_JP2K", "imsz_8h.html#a65569055a682779f95215e0613eacc35a3c004408e2b9a8154ec6414dad24e0fa", null ],
+      [ "IMSZ_DIB", "imsz_8h.html#a65569055a682779f95215e0613eacc35a217f0a2abca45d4376aaf0fe1fcce9da", null ]
     ] ],
     [ "imsz", "imsz_8h.html#abf3da7b32d3026baeb4b9f0da3b5a4f6", null ],
     [ "imsz", "imsz_8h.html#ae5db3c4269648328df33f55f8aaf58a6", null ],

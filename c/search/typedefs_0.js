@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['imerror_52',['ImError',['../imsz_8h.html#a08e7b4c0d641a5b7fe137bf65905665a',1,'imsz.h']]],
-  ['imformat_53',['ImFormat',['../imsz_8h.html#ae31a5519c3faa6263b2ede7753bf07c5',1,'imsz.h']]],
-  ['iminfo_54',['ImInfo',['../imsz_8h.html#a03781d4181f753a251be2603602f1ed7',1,'imsz.h']]]
+  ['imerror_53',['ImError',['../imsz_8h.html#a08e7b4c0d641a5b7fe137bf65905665a',1,'imsz.h']]],
+  ['imformat_54',['ImFormat',['../imsz_8h.html#ae31a5519c3faa6263b2ede7753bf07c5',1,'imsz.h']]],
+  ['iminfo_55',['ImInfo',['../imsz_8h.html#a03781d4181f753a251be2603602f1ed7',1,'imsz.h']]]
 ];
