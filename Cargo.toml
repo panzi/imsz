@@ -10,6 +10,12 @@ documentation = "https://panzi.github.io/imsz/imsz/"
 license = "MIT"
 edition = "2021"
 keywords = [ "image", "metadata" ]
+categories = [ "multimedia::images" ]
+exclude = [
+    "/testdata", "/gentest.py", "/tmp", ".*", "perf.data", "perf.data.old",
+    "c/doxygen-awesome-css", "c/Doxygen", "c/doxygen-msearchbox-fix.css",
+    "c/header.html", "c/target"
+]
 
 [lib]
 name = "imsz"
