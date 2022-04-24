@@ -1,6 +1,6 @@
 # imsz
 
-[![Test Status](https://img.shields.io/github/workflow/status/panzi/imsz/Tests)](https://github.com/panzi/imsz/actions/workflows/tests.yml)
+[![Test Status](https://img.shields.io/github/workflow/status/panzi/imsz/Tests)](https://github.com/panzi/imsz/actions/workflows/test.yml)
 [![License](https://img.shields.io/github/license/panzi/imsz)](https://github.com/panzi/imsz/blob/main/LICENSE)
 [Reference](https://panzi.github.io/imsz/imsz) – [C API](https://panzi.github.io/imsz/c)
 
