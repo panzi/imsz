@@ -6,7 +6,10 @@ authors = [
     "Mathias Panzenböck <grosser.meister.morti@gmx.net>"
 ]
 repository = "https://github.com/panzi/imsz"
+documentation = "https://panzi.github.io/imsz/imsz/"
+license = "MIT"
 edition = "2021"
+keywords = [ "image", "metadata" ]
 
 [lib]
 name = "imsz"
