@@ -17,6 +17,7 @@ exclude = [
     "c/doxygen-awesome-css", "c/Doxygen", "c/doxygen-msearchbox-fix.css",
     "c/header.html", "c/target"
 ]
+rust-version = "1.59"
 
 [lib]
 name = "imsz"
