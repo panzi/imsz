@@ -89,7 +89,7 @@ BINXX=$(BUILD_DIR)/examples/imszxx$(BIN_EXT)
 
 ifeq ($(LINK),STATIC)
 ifeq ($(patsubst %-windows-gnu,windows-gnu,$(TARGET)),windows-gnu)
-    LIBS    = -lkernel32 -lws2_32 -lbcrypt -ladvapi32 -luserenv
+    LIBS    = -lws2_32 -lbcrypt -luserenv
     XFLAGS += -static
 else
     # It's fake static linking by directly linking libimsz.a,
@@ -99,7 +99,7 @@ else
     # version used for static linking.
     # However, these functions aren't *actually* used in the
     # binaries, so it could be fine?
-    LIBS    = -lgcc_s -lutil -lrt -lpthread -lm -ldl -lc
+    LIBS    = -lpthread -ldl
 endif
     DEPS    = $(LIB)
     OBJEX   = $(LIB)
