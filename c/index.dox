@@ -7,7 +7,7 @@
 ///
 /// See @ref imsz.h for all provided functionality.
 ///
-/// Example:
+/// ## Example
 /// ```
 /// const char *filename = "image.png";
 /// ImInfo info = IMSZ_INIT;
@@ -31,8 +31,52 @@
 /// 
 ///     default:
 ///         // NOTE: Under Windows `error` is here a Windows error code and
-///         // FormatMessageW() has to be used instead of strerror().
+///         // FormatMessage() has to be used instead of strerror().
 ///         fprintf(stderr, "%s: %s\n", fname, strerror(error));
 ///         break;
-///     }
+/// }
 /// ```
+/// 
+/// ## Compile
+/// 
+/// Build the static and dynamic C libraries by running `cargo build` in the `c`
+/// folder of the imsz project. (See also `cargo build --release`,
+/// `cargo build --target=i686-pc-windows-gnu`, `cargo build --target=x86_64-pc-windows-gnu`,
+/// etc.)
+/// 
+/// Build and link an example dynamically:
+/// ```bash
+/// gcc -Ltarget/debug -limsz -I. examples/imsz.c -o imsz
+/// ```
+/// 
+/// Build and link an example pseudo-statically (POSIX GCC):
+/// ```bash
+/// gcc -DIMSZ_STATIC -lpthread -ldl -I. examples/imsz.c target/debug/libimsz.a -o imsz
+/// ```
+/// `-DIMSZ_STATIC` is only really needed for MSVC.
+/// 
+/// Sadly this requires linking libraries that aren't *actually* used by imsz,
+/// but that are used be the Rust standard library.
+/// 
+/// Then why do this pseudo-statically? Because when creating an actual static
+/// library we get warnings about certain functions in glibc (`getpwuid_r` and
+/// `getaddrinfo`) that require at runtime the shared libraries from the glibc
+/// version used for static linking:
+/// ```bash
+/// gcc -static -DIMSZ_STATIC -I. examples/imsz.c -Ltarget/debug -limsz -lpthread -ldl -o imsz
+/// ```
+///
+/// Build and link an example statically (Windows MinGW):
+/// ```bash
+/// i686-w64-mingw32-gcc -static -DIMSZ_STATIC -I. examples/imsz.c \
+///    -Ltarget/i686-pc-windows-gnu/debug -limsz \
+///    -lws2_32 -lbcrypt -luserenv -o imsz
+/// ```
+/// Or:
+/// ```bash
+/// x86_64-w64-mingw32-gcc -static -DIMSZ_STATIC -I. examples/imsz.c \
+///    -Ltarget/x86_64-pc-windows-gnu/debug -limsz \
+///    -lws2_32 -lbcrypt -luserenv -o imsz
+/// ```
+/// Again, there are libraries that aren't actually used by imsz, but only by
+/// the Rust standard library.
