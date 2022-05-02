@@ -155,7 +155,7 @@ const FORMAT_NAMES: &'static [&'static [u8]] = &[
 ];
 
 #[cfg(target_family="windows")]
-const fn w<const LEN: usize>(ascii: [u8; LEN]) -> [u16; LEN] {
+const fn w<const LEN: usize>(ascii: &[u8; LEN]) -> [u16; LEN] {
     let mut wide = [0u16; LEN];
 
     let mut index = 0;
