@@ -95,7 +95,9 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="textblock"><p>Get image width and height reading as few bytes as possible.</p>
 <p>This library provides C bindings for the <a href="https://github.com/panzi/imsz">imsz Rust library</a>. (<a href="https://panzi.github.io/imsz/imsz">Rust reference</a>)</p>
 <p>See <a class="el" href="imsz_8h.html">imsz.h</a> for all provided functionality.</p>
-<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *filename = <span class="stringliteral">&quot;image.png&quot;</span>;</div>
+<h2><a class="anchor" id="autotoc_md0"></a>
+Example</h2>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *filename = <span class="stringliteral">&quot;image.png&quot;</span>;</div>
 <div class="line"><a class="code" href="structImInfo.html">ImInfo</a> info = <a class="code" href="imsz_8h.html#a00ef6174783a621fe64821f7fd4cc221">IMSZ_INIT</a>;</div>
 <div class="line"><span class="keywordtype">int</span> error = imsz(filename, &amp;info);</div>
 <div class="line"><span class="keywordflow">switch</span> (error) {</div>
@@ -117,11 +119,26 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">default</span>:</div>
 <div class="line">        <span class="comment">// NOTE: Under Windows `error` is here a Windows error code and</span></div>
-<div class="line">        <span class="comment">// FormatMessageW() has to be used instead of strerror().</span></div>
+<div class="line">        <span class="comment">// FormatMessage() has to be used instead of strerror().</span></div>
 <div class="line">        fprintf(stderr, <span class="stringliteral">&quot;%s: %s\n&quot;</span>, fname, strerror(error));</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">    }</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1"></a>
+Compile</h2>
+<p>Build the static and dynamic C libraries by running <code>cargo build</code> in the <code>c</code> folder of the imsz project. (See also <code>cargo build --release</code>, <code>cargo build --target=i686-pc-windows-gnu</code>, <code>cargo build --target=x86_64-pc-windows-gnu</code>, etc.)</p>
+<p>Build and link an example dynamically: </p><div class="fragment"><div class="line">gcc -Ltarget/debug -limsz -I. examples/imsz.c -o imsz</div>
+</div><!-- fragment --><p>Build and link an example pseudo-statically (POSIX GCC): </p><div class="fragment"><div class="line">gcc -DIMSZ_STATIC -lpthread -ldl -I. examples/imsz.c target/debug/libimsz.a -o imsz</div>
+</div><!-- fragment --><p><code>-DIMSZ_STATIC</code> is only really needed for MSVC.</p>
+<p>Sadly this requires linking libraries that aren't <em>actually</em> used by imsz, but that are used be the Rust standard library.</p>
+<p>Then why do this pseudo-statically? Because when creating an actual static library we get warnings about certain functions in glibc (<code>getpwuid_r</code> and <code>getaddrinfo</code>) that require at runtime the shared libraries from the glibc version used for static linking: </p><div class="fragment"><div class="line">gcc -static -DIMSZ_STATIC -I. examples/imsz.c -Ltarget/debug -limsz -lpthread -ldl -o imsz</div>
+</div><!-- fragment --><p>Build and link an example statically (Windows MinGW): </p><div class="fragment"><div class="line">i686-w64-mingw32-gcc -static -DIMSZ_STATIC -I. examples/imsz.c \</div>
+<div class="line">   -Ltarget/i686-pc-windows-gnu/debug -limsz \</div>
+<div class="line">   -lws2_32 -lbcrypt -luserenv -o imsz</div>
+</div><!-- fragment --><p>Or: </p><div class="fragment"><div class="line">x86_64-w64-mingw32-gcc -static -DIMSZ_STATIC -I. examples/imsz.c \</div>
+<div class="line">   -Ltarget/x86_64-pc-windows-gnu/debug -limsz \</div>
+<div class="line">   -lws2_32 -lbcrypt -luserenv -o imsz</div>
+</div><!-- fragment --><p>Again, there are libraries that aren't actually used by imsz, but only by the Rust standard library. </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aimsz_8h_html_abdb5c222ce01bfb28e61db448b99bb62"><div class="ttname"><a href="imsz_8h.html#abdb5c222ce01bfb28e61db448b99bb62">imsz_format_name</a></div><div class="ttdeci">const char * imsz_format_name(unsigned int format)</div></div>

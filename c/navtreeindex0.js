@@ -1,10 +1,10 @@
 var NAVTREEINDEX0 =
 {
-"annotated.html":[0,0],
-"classes.html":[0,1],
+"annotated.html":[0,2],
+"classes.html":[0,3],
 "files.html":[1,0],
-"functions.html":[0,2,0],
-"functions_vars.html":[0,2,1],
+"functions.html":[0,4,0],
+"functions_vars.html":[0,4,1],
 "globals.html":[1,1,0],
 "globals_defs.html":[1,1,5],
 "globals_enum.html":[1,1,3],
@@ -56,9 +56,11 @@ var NAVTREEINDEX0 =
 "imsz_8h.html#afc34a3081457d2885eb9b26bd2e630c1":[1,0,0,1],
 "imsz_8h_source.html":[1,0,0],
 "index.html":[],
+"index.html#autotoc_md0":[0],
+"index.html#autotoc_md1":[1],
 "pages.html":[],
-"structImInfo.html":[0,0,0],
-"structImInfo.html#a467fb454e66fd1bce42f04b20586401c":[0,0,0,0],
-"structImInfo.html#a9295f8bbf71ae34744daad6f819dd96f":[0,0,0,1],
-"structImInfo.html#add0fdc655ade959af870bcdb3a6b10a6":[0,0,0,2]
+"structImInfo.html":[0,2,0],
+"structImInfo.html#a467fb454e66fd1bce42f04b20586401c":[0,2,0,0],
+"structImInfo.html#a9295f8bbf71ae34744daad6f819dd96f":[0,2,0,1],
+"structImInfo.html#add0fdc655ade959af870bcdb3a6b10a6":[0,2,0,2]
 };

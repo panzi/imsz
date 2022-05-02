@@ -24,6 +24,8 @@ var NAVTREE =
 [
   [ "imsz", "index.html", [
     [ "Classes", "annotated.html", [
+      [ "Example", "index.html#autotoc_md0", null ],
+      [ "Compile", "index.html#autotoc_md1", null ],
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Members", "functions.html", [
