@@ -88,14 +88,17 @@ OBJXX=$(BUILD_DIR)/examples/imszxx.o
 BINXX=$(BUILD_DIR)/examples/imszxx$(BIN_EXT)
 
 ifeq ($(LINK),STATIC)
-    # It's fake static linking by direktly linking libimsz.a,
+ifeq ($(patsubst %-windows-gnu,windows-gnu,$(TARGET)),windows-gnu)
+    LIBS    = -lkernel32 -lws2_32 -lbcrypt -ladvapi32 -luserenv
+    XFLAGS += -static
+else
+    # It's fake static linking by directly linking libimsz.a,
     # i.e. the binary is not actually statically linked, since
     # certain functions in glibc (getpwuid_r and getaddrinfo)
     # require at runtime the shared libraries from the glibc
     # version used for static linking.
-ifeq ($(patsubst %-windows-gnu,windows-gnu,$(TARGET)),windows-gnu)
-    LIBS    = -lkernel32 -lws2_32 -lbcrypt -ladvapi32 -luserenv
-else
+    # However, these functions aren't *actually* used in the
+    # binaries, so it could be fine?
     LIBS    = -lgcc_s -lutil -lrt -lpthread -lm -ldl -lc
 endif
     DEPS    = $(LIB)
