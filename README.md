@@ -42,14 +42,20 @@ The relevant parts:
 ```Rust
 use imsz::imsz;
 
-let info = imsz(fname)?;
-println!("{}: {}, {} x {}", fname, info.format, info.width, info.height);
+let info = imsz(filename)?;
+println!("{}: {}, {} x {}", filename, info.format, info.width, info.height);
 // testdata/image.gif: GIF, 32 x 16
 
-// alternatively if you have something implementing Read and Seek:
+// or for already opened files:
+let info = imsz(File::open(filename)?);
+
+// or for in memory buffers:
+let info = imsz(b"\x89PNG\r\n\x1a\n...");
+
+// or for *anything* implementing Read and Seek:
 use imsz::imsz_from_reader;
 
-let mut file = BufReader::new(File::open(fname)?);
+let mut file = BufReader::new(File::open(filename)?);
 let info = imsz_from_reader(&mut file)?;
 ```
 
