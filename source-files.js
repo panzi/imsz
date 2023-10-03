@@ -1,3 +1,4 @@
-var N = null;var sourcesIndex = {};
-sourcesIndex["imsz"] = {"name":"","files":["lib.rs"]};
+var sourcesIndex = JSON.parse('{\
+"imsz":["",[],["lib.rs"]]\
+}');
 createSourceSidebar();
