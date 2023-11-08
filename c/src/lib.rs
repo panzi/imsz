@@ -188,6 +188,7 @@ const FORMAT_NAMESW: &'static [&'static [u16]] = &[
     &w(b"HEIF\0"),
     &w(b"JPEG 2000\0"),
     &w(b"DIB\0"),
+    &w(b"VTF\0"),
 ];
 
 #[no_mangle]

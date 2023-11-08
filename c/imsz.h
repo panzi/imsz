@@ -76,6 +76,7 @@ typedef enum ImFormat {
     IMSZ_HEIF    = 16u, ///< HEIC/HEIF files.
     IMSZ_JP2K    = 17u, ///< JPEG 2000 files.
     IMSZ_DIB     = 18u, ///< Device-Independent bitmap files.
+    IMSZ_VTF     = 19u, ///< Valve Texture Format.
 } ImFormat;
 
 /// Initialize an ImInfo variable with all 0 values.

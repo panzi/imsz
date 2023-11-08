@@ -90,6 +90,9 @@ pub enum ImFormat {
 
     /// Device-Independent Bitmap files.
     DIB     = 18,
+
+    /// Valve Texture Format.
+    VTF     = 19,
 }
 
 impl ImFormat {
@@ -113,6 +116,7 @@ impl ImFormat {
             Self::HEIF    => "HEIF",
             Self::JP2K    => "JPEG 2000",
             Self::DIB     => "DIB",
+            Self::VTF     => "VTF",
         }
     }
 }
@@ -1093,6 +1097,20 @@ where R: Read, R: Seek {
             format: ImFormat::DIB,
             width:  w as u64,
             height: h.abs() as u64,
+        });
+    } else if size >= 20 && preamble.starts_with(b"VTF\0") {
+        // VTF
+        let header_size = u32::from_le_bytes(array4!(preamble, 12));
+        let w = u16::from_le_bytes(array2!(preamble, 16));
+        let h = u16::from_le_bytes(array2!(preamble, 18));
+        if header_size < 10 {
+            return Err(ImError::ParserError(ImFormat::VTF));
+        }
+
+        return Ok(ImInfo {
+            format: ImFormat::VTF,
+            width:  w as u64,
+            height: h as u64,
         });
     } else if size >= 30 && preamble[1] < 2 && preamble[2] < 12 && is_tga(file)? {
         // TGA

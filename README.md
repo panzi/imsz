@@ -77,6 +77,7 @@ let info = imsz_from_reader(&mut file)?;
 * QOI
 * TGA
 * TIFF
+* VTF
 * WEBP
 * XCF
 
