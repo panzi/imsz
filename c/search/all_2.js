@@ -34,7 +34,8 @@ var searchData=
   ['imsz_5fqoi_33',['IMSZ_QOI',['../imsz_8h.html#a65569055a682779f95215e0613eacc35acc1d62a72a8d0026b7f23fc14cba4e83',1,'imsz.h']]],
   ['imsz_5ftga_34',['IMSZ_TGA',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a8032f0969d3226f7a51b9256d86dc410',1,'imsz.h']]],
   ['imsz_5ftiff_35',['IMSZ_TIFF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35abaa29356ed73ebfae8fcb2e8a53aad23',1,'imsz.h']]],
-  ['imsz_5fwebp_36',['IMSZ_WEBP',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a621bc2a8e9cae78006f442b0999b4c3d',1,'imsz.h']]],
-  ['imsz_5fxcf_37',['IMSZ_XCF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35af500baa74fd53d7af6d3d77ea813af31',1,'imsz.h']]],
-  ['imsz_38',['imsz',['../index.html',1,'']]]
+  ['imsz_5fvtf_36',['IMSZ_VTF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a4107c9cc86d735308d7e63a5a4b3829b',1,'imsz.h']]],
+  ['imsz_5fwebp_37',['IMSZ_WEBP',['../imsz_8h.html#a65569055a682779f95215e0613eacc35a621bc2a8e9cae78006f442b0999b4c3d',1,'imsz.h']]],
+  ['imsz_5fxcf_38',['IMSZ_XCF',['../imsz_8h.html#a65569055a682779f95215e0613eacc35af500baa74fd53d7af6d3d77ea813af31',1,'imsz.h']]],
+  ['imsz_39',['imsz',['../index.html',1,'']]]
 ];
