@@ -64,6 +64,7 @@ class ImFormat(Enum):
     HEIF    = 16
     JP2K    = 17
     DIB     = 18
+    VTF     = 19
 
     def __str__(self) -> str:
         return ffi.string(_imsz.imsz_format_name(self.value)).decode('ASCII')

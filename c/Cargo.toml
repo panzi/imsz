@@ -1,7 +1,7 @@
 [package]
 name = "imsz_c"
 description = "Get width and height from an image file reading as few bytes as possible."
-version = "0.2.2"
+version = "0.3.0"
 authors = [
     "Paulo Scardine <paulo@scardine.com.br>",
     "Mathias Panzenböck <grosser.meister.morti@gmx.net>"
