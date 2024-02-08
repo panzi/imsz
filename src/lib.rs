@@ -150,16 +150,28 @@ pub enum ImError {
 }
 
 impl std::fmt::Display for ImError {
+    #[inline]
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::IO(error) => error.fmt(f),
             Self::UnknownFormat => "Unknown Format".fmt(f),
-            Self::ParserError(format) => write!(f, "Error parsing {} image", format)
+            Self::ParserError(format) => write!(f, "Error parsing {format} image")
+        }
+    }
+}
+
+impl std::error::Error for ImError {
+    #[inline]
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::IO(error) => Some(error),
+            _ => None
         }
     }
 }
 
 impl From<std::io::Error> for ImError {
+    #[inline]
     fn from(error: std::io::Error) -> Self {
         ImError::IO(error)
     }
@@ -173,6 +185,7 @@ trait Ratio<T: Sized> {
 }
 
 impl Ratio<u32> for (u32, u32) {
+    #[inline]
     fn value<R>(&self) -> R::Output
     where R: Sized, R: std::ops::Div, R: From<u32> {
         let (a, b) = *self;
@@ -183,6 +196,7 @@ impl Ratio<u32> for (u32, u32) {
 }
 
 impl Ratio<i32> for (i32, i32) {
+    #[inline]
     fn value<R>(&self) -> R::Output
     where R: Sized, R: std::ops::Div, R: From<i32> {
         let (a, b) = *self;
