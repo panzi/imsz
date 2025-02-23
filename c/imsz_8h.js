@@ -1,7 +1,6 @@
 var imsz_8h =
 [
     [ "ImInfo", "structImInfo.html", "structImInfo" ],
-    [ "imsz_from_file", "imsz_8h.html#afc34a3081457d2885eb9b26bd2e630c1", null ],
     [ "IMSZ_INIT", "imsz_8h.html#a00ef6174783a621fe64821f7fd4cc221", null ],
     [ "ImError", "imsz_8h.html#a08e7b4c0d641a5b7fe137bf65905665a", null ],
     [ "ImFormat", "imsz_8h.html#ae31a5519c3faa6263b2ede7753bf07c5", null ],
@@ -44,6 +43,7 @@ var imsz_8h =
     [ "imsz_format_namew", "imsz_8h.html#a906c9e466f601765166fcdfc88b03466", null ],
     [ "imsz_from_buffer", "imsz_8h.html#ab82b6b7b4d5ea5b26f21a82b7f7ed89f", null ],
     [ "imsz_from_fd", "imsz_8h.html#a145e962d3ae91ccee260887963609aaf", null ],
+    [ "imsz_from_file", "imsz_8h.html#ac5a9b543b1b83429497eeb40256ac97c", null ],
     [ "imsz_from_handle", "imsz_8h.html#ae19020f7de81b052e59b206acf0e2129", null ],
     [ "imsz_from_path", "imsz_8h.html#a18b800cb8c934351b298a9ccaaeca04e", null ],
     [ "imsz_from_pathw", "imsz_8h.html#a56bb9ec2039480c3423faee43e944f10", null ]

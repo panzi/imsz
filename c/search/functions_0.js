@@ -5,7 +5,8 @@ var searchData=
   ['imsz_5fformat_5fnamew_46',['imsz_format_namew',['../imsz_8h.html#a906c9e466f601765166fcdfc88b03466',1,'imsz.h']]],
   ['imsz_5ffrom_5fbuffer_47',['imsz_from_buffer',['../imsz_8h.html#ab82b6b7b4d5ea5b26f21a82b7f7ed89f',1,'imsz.h']]],
   ['imsz_5ffrom_5ffd_48',['imsz_from_fd',['../imsz_8h.html#a145e962d3ae91ccee260887963609aaf',1,'imsz.h']]],
-  ['imsz_5ffrom_5fhandle_49',['imsz_from_handle',['../imsz_8h.html#ae19020f7de81b052e59b206acf0e2129',1,'imsz.h']]],
-  ['imsz_5ffrom_5fpath_50',['imsz_from_path',['../imsz_8h.html#a18b800cb8c934351b298a9ccaaeca04e',1,'imsz.h']]],
-  ['imsz_5ffrom_5fpathw_51',['imsz_from_pathw',['../imsz_8h.html#a56bb9ec2039480c3423faee43e944f10',1,'imsz.h']]]
+  ['imsz_5ffrom_5ffile_49',['imsz_from_file',['../imsz_8h.html#ac5a9b543b1b83429497eeb40256ac97c',1,'imsz.h']]],
+  ['imsz_5ffrom_5fhandle_50',['imsz_from_handle',['../imsz_8h.html#ae19020f7de81b052e59b206acf0e2129',1,'imsz.h']]],
+  ['imsz_5ffrom_5fpath_51',['imsz_from_path',['../imsz_8h.html#a18b800cb8c934351b298a9ccaaeca04e',1,'imsz.h']]],
+  ['imsz_5ffrom_5fpathw_52',['imsz_from_pathw',['../imsz_8h.html#a56bb9ec2039480c3423faee43e944f10',1,'imsz.h']]]
 ];
