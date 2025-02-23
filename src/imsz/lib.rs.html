@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="imsz" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-42caa33d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="imsz" data-themes="" data-resource-suffix="" data-rustdoc-version="1.84.1 (e71f9a9a9 2025-01-27)" data-channel="1.84.1" data-search-js="search-92e6798f.js" data-settings-js="settings-0f613d39.js" ><script src="../../static.files/storage-59e33391.js"></script><script defer src="../../static.files/src-script-56102188.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f194d8c.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1><div class="sub-heading">imsz/</div>lib.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers">
+<a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1139,7 +1140,31 @@
 <a href="#1139" id="1139">1139</a>
 <a href="#1140" id="1140">1140</a>
 <a href="#1141" id="1141">1141</a>
-</pre></div><pre class="rust"><code><span class="doccomment">//! Get image width and height reading as few bytes as possible.
+<a href="#1142" id="1142">1142</a>
+<a href="#1143" id="1143">1143</a>
+<a href="#1144" id="1144">1144</a>
+<a href="#1145" id="1145">1145</a>
+<a href="#1146" id="1146">1146</a>
+<a href="#1147" id="1147">1147</a>
+<a href="#1148" id="1148">1148</a>
+<a href="#1149" id="1149">1149</a>
+<a href="#1150" id="1150">1150</a>
+<a href="#1151" id="1151">1151</a>
+<a href="#1152" id="1152">1152</a>
+<a href="#1153" id="1153">1153</a>
+<a href="#1154" id="1154">1154</a>
+<a href="#1155" id="1155">1155</a>
+<a href="#1156" id="1156">1156</a>
+<a href="#1157" id="1157">1157</a>
+<a href="#1158" id="1158">1158</a>
+<a href="#1159" id="1159">1159</a>
+<a href="#1160" id="1160">1160</a>
+<a href="#1161" id="1161">1161</a>
+<a href="#1162" id="1162">1162</a>
+<a href="#1163" id="1163">1163</a>
+<a href="#1164" id="1164">1164</a>
+<a href="#1165" id="1165">1165</a>
+<a href="#1166" id="1166">1166</a></pre></div><pre class="rust"><code><span class="doccomment">//! Get image width and height reading as few bytes as possible.
 //! 
 //! [GitHub](https://github.com/panzi/imsz) – [C API Reference](https://panzi.github.io/imsz/c)
 //! 
@@ -1150,9 +1175,9 @@
 //! # fn main() -&gt; imsz::ImResult&lt;()&gt; {
 //! use imsz::imsz;
 //! 
-//! let fname = &quot;testdata/image.gif&quot;;
+//! let fname = "testdata/image.gif";
 //! let info = imsz(fname)?;
-//! println!(&quot;{}: {}, {} x {}&quot;, fname, info.format, info.width, info.height);
+//! println!("{}: {}, {} x {}", fname, info.format, info.width, info.height);
 //! // testdata/image.gif: GIF, 32 x 16
 //! 
 //! // alternatively if you have something implementing std::io::Read and std::io::Seek:
@@ -1213,9 +1238,9 @@
 
     <span class="doccomment">/// TARGA (Truevision Advanced Raster Graphics Adapter) files.
     /// 
-    /// Only if the file ends in `b&quot;TRUEVISION-XFILE.\0&quot;` since otherwise there
+    /// Only if the file ends in `b"TRUEVISION-XFILE.\0"` since otherwise there
     /// is no good way to detect TGA files. Note that this string is optional
-    /// to this file format and thus there can be TGA files that aren&#39;t supported
+    /// to this file format and thus there can be TGA files that aren't supported
     /// by this library.
     </span>TGA     = <span class="number">14</span>,
 
@@ -1234,37 +1259,41 @@
 
     <span class="doccomment">/// Valve Texture Format.
     </span>VTF     = <span class="number">19</span>,
+
+    <span class="doccomment">/// Interleaved Bitmap files, including Planar Bitmap variant.
+    </span>ILBM    = <span class="number">20</span>,
 }
 
 <span class="kw">impl </span>ImFormat {
-    <span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="kw">pub const fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::GIF     =&gt; <span class="string">&quot;GIF&quot;</span>,
-            <span class="self">Self</span>::PNG     =&gt; <span class="string">&quot;PNG&quot;</span>,
-            <span class="self">Self</span>::BMP     =&gt; <span class="string">&quot;BMP&quot;</span>,
-            <span class="self">Self</span>::JPEG    =&gt; <span class="string">&quot;JPEG&quot;</span>,
-            <span class="self">Self</span>::WEBP    =&gt; <span class="string">&quot;WebP&quot;</span>,
-            <span class="self">Self</span>::QOI     =&gt; <span class="string">&quot;QOI&quot;</span>,
-            <span class="self">Self</span>::PSD     =&gt; <span class="string">&quot;PSD&quot;</span>,
-            <span class="self">Self</span>::XCF     =&gt; <span class="string">&quot;XCF&quot;</span>,
-            <span class="self">Self</span>::ICO     =&gt; <span class="string">&quot;ICO&quot;</span>,
-            <span class="self">Self</span>::AVIF    =&gt; <span class="string">&quot;AVIF&quot;</span>,
-            <span class="self">Self</span>::TIFF    =&gt; <span class="string">&quot;TIFF&quot;</span>,
-            <span class="self">Self</span>::OpenEXR =&gt; <span class="string">&quot;OpenEXR&quot;</span>,
-            <span class="self">Self</span>::PCX     =&gt; <span class="string">&quot;PCX&quot;</span>,
-            <span class="self">Self</span>::TGA     =&gt; <span class="string">&quot;TGA&quot;</span>,
-            <span class="self">Self</span>::DDS     =&gt; <span class="string">&quot;DDS&quot;</span>,
-            <span class="self">Self</span>::HEIF    =&gt; <span class="string">&quot;HEIF&quot;</span>,
-            <span class="self">Self</span>::JP2K    =&gt; <span class="string">&quot;JPEG 2000&quot;</span>,
-            <span class="self">Self</span>::DIB     =&gt; <span class="string">&quot;DIB&quot;</span>,
-            <span class="self">Self</span>::VTF     =&gt; <span class="string">&quot;VTF&quot;</span>,
+            <span class="self">Self</span>::GIF     =&gt; <span class="string">"GIF"</span>,
+            <span class="self">Self</span>::PNG     =&gt; <span class="string">"PNG"</span>,
+            <span class="self">Self</span>::BMP     =&gt; <span class="string">"BMP"</span>,
+            <span class="self">Self</span>::JPEG    =&gt; <span class="string">"JPEG"</span>,
+            <span class="self">Self</span>::WEBP    =&gt; <span class="string">"WebP"</span>,
+            <span class="self">Self</span>::QOI     =&gt; <span class="string">"QOI"</span>,
+            <span class="self">Self</span>::PSD     =&gt; <span class="string">"PSD"</span>,
+            <span class="self">Self</span>::XCF     =&gt; <span class="string">"XCF"</span>,
+            <span class="self">Self</span>::ICO     =&gt; <span class="string">"ICO"</span>,
+            <span class="self">Self</span>::AVIF    =&gt; <span class="string">"AVIF"</span>,
+            <span class="self">Self</span>::TIFF    =&gt; <span class="string">"TIFF"</span>,
+            <span class="self">Self</span>::OpenEXR =&gt; <span class="string">"OpenEXR"</span>,
+            <span class="self">Self</span>::PCX     =&gt; <span class="string">"PCX"</span>,
+            <span class="self">Self</span>::TGA     =&gt; <span class="string">"TGA"</span>,
+            <span class="self">Self</span>::DDS     =&gt; <span class="string">"DDS"</span>,
+            <span class="self">Self</span>::HEIF    =&gt; <span class="string">"HEIF"</span>,
+            <span class="self">Self</span>::JP2K    =&gt; <span class="string">"JPEG 2000"</span>,
+            <span class="self">Self</span>::DIB     =&gt; <span class="string">"DIB"</span>,
+            <span class="self">Self</span>::VTF     =&gt; <span class="string">"VTF"</span>,
+            <span class="self">Self</span>::ILBM    =&gt; <span class="string">"ILBM"</span>,
         }
     }
 }
 
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>ImFormat {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="self">self</span>.name().fmt(f)
     }
 }
@@ -1282,7 +1311,7 @@
     <span class="doccomment">/// If there was an IO error reading the image file this error is returend.
     </span>IO(std::io::Error),
 
-    <span class="doccomment">/// If the image format couldn&#39;t be detected this error is returend.
+    <span class="doccomment">/// If the image format couldn't be detected this error is returend.
     </span>UnknownFormat,
 
     <span class="doccomment">/// If the image format was detected, but then something went wrong parsing
@@ -1292,18 +1321,18 @@
 
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>ImError {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::IO(error) =&gt; error.fmt(f),
-            <span class="self">Self</span>::UnknownFormat =&gt; <span class="string">&quot;Unknown Format&quot;</span>.fmt(f),
-            <span class="self">Self</span>::ParserError(format) =&gt; <span class="macro">write!</span>(f, <span class="string">&quot;Error parsing {format} image&quot;</span>)
+            <span class="self">Self</span>::UnknownFormat =&gt; <span class="string">"Unknown Format"</span>.fmt(f),
+            <span class="self">Self</span>::ParserError(format) =&gt; <span class="macro">write!</span>(f, <span class="string">"Error parsing {format} image"</span>)
         }
     }
 }
 
 <span class="kw">impl </span>std::error::Error <span class="kw">for </span>ImError {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)&gt; {
+    </span><span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>)&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::IO(error) =&gt; <span class="prelude-val">Some</span>(error),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None
@@ -1531,19 +1560,19 @@
     }
 }
 
-<span class="macro">macro_rules! </span>array2 {
+<span class="macro">macro_rules!</span> array2 {
     (<span class="macro-nonterminal">$data</span>:expr, <span class="macro-nonterminal">$offset</span>:expr) =&gt; {
         [ <span class="macro-nonterminal">$data</span>[<span class="macro-nonterminal">$offset</span>], <span class="macro-nonterminal">$data</span>[<span class="macro-nonterminal">$offset </span>+ <span class="number">1</span>] ]
     };
 }
 
-<span class="macro">macro_rules! </span>array4 {
+<span class="macro">macro_rules!</span> array4 {
     (<span class="macro-nonterminal">$data</span>:expr, <span class="macro-nonterminal">$offset</span>:expr) =&gt; {
         [ <span class="macro-nonterminal">$data</span>[<span class="macro-nonterminal">$offset</span>], <span class="macro-nonterminal">$data</span>[<span class="macro-nonterminal">$offset </span>+ <span class="number">1</span>], <span class="macro-nonterminal">$data</span>[<span class="macro-nonterminal">$offset </span>+ <span class="number">2</span>], <span class="macro-nonterminal">$data</span>[<span class="macro-nonterminal">$offset </span>+ <span class="number">3</span>] ]
     };
 }
 
-<span class="macro">macro_rules! </span>map_err {
+<span class="macro">macro_rules!</span> map_err {
     (<span class="macro-nonterminal">$fmt</span>:expr, <span class="macro-nonterminal">$expr</span>:expr) =&gt; {
         <span class="kw">if let </span><span class="prelude-val">Err</span>(<span class="kw">_</span>) = <span class="macro-nonterminal">$expr </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(<span class="macro-nonterminal">$fmt</span>));
@@ -1555,7 +1584,7 @@
     };
 }
 
-<span class="macro">macro_rules! </span>map_expr {
+<span class="macro">macro_rules!</span> map_expr {
     (<span class="macro-nonterminal">$fmt</span>:ident <span class="macro-nonterminal">$expr</span>:expr) =&gt; {
         <span class="kw">match </span><span class="macro-nonterminal">$expr </span>{
             <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::<span class="macro-nonterminal">$fmt</span>)),
@@ -1664,7 +1693,7 @@
     file.seek(SeekFrom::End(-<span class="number">18</span>))<span class="question-mark">?</span>;
     <span class="kw">let </span><span class="kw-2">mut </span>buf = [<span class="number">0u8</span>; <span class="number">18</span>];
     file.read_exact(<span class="kw-2">&amp;mut </span>buf)<span class="question-mark">?</span>;
-    <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span>buf == <span class="string">b&quot;TRUEVISION-XFILE.\0&quot;</span>);
+    <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span>buf == <span class="string">b"TRUEVISION-XFILE.\0"</span>);
 }
 
 <span class="doccomment">/// Trait to provide generic [imsz()] function for paths, buffers, and readers.
@@ -1777,20 +1806,20 @@
     }
 }
 
-<span class="attr">#[cfg(any(target_family=<span class="string">&quot;unix&quot;</span>, target_family=<span class="string">&quot;windows&quot;</span>, target_family=<span class="string">&quot;wasi&quot;</span>))]
+<span class="attr">#[cfg(any(target_family=<span class="string">"unix"</span>, target_family=<span class="string">"windows"</span>))]
 </span><span class="kw">impl </span>Imsz <span class="kw">for </span><span class="kw-2">&amp;</span>std::io::Stdin {
     <span class="doccomment">/// WARNING: This looses already buffered input!
     </span><span class="attr">#[inline]
     </span><span class="kw">fn </span>imsz(<span class="self">self</span>) -&gt; ImResult&lt;ImInfo&gt; {
         <span class="kw">let </span>lock = <span class="self">self</span>.lock();
 
-        <span class="attr">#[cfg(any(target_family=<span class="string">&quot;unix&quot;</span>, target_family=<span class="string">&quot;wasi&quot;</span>))]
+        <span class="attr">#[cfg(target_family=<span class="string">"unix"</span>)]
         </span><span class="kw">let </span><span class="kw-2">mut </span>seekable_stdin = <span class="kw">unsafe </span>{
             <span class="kw">use </span>std::os::unix::io::{AsRawFd, FromRawFd};
             std::fs::File::from_raw_fd(lock.as_raw_fd())
         };
 
-        <span class="attr">#[cfg(target_family=<span class="string">&quot;windows&quot;</span>)]
+        <span class="attr">#[cfg(target_family=<span class="string">"windows"</span>)]
         </span><span class="kw">let </span><span class="kw-2">mut </span>seekable_stdin = <span class="kw">unsafe </span>{
             <span class="kw">use </span>std::os::windows::io::{AsRawHandle, FromRawHandle};
             std::fs::File::from_raw_handle(lock.as_raw_handle())
@@ -1872,7 +1901,7 @@
 
     <span class="kw">let </span>size = file.read(<span class="kw-2">&amp;mut </span>preamble)<span class="question-mark">?</span>;
 
-    <span class="kw">if </span>size &gt;= <span class="number">6 </span>&amp;&amp; (<span class="kw-2">&amp;</span>preamble[..<span class="number">6</span>] == <span class="string">b&quot;GIF87a&quot; </span>|| <span class="kw-2">&amp;</span>preamble[..<span class="number">6</span>] == <span class="string">b&quot;GIF89a&quot;</span>) {
+    <span class="kw">if </span>size &gt;= <span class="number">6 </span>&amp;&amp; (<span class="kw-2">&amp;</span>preamble[..<span class="number">6</span>] == <span class="string">b"GIF87a" </span>|| <span class="kw-2">&amp;</span>preamble[..<span class="number">6</span>] == <span class="string">b"GIF89a"</span>) {
         <span class="comment">// GIF
         </span><span class="kw">if </span>size &lt; <span class="number">10 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::GIF));
@@ -1885,14 +1914,14 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">8 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;\x89PNG\r\n\x1a\n&quot;</span>) {
+    } <span class="kw">else if </span>size &gt;= <span class="number">8 </span>&amp;&amp; preamble.starts_with(<span class="string">b"\x89PNG\r\n\x1a\n"</span>) {
         <span class="comment">// PNG
         </span><span class="kw">if </span>size &lt; <span class="number">24 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::PNG));
         }
 
         <span class="kw">let </span>chunk_size = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">8</span>));
-        <span class="kw">if </span>chunk_size &lt; <span class="number">8 </span>|| <span class="kw-2">&amp;</span>preamble[<span class="number">12</span>..<span class="number">16</span>] != <span class="string">b&quot;IHDR&quot; </span>{
+        <span class="kw">if </span>chunk_size &lt; <span class="number">8 </span>|| <span class="kw-2">&amp;</span>preamble[<span class="number">12</span>..<span class="number">16</span>] != <span class="string">b"IHDR" </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::PNG));
         }
 
@@ -1904,7 +1933,7 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">10 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;BM&quot;</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">6</span>..<span class="number">10</span>] == <span class="string">b&quot;\0\0\0\0&quot; </span>{
+    } <span class="kw">else if </span>size &gt;= <span class="number">10 </span>&amp;&amp; preamble.starts_with(<span class="string">b"BM"</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">6</span>..<span class="number">10</span>] == <span class="string">b"\0\0\0\0" </span>{
         <span class="comment">// BMP
         </span><span class="kw">let </span>file_size = u32::from_le_bytes(<span class="macro">array4!</span>(preamble, <span class="number">2</span>));
         <span class="kw">let </span>min_size = (file_size <span class="kw">as </span>usize).min(size);
@@ -1938,17 +1967,17 @@
                 </span>height: h.abs() <span class="kw">as </span>u64
             });
         }
-    } <span class="kw">else if </span>size &gt;= <span class="number">3 </span>&amp;&amp; <span class="kw-2">&amp;</span>preamble[..<span class="number">2</span>] == <span class="string">b&quot;\xff\xd8&quot; </span>{
+    } <span class="kw">else if </span>size &gt;= <span class="number">3 </span>&amp;&amp; <span class="kw-2">&amp;</span>preamble[..<span class="number">2</span>] == <span class="string">b"\xff\xd8" </span>{
         <span class="comment">// JPEG
         </span><span class="macro">map_err!</span>(JPEG file.seek(SeekFrom::Start(<span class="number">3</span>)));
         <span class="kw">let </span><span class="kw-2">mut </span>buf1: [u8; <span class="number">1</span>] = [ preamble[<span class="number">2</span>] ];
         <span class="kw">let </span><span class="kw-2">mut </span>buf2: [u8; <span class="number">2</span>] = [<span class="number">0</span>; <span class="number">2</span>];
         <span class="kw">let </span><span class="kw-2">mut </span>buf4: [u8; <span class="number">4</span>] = [<span class="number">0</span>; <span class="number">4</span>];
-        <span class="kw">while </span>buf1[<span class="number">0</span>] != <span class="string">b&#39;\xda&#39; </span>&amp;&amp; buf1[<span class="number">0</span>] != <span class="number">0 </span>{
-            <span class="kw">while </span>buf1[<span class="number">0</span>] != <span class="string">b&#39;\xff&#39; </span>{
+        <span class="kw">while </span>buf1[<span class="number">0</span>] != <span class="string">b'\xda' </span>&amp;&amp; buf1[<span class="number">0</span>] != <span class="number">0 </span>{
+            <span class="kw">while </span>buf1[<span class="number">0</span>] != <span class="string">b'\xff' </span>{
                 <span class="macro">map_err!</span>(JPEG file.read_exact(<span class="kw-2">&amp;mut </span>buf1));
             }
-            <span class="kw">while </span>buf1[<span class="number">0</span>] == <span class="string">b&#39;\xff&#39; </span>{
+            <span class="kw">while </span>buf1[<span class="number">0</span>] == <span class="string">b'\xff' </span>{
                 <span class="macro">map_err!</span>(JPEG file.read_exact(<span class="kw-2">&amp;mut </span>buf1));
             }
             <span class="kw">if </span>buf1[<span class="number">0</span>] &gt;= <span class="number">0xc0 </span>&amp;&amp; buf1[<span class="number">0</span>] &lt;= <span class="number">0xc3 </span>{
@@ -1970,10 +1999,10 @@
             <span class="macro">map_err!</span>(JPEG file.read_exact(<span class="kw-2">&amp;mut </span>buf1));
         }
         <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::JPEG));
-    } <span class="kw">else if </span>size &gt;= <span class="number">30 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;RIFF&quot;</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">8</span>..<span class="number">12</span>] == <span class="string">b&quot;WEBP&quot; </span>{
+    } <span class="kw">else if </span>size &gt;= <span class="number">30 </span>&amp;&amp; preamble.starts_with(<span class="string">b"RIFF"</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">8</span>..<span class="number">12</span>] == <span class="string">b"WEBP" </span>{
         <span class="comment">// WEBP
         </span><span class="kw">let </span>hdr = <span class="kw-2">&amp;</span>preamble[<span class="number">12</span>..<span class="number">16</span>];
-        <span class="kw">if </span>hdr == <span class="string">b&quot;VP8L&quot; </span>{
+        <span class="kw">if </span>hdr == <span class="string">b"VP8L" </span>{
             <span class="kw">let </span>b0 = preamble[<span class="number">21</span>];
             <span class="kw">let </span>b1 = preamble[<span class="number">22</span>];
             <span class="kw">let </span>b2 = preamble[<span class="number">23</span>];
@@ -1987,7 +2016,7 @@
                 width:  w <span class="kw">as </span>u64,
                 height: h <span class="kw">as </span>u64,
             });
-        } <span class="kw">else if </span>hdr == <span class="string">b&quot;VP8 &quot; </span>{
+        } <span class="kw">else if </span>hdr == <span class="string">b"VP8 " </span>{
             <span class="kw">let </span>b0 = preamble[<span class="number">23</span>];
             <span class="kw">let </span>b1 = preamble[<span class="number">24</span>];
             <span class="kw">let </span>b2 = preamble[<span class="number">25</span>];
@@ -2001,7 +2030,7 @@
                 width:  w <span class="kw">as </span>u64 &amp; <span class="number">0x3ffff</span>,
                 height: h <span class="kw">as </span>u64 &amp; <span class="number">0x3ffff</span>,
             });
-        } <span class="kw">else if </span>hdr == <span class="string">b&quot;VP8X&quot; </span>{
+        } <span class="kw">else if </span>hdr == <span class="string">b"VP8X" </span>{
             <span class="kw">let </span>w1 = preamble[<span class="number">24</span>] <span class="kw">as </span>u32;
             <span class="kw">let </span>w2 = preamble[<span class="number">25</span>] <span class="kw">as </span>u32;
             <span class="kw">let </span>w3 = preamble[<span class="number">26</span>] <span class="kw">as </span>u32;
@@ -2019,9 +2048,9 @@
             });
         }
         <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::WEBP));
-    } <span class="kw">else if </span>size &gt;= <span class="number">12 </span>&amp;&amp; (<span class="kw-2">&amp;</span>preamble[<span class="number">4</span>..<span class="number">12</span>] == <span class="string">b&quot;ftypavif&quot; </span>|| <span class="kw-2">&amp;</span>preamble[<span class="number">4</span>..<span class="number">12</span>] == <span class="string">b&quot;ftypheic&quot;</span>) {
+    } <span class="kw">else if </span>size &gt;= <span class="number">12 </span>&amp;&amp; (<span class="kw-2">&amp;</span>preamble[<span class="number">4</span>..<span class="number">12</span>] == <span class="string">b"ftypavif" </span>|| <span class="kw-2">&amp;</span>preamble[<span class="number">4</span>..<span class="number">12</span>] == <span class="string">b"ftypheic"</span>) {
         <span class="comment">// AVIF and HEIF
-        </span><span class="kw">let </span>format = <span class="kw">if </span><span class="kw-2">&amp;</span>preamble[<span class="number">8</span>..<span class="number">12</span>] == <span class="string">b&quot;avif&quot; </span>{
+        </span><span class="kw">let </span>format = <span class="kw">if </span><span class="kw-2">&amp;</span>preamble[<span class="number">8</span>..<span class="number">12</span>] == <span class="string">b"avif" </span>{
             ImFormat::AVIF
         } <span class="kw">else </span>{
             ImFormat::HEIF
@@ -2034,14 +2063,14 @@
         <span class="macro">map_err!</span>(format, file.seek(SeekFrom::Start(ftype_size <span class="kw">as </span>u64)));
 
         <span class="comment">// chunk nesting: meta &gt; iprp &gt; ipco &gt; ispe
-        </span><span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b&quot;meta&quot;</span>, u64::MAX, format)<span class="question-mark">?</span>;
+        </span><span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b"meta"</span>, u64::MAX, format)<span class="question-mark">?</span>;
         <span class="kw">if </span>chunk_size &lt; <span class="number">12 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(format));
         }
         <span class="macro">map_err!</span>(format, file.seek(SeekFrom::Current(<span class="number">4</span>)));
-        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b&quot;iprp&quot;</span>, chunk_size - <span class="number">12</span>, format)<span class="question-mark">?</span>;
-        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b&quot;ipco&quot;</span>, chunk_size -  <span class="number">8</span>, format)<span class="question-mark">?</span>;
-        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b&quot;ispe&quot;</span>, chunk_size -  <span class="number">8</span>, format)<span class="question-mark">?</span>;
+        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b"iprp"</span>, chunk_size - <span class="number">12</span>, format)<span class="question-mark">?</span>;
+        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b"ipco"</span>, chunk_size -  <span class="number">8</span>, format)<span class="question-mark">?</span>;
+        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b"ispe"</span>, chunk_size -  <span class="number">8</span>, format)<span class="question-mark">?</span>;
 
         <span class="kw">if </span>chunk_size &lt; <span class="number">12 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(format));
@@ -2058,12 +2087,12 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">24 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;\0\0\0\x0CjP  &quot;</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">16</span>..<span class="number">24</span>] == <span class="string">b&quot;ftypjp2 &quot; </span>{
+    } <span class="kw">else if </span>size &gt;= <span class="number">24 </span>&amp;&amp; preamble.starts_with(<span class="string">b"\0\0\0\x0CjP  "</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">16</span>..<span class="number">24</span>] == <span class="string">b"ftypjp2 " </span>{
         <span class="comment">// JPEG 2000
         </span><span class="kw">let </span>chunk_size = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">12</span>));
         <span class="macro">map_err!</span>(JP2K file.seek(SeekFrom::Start(<span class="number">12 </span>+ chunk_size <span class="kw">as </span>u64)));
-        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b&quot;jp2h&quot;</span>, u64::MAX, ImFormat::JP2K)<span class="question-mark">?</span>;
-        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b&quot;ihdr&quot;</span>, chunk_size, ImFormat::JP2K)<span class="question-mark">?</span>;
+        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b"jp2h"</span>, u64::MAX, ImFormat::JP2K)<span class="question-mark">?</span>;
+        <span class="kw">let </span>chunk_size = find_riff_chunk(file, <span class="string">b"ihdr"</span>, chunk_size, ImFormat::JP2K)<span class="question-mark">?</span>;
 
         <span class="kw">if </span>chunk_size &lt; <span class="number">8 </span>{
             <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::JP2K));
@@ -2080,16 +2109,16 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">8 </span>&amp;&amp; (preamble.starts_with(<span class="string">b&quot;II*\0&quot;</span>) || preamble.starts_with(<span class="string">b&quot;MM\0*&quot;</span>)) {
+    } <span class="kw">else if </span>size &gt;= <span class="number">8 </span>&amp;&amp; (preamble.starts_with(<span class="string">b"II*\0"</span>) || preamble.starts_with(<span class="string">b"MM\0*"</span>)) {
         <span class="comment">// TIFF
-        </span><span class="kw">if </span>preamble.starts_with(<span class="string">b&quot;MM&quot;</span>) {
+        </span><span class="kw">if </span>preamble.starts_with(<span class="string">b"MM"</span>) {
             <span class="comment">// big endian
             </span><span class="kw">return </span>parse_tiff::&lt;BigEndianReader, R&gt;(file, <span class="kw-2">&amp;</span>preamble[..size]);
         } <span class="kw">else </span>{
             <span class="comment">// little endian
             </span><span class="kw">return </span>parse_tiff::&lt;LittleEndianReader, R&gt;(file, <span class="kw-2">&amp;</span>preamble[..size]);
         }
-    } <span class="kw">else if </span>size &gt;= <span class="number">14 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;qoif&quot;</span>) {
+    } <span class="kw">else if </span>size &gt;= <span class="number">14 </span>&amp;&amp; preamble.starts_with(<span class="string">b"qoif"</span>) {
         <span class="comment">// QOI
         </span><span class="kw">let </span>w = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">4</span>));
         <span class="kw">let </span>h = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">8</span>));
@@ -2099,7 +2128,7 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">22 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;8BPS\0\x01\0\0\0\0\0\0&quot;</span>) {
+    } <span class="kw">else if </span>size &gt;= <span class="number">22 </span>&amp;&amp; preamble.starts_with(<span class="string">b"8BPS\0\x01\0\0\0\0\0\0"</span>) {
         <span class="comment">// PSD
         </span><span class="kw">let </span>h = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">14</span>));
         <span class="kw">let </span>w = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">18</span>));
@@ -2109,7 +2138,7 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">22 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;gimp xcf &quot;</span>) &amp;&amp; preamble[<span class="number">13</span>] == <span class="number">0 </span>{
+    } <span class="kw">else if </span>size &gt;= <span class="number">22 </span>&amp;&amp; preamble.starts_with(<span class="string">b"gimp xcf "</span>) &amp;&amp; preamble[<span class="number">13</span>] == <span class="number">0 </span>{
         <span class="comment">// XCF
         </span><span class="kw">let </span>w = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">14</span>));
         <span class="kw">let </span>h = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">18</span>));
@@ -2119,7 +2148,7 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">6 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;\0\0\x01\0&quot;</span>) {
+    } <span class="kw">else if </span>size &gt;= <span class="number">6 </span>&amp;&amp; preamble.starts_with(<span class="string">b"\0\0\x01\0"</span>) {
         <span class="comment">// ICO
         </span><span class="kw">let </span>count = u16::from_le_bytes(<span class="macro">array2!</span>(preamble, <span class="number">4</span>));
         <span class="macro">map_err!</span>(ICO file.seek(SeekFrom::Start(<span class="number">6</span>)));
@@ -2142,7 +2171,7 @@
             width:  width  <span class="kw">as </span>u64,
             height: height <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt; <span class="number">8 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;\x76\x2f\x31\x01&quot;</span>) &amp;&amp; (preamble[<span class="number">4</span>] == <span class="number">0x01 </span>|| preamble[<span class="number">4</span>] == <span class="number">0x02</span>) {
+    } <span class="kw">else if </span>size &gt; <span class="number">8 </span>&amp;&amp; preamble.starts_with(<span class="string">b"\x76\x2f\x31\x01"</span>) &amp;&amp; (preamble[<span class="number">4</span>] == <span class="number">0x01 </span>|| preamble[<span class="number">4</span>] == <span class="number">0x02</span>) {
         <span class="comment">// OpenEXR
         // https://www.openexr.com/documentation/openexrfilelayout.pdf
         </span><span class="macro">map_err!</span>(OpenEXR file.seek(SeekFrom::Start(<span class="number">8</span>)));
@@ -2180,8 +2209,8 @@
             <span class="macro">map_err!</span>(OpenEXR file.read_exact(<span class="kw-2">&amp;mut </span>buf4));
             <span class="kw">let </span>size = u32::from_le_bytes(buf4);
 
-            <span class="kw">if </span><span class="kw-2">&amp;</span>name_buf == <span class="string">b&quot;displayWindow&quot; </span>{
-                <span class="kw">if </span><span class="kw-2">&amp;</span>type_buf != <span class="string">b&quot;box2i&quot; </span>|| size != <span class="number">16 </span>{
+            <span class="kw">if </span><span class="kw-2">&amp;</span>name_buf == <span class="string">b"displayWindow" </span>{
+                <span class="kw">if </span><span class="kw-2">&amp;</span>type_buf != <span class="string">b"box2i" </span>|| size != <span class="number">16 </span>{
                     <span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::OpenEXR));
                 }
 
@@ -2230,7 +2259,7 @@
             width:  width  <span class="kw">as </span>u64,
             height: height <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">30 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;DDS \x7C\0\0\0&quot;</span>) &amp;&amp; (u32::from_le_bytes(<span class="macro">array4!</span>(preamble, <span class="number">8</span>)) &amp; <span class="number">0x1007</span>) != <span class="number">0 </span>{
+    } <span class="kw">else if </span>size &gt;= <span class="number">30 </span>&amp;&amp; preamble.starts_with(<span class="string">b"DDS \x7C\0\0\0"</span>) &amp;&amp; (u32::from_le_bytes(<span class="macro">array4!</span>(preamble, <span class="number">8</span>)) &amp; <span class="number">0x1007</span>) != <span class="number">0 </span>{
         <span class="comment">// DDS
         // http://doc.51windows.net/directx9_sdk/graphics/reference/DDSFileReference/ddsfileformat.htm
         // https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dds-header
@@ -2243,7 +2272,7 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">14 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;\x28\0\0\0&quot;</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">12</span>..<span class="number">14</span>] == <span class="string">b&quot;\x01\0&quot; </span>&amp;&amp; preamble[<span class="number">15</span>] == <span class="number">0 </span>{
+    } <span class="kw">else if </span>size &gt;= <span class="number">14 </span>&amp;&amp; preamble.starts_with(<span class="string">b"\x28\0\0\0"</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">12</span>..<span class="number">14</span>] == <span class="string">b"\x01\0" </span>&amp;&amp; preamble[<span class="number">15</span>] == <span class="number">0 </span>{
         <span class="comment">// DIB
         </span><span class="kw">let </span>w = i32::from_le_bytes(<span class="macro">array4!</span>(preamble, <span class="number">4</span>));
         <span class="kw">let </span>h = i32::from_le_bytes(<span class="macro">array4!</span>(preamble, <span class="number">8</span>));
@@ -2253,7 +2282,7 @@
             width:  w <span class="kw">as </span>u64,
             height: h.abs() <span class="kw">as </span>u64,
         });
-    } <span class="kw">else if </span>size &gt;= <span class="number">20 </span>&amp;&amp; preamble.starts_with(<span class="string">b&quot;VTF\0&quot;</span>) {
+    } <span class="kw">else if </span>size &gt;= <span class="number">20 </span>&amp;&amp; preamble.starts_with(<span class="string">b"VTF\0"</span>) {
         <span class="comment">// VTF
         </span><span class="kw">let </span>header_size = u32::from_le_bytes(<span class="macro">array4!</span>(preamble, <span class="number">12</span>));
         <span class="kw">let </span>w = u16::from_le_bytes(<span class="macro">array2!</span>(preamble, <span class="number">16</span>));
@@ -2267,6 +2296,27 @@
             width:  w <span class="kw">as </span>u64,
             height: h <span class="kw">as </span>u64,
         });
+    } <span class="kw">else if </span>size &gt;= <span class="number">24 </span>&amp;&amp; preamble.starts_with(<span class="string">b"FORM"</span>) &amp;&amp; <span class="macro">matches!</span>(<span class="kw-2">&amp;</span>preamble[<span class="number">8</span>..<span class="number">12</span>], <span class="string">b"ILBM"</span>|<span class="string">b"PBM "</span>) &amp;&amp; <span class="kw-2">&amp;</span>preamble[<span class="number">12</span>..<span class="number">16</span>] == <span class="string">b"BMHD" </span>{
+        <span class="kw">let </span>chunk_len = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">4</span>));
+        <span class="kw">if </span>chunk_len &lt; <span class="number">32 </span>{
+            <span class="comment">// need at least room for full header chunk
+            </span><span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::ILBM));
+        }
+
+        <span class="kw">let </span>bmhd_chunk_len = u32::from_be_bytes(<span class="macro">array4!</span>(preamble, <span class="number">16</span>));
+        <span class="kw">if </span>bmhd_chunk_len &lt; <span class="number">20 </span>{
+            <span class="comment">// need at least room for full header data
+            </span><span class="kw">return </span><span class="prelude-val">Err</span>(ImError::ParserError(ImFormat::ILBM));
+        }
+
+        <span class="kw">let </span>w = u16::from_be_bytes(<span class="macro">array2!</span>(preamble, <span class="number">20</span>));
+        <span class="kw">let </span>h = u16::from_be_bytes(<span class="macro">array2!</span>(preamble, <span class="number">22</span>));
+
+        <span class="kw">return </span><span class="prelude-val">Ok</span>(ImInfo {
+            format: ImFormat::ILBM,
+            width:  w <span class="kw">as </span>u64,
+            height: h <span class="kw">as </span>u64,
+        })
     } <span class="kw">else if </span>size &gt;= <span class="number">30 </span>&amp;&amp; preamble[<span class="number">1</span>] &lt; <span class="number">2 </span>&amp;&amp; preamble[<span class="number">2</span>] &lt; <span class="number">12 </span>&amp;&amp; is_tga(file)<span class="question-mark">? </span>{
         <span class="comment">// TGA
         </span><span class="kw">let </span>w = u16::from_le_bytes(<span class="macro">array2!</span>(preamble, <span class="number">12</span>));
