@@ -1,4 +1,4 @@
-use imsz::{imsz_from_reader, ImInfo, ImError, ImResult};
+use imsz::{imsz_from_reader, ImError, ImInfo, ImResult};
 use std::os::raw::{c_int, c_char, c_uint, c_void};
 use std::io::BufReader;
 use std::fs::File;
@@ -152,6 +152,8 @@ const FORMAT_NAMES: &'static [&'static [u8]] = &[
     b"HEIF\0",
     b"JPEG 2000\0",
     b"DIB\0",
+    b"VTF\0",
+    b"ILBM\0",
 ];
 
 #[cfg(target_family="windows")]
@@ -189,6 +191,7 @@ const FORMAT_NAMESW: &'static [&'static [u16]] = &[
     &w(b"JPEG 2000\0"),
     &w(b"DIB\0"),
     &w(b"VTF\0"),
+    &w(b"ILBM\0"),
 ];
 
 #[no_mangle]

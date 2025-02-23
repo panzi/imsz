@@ -93,10 +93,13 @@ pub enum ImFormat {
 
     /// Valve Texture Format.
     VTF     = 19,
+
+    /// Interleaved Bitmap files, including Planar Bitmap variant.
+    ILBM    = 20,
 }
 
 impl ImFormat {
-    pub fn name(&self) -> &'static str {
+    pub const fn name(&self) -> &'static str {
         match self {
             Self::GIF     => "GIF",
             Self::PNG     => "PNG",
@@ -117,6 +120,7 @@ impl ImFormat {
             Self::JP2K    => "JPEG 2000",
             Self::DIB     => "DIB",
             Self::VTF     => "VTF",
+            Self::ILBM    => "ILBM",
         }
     }
 }
@@ -636,14 +640,14 @@ impl Imsz for std::io::Stdin {
     }
 }
 
-#[cfg(any(target_family="unix", target_family="windows", target_family="wasi"))]
+#[cfg(any(target_family="unix", target_family="windows"))]
 impl Imsz for &std::io::Stdin {
     /// WARNING: This looses already buffered input!
     #[inline]
     fn imsz(self) -> ImResult<ImInfo> {
         let lock = self.lock();
 
-        #[cfg(any(target_family="unix", target_family="wasi"))]
+        #[cfg(target_family="unix")]
         let mut seekable_stdin = unsafe {
             use std::os::unix::io::{AsRawFd, FromRawFd};
             std::fs::File::from_raw_fd(lock.as_raw_fd())
@@ -1126,6 +1130,27 @@ where R: Read, R: Seek {
             width:  w as u64,
             height: h as u64,
         });
+    } else if size >= 24 && preamble.starts_with(b"FORM") && matches!(&preamble[8..12], b"ILBM"|b"PBM ") && &preamble[12..16] == b"BMHD" {
+        let chunk_len = u32::from_be_bytes(array4!(preamble, 4));
+        if chunk_len < 32 {
+            // need at least room for full header chunk
+            return Err(ImError::ParserError(ImFormat::ILBM));
+        }
+
+        let bmhd_chunk_len = u32::from_be_bytes(array4!(preamble, 16));
+        if bmhd_chunk_len < 20 {
+            // need at least room for full header data
+            return Err(ImError::ParserError(ImFormat::ILBM));
+        }
+
+        let w = u16::from_be_bytes(array2!(preamble, 20));
+        let h = u16::from_be_bytes(array2!(preamble, 22));
+
+        return Ok(ImInfo {
+            format: ImFormat::ILBM,
+            width:  w as u64,
+            height: h as u64,
+        })
     } else if size >= 30 && preamble[1] < 2 && preamble[2] < 12 && is_tga(file)? {
         // TGA
         let w = u16::from_le_bytes(array2!(preamble, 12));

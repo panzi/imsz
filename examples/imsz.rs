@@ -13,7 +13,7 @@ fn main() {
     let args = Args::parse();
 
     if args.files.is_empty() {
-        #[cfg(any(target_family="unix", target_family="windows", target_family="wasi"))]
+        #[cfg(any(target_family="unix", target_family="windows"))]
         {
             match imsz(std::io::stdin()) {
                 Ok(info) => println!("<stdin>: {}, {} x {}", info.format, info.width, info.height),

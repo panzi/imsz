@@ -143,6 +143,23 @@ fn ico() {
 
 
 #[test]
+fn ilbm() {
+    let info = imsz::imsz_from_path(get_testdata("image.ilbm"));
+    match info {
+        Ok(info) => {
+            assert_eq!(info.format, imsz::ImFormat::ILBM);
+            assert_eq!(info.format.name(), "ILBM");
+            assert_eq!(info.width,  32);
+            assert_eq!(info.height, 16);
+        }
+        Err(error) => {
+            assert!(false, "{}", error);
+        }
+    }
+}
+
+
+#[test]
 fn jp2() {
     let info = imsz::imsz_from_path(get_testdata("image.jp2"));
     match info {

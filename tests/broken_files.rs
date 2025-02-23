@@ -1,14 +1,16 @@
-use imsz::{imsz, ImError, ImFormat};
+use imsz::{imsz, ImError, ImFormat, ImInfo, ImResult};
 
 fn expect_broken(data: &[u8], expect_format: ImFormat) {
-    match imsz(data) {
-        Err(ImError::ParserError(format)) => {
-            assert_eq!(format, expect_format);
-        }
-        other => {
-            assert!(false, "expected: Err(ImError::ParserError(ImFormat::AVIF)), actual: {:?}", other);
+    let actual = imsz(data);
+
+    if let Err(ImError::ParserError(format)) = actual {
+        if format == expect_format {
+            return;
         }
     }
+
+    let expected: ImResult<ImInfo> = Err(ImError::ParserError(expect_format));
+    assert!(false, " expected: {expected:?}\n   actual: {actual:?}");
 }
 
 #[test]
@@ -73,5 +75,16 @@ fn broken_bmp() {
     ];
     for data in broken_images {
         expect_broken(data, ImFormat::BMP);
+    }
+}
+
+#[test]
+fn broken_ilbm() {
+    let broken_images = [
+        b"FORM\x00\x00\x00\x80ILBMBMHD\x00\x00\x00\x12\x02\x80\x01\xe0" as &[u8],
+        b"FORM\x00\x00\x00\x1ePBM BMHD\x00\x00\x00\x14\x02\x80\x01\xe0",
+    ];
+    for data in broken_images {
+        expect_broken(data, ImFormat::ILBM);
     }
 }
