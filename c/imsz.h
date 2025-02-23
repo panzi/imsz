@@ -128,7 +128,7 @@ IMSZ_EXPORT int imsz_from_fd(int fd, ImInfo *info_ptr);
 
 /// Get image width and height from file @p stream.
 ///
-/// @param file A file handle of an image file. Must be seekable.
+/// @param stream A file handle of an image file. Must be seekable.
 /// @param info_ptr Pointer to where to write the result. Can be NULL.
 /// @return ::ImError value or `errno` value under POSIX and Windows error code under Windows.
 IMSZ_EXPORT int imsz_from_file(FILE *stream, ImInfo *info_ptr);
