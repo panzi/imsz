@@ -23,7 +23,7 @@ $ cargo run -q --example imsz testdata/image.gif
 testdata/image.gif: GIF, 32 x 16
 
 $ cargo run -q --example imsz -- --help
-imsz 0.4.0
+imsz 0.4.1
 Paulo Scardine <paulo@scardine.com.br>, Mathias Panzenböck <grosser.meister.morti@gmx.net>
 
 USAGE:
