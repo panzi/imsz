@@ -23,7 +23,7 @@ $ cargo run -q --example imsz testdata/image.gif
 testdata/image.gif: GIF, 32 x 16
 
 $ cargo run -q --example imsz -- --help
-imsz 0.3.0
+imsz 0.4.0
 Paulo Scardine <paulo@scardine.com.br>, Mathias Panzenböck <grosser.meister.morti@gmx.net>
 
 USAGE:
@@ -68,6 +68,7 @@ let info = imsz_from_reader(&mut file)?;
 * GIF
 * HEIC/HEIF
 * ICO
+* ILBM
 * JPEG
 * JPEG 2000
 * PCX
