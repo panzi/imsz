@@ -14,7 +14,7 @@ pub struct ImInfoC {
 fn convert_result(result: ImResult<ImInfo>, info_ptr: *mut ImInfoC) -> c_int {
     match result {
         Ok(info) => {
-            if info_ptr != std::ptr::null_mut() {
+            if !info_ptr.is_null() {
                 unsafe {
                     (*info_ptr).format = info.format as c_uint;
                     (*info_ptr).width  = info.width;
@@ -31,7 +31,7 @@ fn convert_result(result: ImResult<ImInfo>, info_ptr: *mut ImInfoC) -> c_int {
             }
         },
         Err(ImError::ParserError(format)) => {
-            if info_ptr != std::ptr::null_mut() {
+            if !info_ptr.is_null() {
                 unsafe {
                     (*info_ptr).format = format as c_uint;
                 }
@@ -62,7 +62,7 @@ pub extern "C" fn imsz_from_path(path: *const c_char, info_ptr: *mut ImInfoC) ->
 
 #[no_mangle]
 pub extern "C" fn imsz_from_buffer(buf: *const c_void, len: libc::size_t, info_ptr: *mut ImInfoC) -> c_int {
-    if buf == std::ptr::null() {
+    if buf.is_null() {
         #[cfg(target_family="unix")]
         return libc::EINVAL;
 
@@ -74,6 +74,12 @@ pub extern "C" fn imsz_from_buffer(buf: *const c_void, len: libc::size_t, info_p
     let mut reader = std::io::Cursor::new(slice);
 
     return convert_result(imsz::imsz_from_reader(&mut reader), info_ptr);
+}
+
+#[no_mangle]
+pub extern "C" fn imsz_from_file(stream: *mut libc::FILE, info_ptr: *mut ImInfoC) -> c_int {
+    let fd = if stream.is_null() { -1 } else { unsafe { libc::fileno(stream) } };
+    imsz_from_fd(fd, info_ptr)
 }
 
 #[no_mangle]
@@ -111,7 +117,7 @@ pub extern "C" fn imsz_from_fd(fd: c_int, info_ptr: *mut ImInfoC) -> c_int {
 pub extern "C" fn imsz_from_handle(hnd: std::os::windows::io::RawHandle, info_ptr: *mut ImInfoC) -> c_int {
     use std::os::windows::io::FromRawHandle;
 
-    if hnd == std::ptr::null_mut() {
+    if hnd.is_null() {
         return 0x00000006; // ERROR_INVALID_HANDLE
     }
 

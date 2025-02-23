@@ -126,6 +126,13 @@ IMSZ_EXPORT int imsz_from_buffer(const void *buf, size_t len, ImInfo *info_ptr);
 /// @return ::ImError value or `errno` value under POSIX and Windows error code under Windows.
 IMSZ_EXPORT int imsz_from_fd(int fd, ImInfo *info_ptr);
 
+/// Get image width and height from file @p stream.
+///
+/// @param file A file handle of an image file. Must be seekable.
+/// @param info_ptr Pointer to where to write the result. Can be NULL.
+/// @return ::ImError value or `errno` value under POSIX and Windows error code under Windows.
+IMSZ_EXPORT int imsz_from_file(FILE *stream, ImInfo *info_ptr);
+
 /// Get the name of an image file format.
 ///
 /// @param format A ImFormat value.
@@ -153,8 +160,6 @@ IMSZ_EXPORT const char *imsz_format_name(unsigned int format);
     /// @return The name of the image file format or `"(unknown)"` for an unknown value.
     IMSZ_EXPORT const wchar_t *imsz_format_namew(unsigned int format);
 
-    #define imsz_from_file(fp, info_ptr) imsz_from_fd(_fileno((fp)), (info_ptr))
-
     #define imsz_2_(arg1, arg2) \
         _Generic((arg1), \
             wchar_t*:       imsz_from_pathw((const wchar_t*)(arg1), (arg2)), \
@@ -166,8 +171,6 @@ IMSZ_EXPORT const char *imsz_format_name(unsigned int format);
             int:            imsz_from_fd((intptr_t)(arg1), (arg2)) \
         )
 #else
-    #define imsz_from_file(fp, info_ptr) imsz_from_fd(fileno((fp)), (info_ptr))
-
     #define imsz_2_(arg1, arg2) \
         _Generic((arg1), \
             char*:          imsz_from_path((const char*)(arg1), (arg2)), \
@@ -176,13 +179,6 @@ IMSZ_EXPORT const char *imsz_format_name(unsigned int format);
             int:            imsz_from_fd((intptr_t)(arg1), (arg2)) \
         )
 #endif
-
-/// @def imsz_from_file(fp,info_ptr)
-/// Get image width and height from FILE pointer @p fp.
-///
-/// @param fp FILE pointer. Must be seekable.
-/// @param info_ptr Pointer to where to write the result. Can be NULL.
-/// @return ::ImError value or Windows error code.
 
 #define imsz_3_(arg1, arg2, arg3) \
     imsz_from_buffer((arg1), (arg2), (arg3))
